@@ -1,7 +1,7 @@
 /* Safara Shuttle app: keeps the site working offline.
    Pages: network first (always the newest version when online).
    Images and icons: shown from cache at once, then refreshed in the background. */
-const CACHE = 'safara-v5';
+const CACHE = 'safara-v6';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png'];
 
 self.addEventListener('install', e => {
@@ -24,7 +24,9 @@ self.addEventListener('fetch', e => {
 
   if (req.mode === 'navigate') {
     e.respondWith(
-      fetch(req)
+      // no-cache: always ask the server for the newest page (cheap when unchanged)
+      fetch(new Request(req.url, { cache: 'no-cache', credentials: 'same-origin' }))
+        .then(res => (res.redirected ? fetch(req) : res))
         .then(res => {
           if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put('./index.html', copy)); }
           return res;

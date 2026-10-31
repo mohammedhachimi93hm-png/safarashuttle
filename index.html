@@ -703,6 +703,7 @@ const CONFIG = {
   phoneDisplay: '+212 6 61 52 15 19',
   email: 'support@safarashuttle.com',
   imgDir: 'images/',
+  imgVer: '6',     // change ce numéro quand une photo change : les navigateurs prennent la nouvelle tout de suite
   // Réservations et avis envoyés par e-mail (service gratuit FormSubmit). Le 1er envoi demande une activation dans la boîte support@.
   formEndpoint: 'https://formsubmit.co/ajax/support@safarashuttle.com',
   googleReviewsUrl: '',              // lien de votre fiche Google (avis), à ajouter plus tard
@@ -1311,7 +1312,7 @@ function flapIntro(){
 let CITY=0, cityTimer=null, cityAuto=true;
 function renderCities(){
   const bg=$('#herobg');
-  if(!bg.children.length) bg.innerHTML=HERO_CITIES.map(c=>`<div class="slide" style="background-image:url('${CONFIG.imgDir}${c.img}')"></div>`).join('');
+  if(!bg.children.length) bg.innerHTML=HERO_CITIES.map(c=>`<div class="slide" style="background-image:url('${CONFIG.imgDir}${c.img}?v=${CONFIG.imgVer}')"></div>`).join('');
   $$('.slide',bg).forEach((s,i)=>s.classList.toggle('on',i===CITY));
   const c=HERO_CITIES[CITY];
   $('#cities').innerHTML=`<p><span class="city-name">${esc(c.name)}</span><span class="city-tag">${esc(L(c.tag))}</span></p><div class="city-tabs" role="group" aria-label="${esc(t('hero.cities'))}">${HERO_CITIES.map((x,i)=>`<button type="button" data-city="${i}" aria-pressed="${i===CITY}">${esc(x.name)}</button>`).join('')}</div>`;
@@ -1325,7 +1326,7 @@ function stopAuto(){ cityAuto=false; clearInterval(cityTimer); $('#hero').classL
 function carArt(c){
   if(!c.img) return carSVG(c.shape);
   const base=c.img.replace(/\.(png|jpe?g)$/i,'');
-  return carSVG(c.shape)+`<img src="${CONFIG.imgDir}${base}.png" data-alt="${CONFIG.imgDir}${c.img}" alt="${esc(L(c.model))}" decoding="async" style="object-position:${c.pos||'center'}">`;
+  return carSVG(c.shape)+`<img src="${CONFIG.imgDir}${base}.png?v=${CONFIG.imgVer}" data-alt="${CONFIG.imgDir}${c.img}?v=${CONFIG.imgVer}" alt="${esc(L(c.model))}" decoding="async" style="object-position:${c.pos||'center'}">`;
 }
 function wireImgs(root){
   $$('img',root).forEach(img=>{
