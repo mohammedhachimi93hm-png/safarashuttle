@@ -9,7 +9,42 @@
 <meta property="og:description" content="Aéroport, hôtel, riad : chauffeur privé à prix fixe à Marrakech, Agadir, Casablanca, Rabat, Fès, Tanger et Chefchaouen.">
 <meta property="og:url" content="https://safarashuttle.com/">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://safarashuttle.com/images/hero-marrakech.png">
+<meta property="og:image" content="https://safarashuttle.com/icons/icon-512.png">
+<meta name="robots" content="index,follow">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://safarashuttle.com/#business",
+  "name": "Safara Shuttle",
+  "description": "Transferts aéroport, chauffeur privé et excursions au départ de Casablanca vers tout le Maroc. Skoda, Mercedes, Vito, Ford Tourneo et Sprinter. Prix fixe.",
+  "url": "https://safarashuttle.com/",
+  "logo": "https://safarashuttle.com/icons/icon-512.png",
+  "image": "https://safarashuttle.com/icons/icon-512.png",
+  "telephone": "+212661521519",
+  "email": "support@safarashuttle.com",
+  "priceRange": "350–5500 MAD",
+  "currenciesAccepted": "MAD, EUR, USD",
+  "paymentAccepted": "Cash, Credit Card, Bank Transfer",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Mediouna",
+    "postalCode": "29490",
+    "addressRegion": "Casablanca-Settat",
+    "addressCountry": "MA"
+  },
+  "areaServed": {"@type": "Country", "name": "Maroc"},
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "00:00",
+    "closes": "23:59"
+  }],
+  "hasMap": "https://maps.app.goo.gl/sG957xzgNAQWQL4M8",
+  "sameAs": ["https://maps.app.goo.gl/sG957xzgNAQWQL4M8"],
+  "knowsLanguage": ["fr", "en", "ar"]
+}
+</script>
 <link rel="icon" type="image/png" href="icons/favicon-64.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0E5A4A">
@@ -382,6 +417,26 @@ td.rt{white-space:normal;min-width:210px}
 .rate input:checked~label,.rate label:hover,.rate label:hover~label{color:var(--brass-hi)}
 .rate input:focus-visible+label{outline:2px solid var(--brass-hi);outline-offset:2px;border-radius:4px}
 .rev-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.rev-photo{display:block;width:100%;max-height:260px;object-fit:cover;border-radius:10px;margin-top:10px}
+.photo-pick{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.photo-pick input[type=file]{font-size:14px;max-width:100%}
+.photo-prev{width:72px;height:72px;border-radius:10px;object-fit:cover;border:1px solid var(--line)}
+.photo-hint{font-size:12.5px;color:var(--muted)}
+
+/* client photos: endless strip */
+.cphotos{margin-top:44px;min-width:0}
+.cphotos h3{font:700 1.3rem var(--f-body);margin-bottom:14px}
+.marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.track{display:flex;gap:14px;width:max-content;animation:scrollx var(--dur,40s) linear infinite}
+.marquee:hover .track,.marquee:focus-within .track{animation-play-state:paused}
+@keyframes scrollx{to{transform:translateX(calc(-50% - 7px))}}
+@media (prefers-reduced-motion:reduce){.track{animation:none}.marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}}
+.cp{margin:0;flex:none;position:relative}
+.cp img{height:220px;width:auto;max-width:none;display:block;border-radius:14px;object-fit:cover}
+.cp figcaption{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.55);color:#fff;font-size:12.5px;padding:3px 9px;border-radius:999px}
+@media (max-width:600px){.cp img{height:170px}}
+.cp-empty{border:1px dashed var(--line);border-radius:14px;padding:22px;display:flex;gap:12px;align-items:center;color:var(--muted);background:var(--surface)}
+.cp-empty .ic{width:28px;height:28px;color:var(--brass);flex:none}
 
 /* faq */
 .faq{max-width:840px}
@@ -614,6 +669,7 @@ td.rt{white-space:normal;min-width:210px}
     <div class="wrap">
       <div class="shead"><p class="eyebrow" data-i18n="rev.eyebrow">Avis clients</p><h2 data-i18n="rev.title"></h2><p data-i18n="rev.lede"></p></div>
       <div class="revgrid"><div id="revlist"></div><form class="revform" id="revform" novalidate></form></div>
+      <div class="cphotos" id="cphotos"></div>
     </div>
   </section>
 
@@ -699,8 +755,10 @@ const CONFIG = {
   mapsUrl: 'https://maps.app.goo.gl/sG957xzgNAQWQL4M8',   // fiche Google Maps de l'agence
   mapsQuery: 'Taxi aéroport vip, 29490, Mediouna',          // sert à afficher la carte Google dans le site
   address: 'Mediouna 29490, Grand Casablanca, Maroc',
-  // Avis clients réels uniquement, ex. {name:'Sara', from:'Paris', stars:5, text:'…'}
+  // Avis clients réels uniquement, ex. {name:'Sara', from:'Paris', stars:5, text:'…', photo:'clients/sara.jpg'}
   reviews: [],
+  // Photos de clients (avec leur accord), elles défilent sous les avis : {src:'clients/sara.jpg', name:'Sara', from:'Paris'}
+  clientPhotos: [],
   licence: 'à compléter',            // n° d'agrément transport touristique
   eurPerMad: 0.092,                  // taux indicatif MAD -> EUR
   usdPerMad: 0.106,                  // taux indicatif MAD -> USD
@@ -938,6 +996,8 @@ fr:{
  'rev.emptyT':'Les premiers avis arrivent','rev.emptyP':'Soyez parmi les premiers à donner votre avis.','rev.google':'Voir nos avis Google',
  'rev.formT':'Laisser un avis','rev.from':'Ville ou pays','rev.fromPh':'ex. Lyon, France','rev.rating':'Votre note','rev.text':'Votre avis','rev.send':'Envoyer mon avis',
  'rev.ok':'Merci ! Votre avis sera publié après vérification.','rev.fail':'L’envoi n’a pas marché. Envoyez votre avis sur','rev.err':'Indiquez votre nom et quelques mots sur votre trajet.',
+ 'rev.photo':'Votre photo (facultatif)','rev.photoHint':'Une photo de votre voyage avec nous. Elle s’affiche avec votre avis après vérification.','rev.photoErr':'Choisissez une image (JPG ou PNG).',
+ 'cp.title':'Nos clients en voyage','cp.empty':'Les photos de nos clients apparaîtront ici. Ajoutez la vôtre avec votre avis.',
  'pay.opt.card':'Carte bancaire (TPE dans la voiture)','pay.opt.transfer':'Virement bancaire','pay.opt.cash':'Espèces (MAD ou euros)',
  'type.transfer':'Transfert','type.hourly':'À l’heure','type.trip':'Excursion',
  'type.long.transfer':'Transfert','type.long.hourly':'Mise à disposition','type.long.trip':'Excursion',
@@ -1030,6 +1090,8 @@ en:{
  'rev.emptyT':'First reviews coming soon','rev.emptyP':'Be one of the first to leave a review.','rev.google':'See our Google reviews',
  'rev.formT':'Leave a review','rev.from':'City or country','rev.fromPh':'e.g. London, UK','rev.rating':'Your rating','rev.text':'Your review','rev.send':'Send my review',
  'rev.ok':'Thank you! Your review will be published once checked.','rev.fail':'Sending failed. Send your review on','rev.err':'Enter your name and a few words about your trip.',
+ 'rev.photo':'Your photo (optional)','rev.photoHint':'A photo from your trip with us. It appears with your review once checked.','rev.photoErr':'Choose an image (JPG or PNG).',
+ 'cp.title':'Our guests on the road','cp.empty':'Our guests’ photos will appear here. Add yours with your review.',
  'pay.opt.card':'Bank card (terminal in the car)','pay.opt.transfer':'Bank transfer','pay.opt.cash':'Cash (MAD or euros)',
  'type.transfer':'Transfer','type.hourly':'By the hour','type.trip':'Day trip',
  'type.long.transfer':'Transfer','type.long.hourly':'Chauffeur by the hour','type.long.trip':'Day trip',
@@ -1480,14 +1542,48 @@ function renderCalcOut(){
 /* ====== Avis clients (réels uniquement) ====== */
 function renderReviews(){
   const R=CONFIG.reviews||[];
-  $('#revlist').innerHTML=R.length?`<div class="revs">${R.map(r=>`<figure class="rev"><div class="stars" aria-label="${+r.stars}/5">${'★'.repeat(+r.stars)}${'☆'.repeat(5-r.stars)}</div><blockquote>${esc(r.text)}</blockquote><figcaption>${esc(r.name)}${r.from?' · '+esc(r.from):''}</figcaption></figure>`).join('')}</div>`
+  $('#revlist').innerHTML=R.length?`<div class="revs">${R.map(r=>`<figure class="rev"><div class="stars" aria-label="${+r.stars}/5">${'★'.repeat(+r.stars)}${'☆'.repeat(5-r.stars)}</div><blockquote>${esc(r.text)}</blockquote>${r.photo?`<img class="rev-photo" src="${CONFIG.imgDir}${esc(r.photo)}" alt="" loading="lazy">`:''}<figcaption>${esc(r.name)}${r.from?' · '+esc(r.from):''}</figcaption></figure>`).join('')}</div>`
     :`<div class="rev-empty"><div class="stars big" aria-hidden="true">★★★★★</div><h3>${esc(t('rev.emptyT'))}</h3><p>${esc(t('rev.emptyP'))}</p>${CONFIG.googleReviewsUrl?`<a class="btn btn-ghost" href="${esc(CONFIG.googleReviewsUrl)}" target="_blank" rel="noopener">${esc(t('rev.google'))}</a>`:''}</div>`;
   $('#revform').innerHTML=`<h3>${esc(t('rev.formT'))}</h3><div class="fgrid">
     ${fld('c3','r-name',t('f.name'),'<input id="r-name" type="text" autocomplete="name">')}
     ${fld('c3','r-from',t('rev.from'),`<input id="r-from" type="text" placeholder="${esc(t('rev.fromPh'))}">`)}
     <div class="field c6"><span class="flabel">${esc(t('rev.rating'))}</span><div class="rate" role="radiogroup" aria-label="${esc(t('rev.rating'))}">${[5,4,3,2,1].map(n=>`<input type="radio" name="r-stars" id="r-s${n}" value="${n}"${n===5?' checked':''}><label for="r-s${n}" title="${n}/5">★</label>`).join('')}</div></div>
-    ${fld('c6','r-text',t('rev.text'),'<textarea id="r-text" maxlength="600"></textarea>')}</div>
+    ${fld('c6','r-text',t('rev.text'),'<textarea id="r-text" maxlength="600"></textarea>')}
+    <div class="field c6"><label for="r-photo">${esc(t('rev.photo'))}</label><div class="photo-pick"><input id="r-photo" type="file" accept="image/*"><img class="photo-prev" id="r-prev" alt="" hidden></div><span class="photo-hint">${esc(t('rev.photoHint'))}</span></div></div>
     <div class="rev-actions"><button type="submit" class="btn btn-primary">${esc(t('rev.send'))}</button><p class="after" id="r-status" role="status" hidden></p></div>`;
+}
+
+/* ====== Photos de clients : bande qui défile ====== */
+function renderClientPhotos(){
+  const el=$('#cphotos'); if(!el) return;
+  const list=(CONFIG.clientPhotos||[]).concat((CONFIG.reviews||[]).filter(r=>r.photo).map(r=>({src:r.photo,name:r.name,from:r.from})));
+  const item=(p,hide)=>`<figure class="cp"${hide?' aria-hidden="true"':''}><img src="${CONFIG.imgDir}${esc(p.src)}" alt="${hide?'':esc(p.name||'')}" loading="lazy"><figcaption>${esc(p.name||'')}${p.from?' · '+esc(p.from):''}</figcaption></figure>`;
+  el.innerHTML=`<h3>${esc(t('cp.title'))}</h3>`+(list.length
+    ?`<div class="marquee"><div class="track" style="--dur:${Math.max(24,list.length*7)}s">${list.map(p=>item(p,false)).join('')}${list.map(p=>item(p,true)).join('')}</div></div>`
+    :`<div class="cp-empty">${ic('user')}<span>${esc(t('cp.empty'))}</span></div>`);
+}
+
+/* ====== Photo jointe à un avis : réduite puis envoyée par e-mail (FormSubmit) ====== */
+async function shrinkImage(file){
+  if(!/^image\//.test(file.type)) throw new Error('type');
+  const url=URL.createObjectURL(file);
+  try{
+    const img=await new Promise((res,rej)=>{const i=new Image(); i.onload=()=>res(i); i.onerror=rej; i.src=url;});
+    const k=Math.min(1,1600/Math.max(img.naturalWidth,img.naturalHeight));
+    const c=document.createElement('canvas'); c.width=Math.round(img.naturalWidth*k); c.height=Math.round(img.naturalHeight*k);
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+    const blob=await new Promise(r=>c.toBlob(r,'image/jpeg',0.82));
+    return new File([blob],'photo-avis.jpg',{type:'image/jpeg'});
+  } finally { URL.revokeObjectURL(url); }
+}
+function postWithFile(fields,file){
+  const f=document.createElement('form'); f.method='POST'; f.enctype='multipart/form-data'; f.hidden=true;
+  f.action=CONFIG.formEndpoint.replace('/ajax/','/');
+  const all=Object.assign({_captcha:'false',_template:'table',_next:location.origin+location.pathname+'?avis=merci#avis'},fields);
+  Object.keys(all).forEach(k=>{const i=document.createElement('input'); i.type='hidden'; i.name=k; i.value=all[k]; f.appendChild(i);});
+  const fi=document.createElement('input'); fi.type='file'; fi.name='attachment';
+  const dt=new DataTransfer(); dt.items.add(file); fi.files=dt.files; f.appendChild(fi);
+  document.body.appendChild(f); f.submit();
 }
 
 /* ====== Envoi par e-mail (FormSubmit) ====== */
@@ -1665,6 +1761,12 @@ $('#bkbody').addEventListener('click',e=>{
 $('#bknext').addEventListener('click',()=>{const err=validate(STEP); showErr(err); if(err) return; STEP=Math.min(4,STEP+1); renderStep(); $('#bk-title').focus();});
 $('#bkback').addEventListener('click',()=>{showErr(''); S.mailSent=false; STEP=Math.max(1,STEP-1); renderStep();});
 $('#calc').addEventListener('change',e=>{ const k=readField(e.target); if(!k) return; renderCalcOut(); renderQuick(); });
+$('#revform').addEventListener('change',e=>{
+  if(e.target.id!=='r-photo') return;
+  const f=e.target.files[0], pv=$('#r-prev');
+  if(pv.src) URL.revokeObjectURL(pv.src);
+  if(f&&/^image\//.test(f.type)){ pv.src=URL.createObjectURL(f); pv.hidden=false; } else { pv.hidden=true; pv.removeAttribute('src'); }
+});
 $('#revform').addEventListener('submit',async e=>{
   e.preventDefault();
   const name=$('#r-name').value.trim(), from=$('#r-from').value.trim(), text=$('#r-text').value.trim();
@@ -1673,7 +1775,10 @@ $('#revform').addEventListener('submit',async e=>{
   if(name.length<2||text.length<5){ st.textContent=t('rev.err'); return; }
   st.textContent=t('sending');
   const msg=`${t('rev.formT')} · ${CONFIG.brandFull}\n${'★'.repeat(+stars)} (${stars}/5)\n${name}${from?' · '+from:''}\n\n${text}`;
-  const ok=await sendForm({_subject:`${t('rev.formT')} · ${stars}/5 · ${name}`, Nom:name, Ville:from||'-', Note:stars+'/5', Avis:text});
+  const fields={_subject:`${t('rev.formT')} · ${stars}/5 · ${name}`, Nom:name, Ville:from||'-', Note:stars+'/5', Avis:text};
+  const pf=$('#r-photo')&&$('#r-photo').files[0];
+  if(pf){ try{ postWithFile(fields, await shrinkImage(pf)); }catch(err){ st.textContent=t('rev.photoErr'); } return; }
+  const ok=await sendForm(fields);
   if(ok){ st.textContent=t('rev.ok'); e.target.reset(); }
   else st.innerHTML=`${esc(t('rev.fail'))} <a href="https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">WhatsApp</a>`;
 });
@@ -1724,10 +1829,11 @@ function applyStatic(){
   $$('[data-brand-sub]').forEach(el=>{el.textContent=CONFIG.brandSub;});
   $$('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===LANG));
 }
-function renderAll(){ applyStatic(); renderCities(); renderWaCard(); renderAgency(); renderPay(); renderQuick(); renderBoard(); renderTrust(); renderServices(); renderFleet(); renderSteps(); renderMap(); renderTrips(); renderPrices(); renderCalc(); renderReviews(); renderFAQ(); renderContact(); if(!$('#bkov').hidden) renderStep(); }
+function renderAll(){ applyStatic(); renderCities(); renderWaCard(); renderAgency(); renderPay(); renderQuick(); renderBoard(); renderTrust(); renderServices(); renderFleet(); renderSteps(); renderMap(); renderTrips(); renderPrices(); renderCalc(); renderReviews(); renderClientPhotos(); renderFAQ(); renderContact(); if(!$('#bkov').hidden) renderStep(); }
 function setLang(l){ LANG=l; try{localStorage.setItem('siyaha-lang',l);}catch(e){} renderAll(); }
 
 renderAll(); flapIntro(); setInterval(tick,15000);
+if(/[?&]avis=merci/.test(location.search)){ const st=$('#r-status'); if(st){ st.hidden=false; st.textContent=t('rev.ok'); } }
 
 /* ====== Application (PWA) ====== */
 if('serviceWorker' in navigator && (location.protocol==='https:'||/^(localhost|127\.0\.0\.1)$/.test(location.hostname))){
