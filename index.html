@@ -61,7 +61,8 @@
     "closes": "23:59"
   }],
   "geo": {"@type": "GeoCoordinates", "latitude": 33.457348, "longitude": -7.514808},
-  "hasMap": "https://www.google.com/maps?q=33.457348,-7.514808",
+  "hasMap": "https://www.google.com/maps?cid=6594830863827031958",
+  "sameAs": ["https://www.google.com/maps?cid=6594830863827031958"],
   "knowsLanguage": ["fr", "en", "ar"]
 }
 </script>
@@ -815,7 +816,7 @@ const CONFIG = {
   imgVer: '6',     // change ce numéro quand une photo change : les navigateurs prennent la nouvelle tout de suite
   // Réservations et avis envoyés par e-mail (service gratuit FormSubmit). Le 1er envoi demande une activation dans la boîte support@.
   formEndpoint: 'https://formsubmit.co/ajax/support@safarashuttle.com',
-  googleReviewsUrl: '',              // lien de votre fiche Google (avis), à ajouter plus tard
+  googleReviewsUrl: 'https://search.google.com/local/writereview?placeid=ChIJryN0Y5U3pg0Rllcx0LqLhVs',   // laisser un avis sur la fiche Google
   mapsUrl: 'https://www.google.com/maps/dir/?api=1&destination=33.457348,-7.514808',   // itinéraire vers l'agence (depuis la position du client)
   mapsQuery: '33.457348,-7.514808',          // position de l'agence (Mediouna), carte Google dans le site
   address: 'Mediouna 29490, Grand Casablanca, Maroc',
@@ -1057,7 +1058,7 @@ fr:{
  'bk.mailFail':'L’e-mail n’est pas parti. Votre demande WhatsApp suffit, ou écrivez à',
  'mail.subject':'Nouvelle réservation {ref} · {brand}','mail.auto':'Merci ! Nous avons bien reçu votre demande {ref}. Nous vous confirmons très vite sur WhatsApp et par e-mail. {brand}',
  'rev.eyebrow':'Avis clients','rev.title':'Ce que disent nos clients','rev.lede':'Votre avis est publié après vérification.',
- 'rev.emptyT':'Les premiers avis arrivent','rev.emptyP':'Soyez parmi les premiers à donner votre avis.','rev.google':'Voir nos avis Google',
+ 'rev.emptyT':'Les premiers avis arrivent','rev.emptyP':'Soyez parmi les premiers à donner votre avis.','rev.google':'Donner votre avis sur Google',
  'rev.formT':'Laisser un avis','rev.from':'Ville ou pays','rev.fromPh':'ex. Lyon, France','rev.rating':'Votre note','rev.text':'Votre avis','rev.send':'Envoyer mon avis',
  'rev.ok':'Merci ! Votre avis sera publié après vérification.','rev.fail':'L’envoi n’a pas marché. Envoyez votre avis sur','rev.err':'Indiquez votre nom et quelques mots sur votre trajet.',
  'rev.photo':'Votre photo (facultatif)','rev.photoHint':'Une photo de votre voyage avec nous. Elle s’affiche avec votre avis après vérification.','rev.photoErr':'Choisissez une image (JPG ou PNG).',
@@ -1151,7 +1152,7 @@ en:{
  'bk.mailFail':'The email could not be sent. Your WhatsApp request is enough, or write to',
  'mail.subject':'New booking {ref} · {brand}','mail.auto':'Thank you! We received your request {ref}. We will confirm shortly on WhatsApp and by email. {brand}',
  'rev.eyebrow':'Guest reviews','rev.title':'What our guests say','rev.lede':'Your review is published once checked.',
- 'rev.emptyT':'First reviews coming soon','rev.emptyP':'Be one of the first to leave a review.','rev.google':'See our Google reviews',
+ 'rev.emptyT':'First reviews coming soon','rev.emptyP':'Be one of the first to leave a review.','rev.google':'Leave a review on Google',
  'rev.formT':'Leave a review','rev.from':'City or country','rev.fromPh':'e.g. London, UK','rev.rating':'Your rating','rev.text':'Your review','rev.send':'Send my review',
  'rev.ok':'Thank you! Your review will be published once checked.','rev.fail':'Sending failed. Send your review on','rev.err':'Enter your name and a few words about your trip.',
  'rev.photo':'Your photo (optional)','rev.photoHint':'A photo from your trip with us. It appears with your review once checked.','rev.photoErr':'Choose an image (JPG or PNG).',
