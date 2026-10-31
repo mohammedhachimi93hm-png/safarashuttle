@@ -11,6 +11,12 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://safarashuttle.com/images/hero-marrakech.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpolygon points='20,2.3 25.2,7.5 32.5,7.5 32.5,14.8 37.7,20 32.5,25.2 32.5,32.5 25.2,32.5 20,37.7 14.8,32.5 7.5,32.5 7.5,25.2 2.3,20 7.5,14.8 7.5,7.5 14.8,7.5' fill='%230E5A4A' stroke='%23D4A245' stroke-width='1.4'/%3E%3Cpath d='M9.6 25.2v-2.6c0-.9.5-1.5 1.4-1.7l2.7-.6 2.6-3.2c.5-.6 1.2-.9 2-.9h6.2c.8 0 1.5.3 2 .9l2.6 3.2 1.6.4c.9.2 1.4.9 1.4 1.8v2.7z' fill='%23F7EEDC'/%3E%3Ccircle cx='14.3' cy='25.4' r='2.3' fill='%23D4A245'/%3E%3Ccircle cx='25.9' cy='25.4' r='2.3' fill='%23D4A245'/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0E5A4A">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Safara">
 <style>[hidden]{display:none!important}img{max-width:100%}</style>
 <title>Safara Shuttle</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -94,6 +100,7 @@ button{font:inherit;color:inherit}
 .nav ul{display:flex;gap:2px;list-style:none;margin:0;padding:0}
 .nav a{display:block;padding:8px 11px;border-radius:8px;text-decoration:none;font-size:15.5px;font-weight:600;color:var(--ink);white-space:nowrap}
 .nav a:hover{color:var(--ink);background:var(--surface-2)}
+.nav .nav-install{color:var(--teal);font-weight:700}
 .lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;flex:none}
 .lang button{border:0;background:none;padding:5px 10px;border-radius:999px;font:600 12px/1 var(--f-mono);letter-spacing:.06em;cursor:pointer;color:var(--muted)}
 .lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
@@ -121,7 +128,7 @@ button{font:inherit;color:inherit}
 .slide{position:absolute;inset:0;background-size:cover;background-position:70% center;opacity:0;transition:opacity 1.2s ease}
 .slide.on{opacity:1}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--shade-1) 0%,var(--shade-2) 44%,var(--shade-0) 74%),linear-gradient(0deg,var(--shade-2) 0%,var(--shade-0) 32%)}
-.hero-grid{padding-block:clamp(36px,6vw,80px) clamp(32px,5vw,56px);display:grid;grid-template-columns:minmax(0,600px) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:end}
+.hero-grid{padding-block:clamp(36px,6vw,80px) clamp(32px,5vw,56px);display:grid;grid-template-columns:minmax(0,600px) minmax(320px,1fr);gap:clamp(28px,5vw,64px);align-items:end}
 .hero h1{font-size:clamp(2.35rem,5.2vw,4.1rem);margin-top:14px;color:var(--on-teal)}
 .hero .eyebrow{color:var(--brass-hi);font-size:clamp(14px,1.45vw,18px);font-weight:600;letter-spacing:.14em;display:flex;flex-direction:column;align-items:flex-start;gap:8px;line-height:1.35}
 .hero .eyebrow .ar{font-size:clamp(40px,4.2vw,56px);line-height:1.05;letter-spacing:0}
@@ -133,6 +140,9 @@ button{font:inherit;color:inherit}
 .wa-title .ic{color:var(--brass-hi);width:26px;height:26px}
 .wa-sub{font-size:16px;margin-top:6px;margin-bottom:4px}
 .wa-card .btn{width:100%;min-height:52px;font-size:16.5px}
+.wa-card .crow{grid-template-columns:minmax(0,1fr) auto}
+.wa-card .crow>.ic{display:none}
+.wa-card .crow .val{white-space:nowrap;font-size:1.2rem}
 .wa-float{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;background:var(--wa);color:#fff;font-weight:700;text-decoration:none;box-shadow:0 10px 26px -8px rgba(0,0,0,.5)}
 .wa-float .ic{width:22px;height:22px}
 .wa-float:hover{filter:brightness(1.08)}
@@ -513,6 +523,7 @@ td.rt{white-space:normal;min-width:210px}
         <li><a href="#avis" data-i18n="nav.reviews">Avis</a></li>
         <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
         <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+        <li id="installLi" hidden><a href="#" id="installApp" class="nav-install" data-i18n="nav.install">Installer l’app</a></li>
       </ul>
     </nav>
     <div class="lang" role="group" aria-label="Langue">
@@ -908,7 +919,7 @@ const HERO_CITIES = [
 /* ====== Textes FR / EN ====== */
 const I18N = {
 fr:{
- 'nav.services':'Services','nav.fleet':'Nos voitures','nav.map':'Aéroports & hôtels','nav.trips':'Excursions','nav.prices':'Tarifs','nav.faq':'FAQ','nav.contact':'Contact',
+ 'nav.install':'Installer l’app','nav.services':'Services','nav.fleet':'Nos voitures','nav.map':'Aéroports & hôtels','nav.trips':'Excursions','nav.prices':'Tarifs','nav.faq':'FAQ','nav.contact':'Contact',
  'cta.book':'Réserver','menu':'Menu',
  'hero.eyebrow':'Au départ de Casablanca · Partout au Maroc',
  'hero.title':'De l’aéroport à votre destination, sans attendre.',
@@ -946,6 +957,7 @@ fr:{
  'f.name':'Nom complet','f.phone':'Téléphone (WhatsApp)','f.email':'E-mail (pour recevoir la confirmation)','f.flight':'Numéro de vol','f.flightOpt':'Numéro de vol (facultatif)',
  'f.hotel':'Hôtel ou adresse exacte','f.sign':'Nom sur le panneau','f.child':'Siège enfant','f.notes':'Remarques (facultatif)',
  'ph.name':'ex. Sophie Martin','ph.phone':'+33 6 12 34 56 78','ph.flight':'ex. AT 801','ph.hotel':'ex. Hôtel …, avenue …','ph.notes':'Poussette, arrêt en route, vol tardif…',
+ 'f.wheel':'Fauteuil roulant','sum.wheel':'Fauteuil roulant','wheel.none':'Non','wheel.need':'J’ai besoin d’un fauteuil roulant','wheel.own':'J’apporte mon fauteuil roulant',
  'child.none':'Aucun','child.infant':'Siège bébé (0–1 an)','child.child':'Siège enfant (1–4 ans)','child.booster':'Rehausseur (4–10 ans)',
  'hours':'{n} heures','opt.airports':'Aéroports',
  'hero.from':'Berline Skoda, à partir de','hero.cta':'Voir les véhicules et prix',
@@ -1000,7 +1012,7 @@ fr:{
  'dur.m':'{m} min'
 },
 en:{
- 'nav.services':'Services','nav.fleet':'Our cars','nav.map':'Airports & hotels','nav.trips':'Day trips','nav.prices':'Prices','nav.faq':'FAQ','nav.contact':'Contact',
+ 'nav.install':'Install the app','nav.services':'Services','nav.fleet':'Our cars','nav.map':'Airports & hotels','nav.trips':'Day trips','nav.prices':'Prices','nav.faq':'FAQ','nav.contact':'Contact',
  'cta.book':'Book','menu':'Menu',
  'hero.eyebrow':'From Casablanca · Anywhere in Morocco',
  'hero.title':'From the airport to your destination, no waiting.',
@@ -1038,6 +1050,7 @@ en:{
  'f.name':'Full name','f.phone':'Phone (WhatsApp)','f.email':'Email (to receive the confirmation)','f.flight':'Flight number','f.flightOpt':'Flight number (optional)',
  'f.hotel':'Hotel or exact address','f.sign':'Name on the sign','f.child':'Child seat','f.notes':'Notes (optional)',
  'ph.name':'e.g. James Wilson','ph.phone':'+44 7700 900123','ph.flight':'e.g. AT 801','ph.hotel':'e.g. Hotel …, avenue …','ph.notes':'Stroller, stop on the way, late flight…',
+ 'f.wheel':'Wheelchair','sum.wheel':'Wheelchair','wheel.none':'No','wheel.need':'I need a wheelchair','wheel.own':'I bring my own wheelchair',
  'child.none':'None','child.infant':'Infant seat (0–1)','child.child':'Child seat (1–4)','child.booster':'Booster (4–10)',
  'hours':'{n} hours','opt.airports':'Airports',
  'hero.from':'Skoda sedan, from','hero.cta':'See cars and prices',
@@ -1103,6 +1116,8 @@ const FAQ = [
   a:{fr:'Non. Le prix affiché comprend carburant, péages, attente et bagages. Seul le supplément de nuit (22 h – 6 h, +20 %) s’ajoute, et il apparaît déjà dans le récapitulatif.',en:'No. The price includes fuel, tolls, waiting time and luggage. The only extra is the night supplement (10 pm – 6 am, +20%), already shown in your summary.'}},
  {q:{fr:'Comment annuler ?',en:'How do I cancel?'},
   a:{fr:'Envoyez-nous un message WhatsApp avec votre référence. L’annulation est gratuite jusqu’à 24 heures avant la prise en charge.',en:'Send us a WhatsApp message with your reference. Cancellation is free up to 24 hours before pickup.'}},
+ {q:{fr:'Je voyage avec un fauteuil roulant. C’est possible ?',en:'I travel with a wheelchair. Is that possible?'},
+  a:{fr:'Oui. Indiquez-le en réservant : nous fournissons un fauteuil roulant, ou nous transportons le vôtre.',en:'Yes. Tell us when you book: we provide a wheelchair, or we carry yours.'}},
  {q:{fr:'Avez-vous des sièges enfant ?',en:'Do you have child seats?'},
   a:{fr:'Oui : siège bébé, siège enfant et rehausseur, sans supplément. Choisissez-les pendant la réservation.',en:'Yes: infant seats, child seats and boosters at no extra cost. Pick them when you book.'}}
 ];
@@ -1233,7 +1248,7 @@ function quote(s,clsId){
 
 /* ====== État de la réservation ====== */
 const S={type:'transfer',from:'CMN',to:'casa-centre',hotelTo:'',mailSent:false,date:addDays(1),time:'14:30',pax:2,bags:2,roundtrip:false,retDate:addDays(8),retTime:'10:00',
-  hours:4,place:'marrakech-medina',trip:'ourika',vehicle:'eco',name:'',phone:'',email:'',flight:'',hotel:'',sign:'',signTouched:false,child:'none',pay:'cash',notes:'',ref:''};
+  hours:4,place:'marrakech-medina',trip:'ourika',vehicle:'eco',name:'',phone:'',email:'',flight:'',hotel:'',sign:'',signTouched:false,child:'none',wheel:'none',pay:'cash',notes:'',ref:''};
 let STEP=1, MAP_SEL='CMN', lastFocus=null;
 const fits=c=>c.pax>=S.pax&&c.bags>=S.bags;
 
@@ -1568,7 +1583,8 @@ function renderStep(){
       ${S.type==='transfer'?fld('c6','b-hotelTo',t('f.hotelTo'),inp('b-hotelTo','hotelTo','text',S.hotelTo,` placeholder="${esc(t('ph.hotelTo'))}"`)):''}
       ${fld('c3','b-sign',t('f.sign'),inp('b-sign','sign','text',S.sign||S.name,''))}
       ${fld('c3','b-child',t('f.child'),sel('b-child','child',['none','infant','child','booster'].map(v=>`<option value="${v}"${S.child===v?' selected':''}>${esc(t('child.'+v))}</option>`).join('')))}
-      ${fld('c6','b-pay',t('f.pay'),sel('b-pay','pay',['cash','card','transfer'].map(v=>`<option value="${v}"${S.pay===v?' selected':''}>${esc(t('pay.opt.'+v))}</option>`).join('')))}
+      ${fld('c3','b-wheel',t('f.wheel'),sel('b-wheel','wheel',['none','need','own'].map(v=>`<option value="${v}"${S.wheel===v?' selected':''}>${esc(t('wheel.'+v))}</option>`).join('')))}
+      ${fld('c3','b-pay',t('f.pay'),sel('b-pay','pay',['cash','card','transfer'].map(v=>`<option value="${v}"${S.pay===v?' selected':''}>${esc(t('pay.opt.'+v))}</option>`).join('')))}
       ${fld('c6','b-notes',t('f.notes'),`<textarea id="b-notes" data-k="notes" placeholder="${esc(t('ph.notes'))}">${esc(S.notes)}</textarea>`)}
       <div class="c6 sign-wrap"><span class="flabel">${esc(t('sign.preview'))}</span><div class="sign"><div class="s-brand">${esc(CONFIG.brand)} · ${esc(CONFIG.brandSub)}</div><div class="s-name" id="b-signprev">${esc(S.sign||S.name||'—')}</div></div></div>
     </div>`;
@@ -1611,6 +1627,7 @@ function summaryRows(){
   if(S.type==='transfer'&&S.hotelTo) r.push([t('sum.to'),esc(S.hotelTo)]);
   r.push([t('sum.sign'),esc(S.sign||S.name)]);
   if(S.child!=='none') r.push([t('sum.child'),esc(t('child.'+S.child))]);
+  if(S.wheel!=='none') r.push([t('sum.wheel'),esc(t('wheel.'+S.wheel))]);
   if(S.notes) r.push([t('sum.notes'),esc(S.notes)]);
   return r;
 }
@@ -1724,6 +1741,19 @@ function renderAll(){ applyStatic(); renderCities(); renderWaCard(); renderAgenc
 function setLang(l){ LANG=l; try{localStorage.setItem('siyaha-lang',l);}catch(e){} renderAll(); }
 
 renderAll(); flapIntro(); setInterval(tick,15000);
+
+/* ====== Application (PWA) ====== */
+if('serviceWorker' in navigator && (location.protocol==='https:'||/^(localhost|127\.0\.0\.1)$/.test(location.hostname))){
+  window.addEventListener('load',()=>{ navigator.serviceWorker.register('sw.js').catch(()=>{}); });
+}
+let installEvt=null;
+window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); installEvt=e; $('#installLi').hidden=false; });
+window.addEventListener('appinstalled',()=>{ installEvt=null; $('#installLi').hidden=true; });
+$('#installApp').addEventListener('click',async e=>{
+  e.preventDefault(); if(!installEvt) return;
+  installEvt.prompt(); try{ await installEvt.userChoice; }catch(err){}
+  installEvt=null; $('#installLi').hidden=true;
+});
 $('#cities').addEventListener('focusin',stopAuto);
 startAuto();
 })();
