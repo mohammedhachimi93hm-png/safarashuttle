@@ -1,7 +1,7 @@
 /* Safara Shuttle app: keeps the site working offline.
    Pages: network first (always the newest version when online).
    Images and icons: shown from cache at once, then refreshed in the background. */
-const CACHE = 'safara-v4';
+const CACHE = 'safara-v5';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png'];
 
 self.addEventListener('install', e => {
