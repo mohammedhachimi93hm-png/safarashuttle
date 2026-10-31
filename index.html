@@ -224,11 +224,11 @@ button{font:inherit;color:inherit}
 .wa-float .ic{width:22px;height:22px}
 .wa-float:hover{filter:brightness(1.08)}
 @media (max-width:600px){.wa-float span{display:none}.wa-float{padding:14px}}
-.cities{justify-self:end;display:flex;flex-direction:column;align-items:flex-end;gap:14px;text-align:right;max-width:100%}
-.city-name{display:block;font:400 clamp(2.1rem,4.4vw,3.4rem)/1 var(--f-display);text-shadow:0 2px 18px rgba(0,0,0,.35)}
-.city-tag{display:block;font:600 14px/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;margin-top:10px}
-.city-tabs{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:2px 18px}
-.city-tabs button{position:relative;border:0;background:none;color:var(--on-teal);opacity:.8;padding:9px 0;font:700 13.5px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+.cities{--city-ink:#F3E0A6;align-self:flex-end;width:min(420px,100%);margin-block:auto;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;color:var(--city-ink);text-shadow:0 2px 14px rgba(0,0,0,.35)}
+.city-name{display:block;font:400 clamp(2.3rem,4.6vw,3.6rem)/1 var(--f-display);-webkit-text-stroke:.7px currentColor}
+.city-tag{display:block;font:600 15px/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;margin-top:10px}
+.city-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 18px}
+.city-tabs button{position:relative;border:0;background:none;color:var(--city-ink);opacity:.85;padding:9px 0;font:700 14.5px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
 .city-tabs button:hover,.city-tabs button[aria-pressed="true"]{opacity:1}
 .city-tabs button::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--brass-hi)}
 .city-tabs button[aria-pressed="true"]::after{width:100%}
@@ -241,8 +241,7 @@ button{font:inherit;color:inherit}
   .slide{background-position:70% center}
   .hero-side{align-items:stretch}
   .wa-card{width:100%}
-  .cities{justify-self:start;align-items:flex-start;text-align:left;padding-top:46vw}
-  .city-tabs{justify-content:flex-start}
+  .cities{align-self:stretch;width:auto;margin-block:0;padding-top:46vw}
 }
 
 /* forms */
