@@ -10,7 +10,7 @@
 <meta property="og:url" content="https://safarashuttle.com/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://safarashuttle.com/images/hero-marrakech.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpolygon points='20,2.3 25.2,7.5 32.5,7.5 32.5,14.8 37.7,20 32.5,25.2 32.5,32.5 25.2,32.5 20,37.7 14.8,32.5 7.5,32.5 7.5,25.2 2.3,20 7.5,14.8 7.5,7.5 14.8,7.5' fill='%230E5A4A' stroke='%23D4A245' stroke-width='1.4'/%3E%3Cpath d='M9.6 25.2v-2.6c0-.9.5-1.5 1.4-1.7l2.7-.6 2.6-3.2c.5-.6 1.2-.9 2-.9h6.2c.8 0 1.5.3 2 .9l2.6 3.2 1.6.4c.9.2 1.4.9 1.4 1.8v2.7z' fill='%23F7EEDC'/%3E%3Ccircle cx='14.3' cy='25.4' r='2.3' fill='%23D4A245'/%3E%3Ccircle cx='25.9' cy='25.4' r='2.3' fill='%23D4A245'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="icons/favicon-64.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0E5A4A">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -26,7 +26,7 @@
 <style>
 /* Layout: full-bleed city photo hero over a zellige ground, zellige friezes between bands, horseshoe arches framing the fleet and the arrivals board */
 :root{
-  --bg:#F6EFE2; --surface:#FFFBF3; --surface-2:#EFE3CC; --ink:#2A1D14; --muted:#4E4034; --line:#E2D3B9;
+  --bg:#F6EFE2; --surface:#FFFBF3; --surface-2:#EFE3CC; --ink:#2A1D14; --muted:#4E4034; --line:#E2D3B9; --field-bg:#FFFFFF; --field-line:#C4AE8C; --logo-ink:#0E5A4A; --logo-sub:#A06D1B;
   --teal:#0E5A4A; --teal-2:#0A4337; --on-teal:#F7EEDC; --on-teal-line:rgba(247,238,220,.22);
   --brass:#8E5F16; --brass-hi:#D4A245; --brass-soft:#F1DFB8; --on-brass:#24170A;
   --terra:#B4532A; --majorelle:#2D4BA0; --wa:#1E9E57;
@@ -44,7 +44,7 @@
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#17110C; --surface:#21180F; --surface-2:#2B2015; --ink:#F3E8D6; --muted:#D8C9B2; --line:#3D2E20;
+    --bg:#17110C; --surface:#21180F; --surface-2:#2B2015; --ink:#F3E8D6; --muted:#D8C9B2; --line:#3D2E20; --field-bg:#2B2015; --field-line:#6A5338; --logo-ink:#F3E8D6; --logo-sub:#E0B45C;
     --teal:#1F7A66; --teal-2:#0E4A3E; --on-teal:#F7EEDC; --on-teal-line:rgba(247,238,220,.22);
     --brass:#E0B45C; --brass-hi:#E0B45C; --brass-soft:#43321A; --on-brass:#24170A;
     --terra:#D9774C; --majorelle:#8BA2E8;
@@ -54,7 +54,7 @@
   }
 }
 :root[data-theme="dark"]{
-  --bg:#17110C; --surface:#21180F; --surface-2:#2B2015; --ink:#F3E8D6; --muted:#D8C9B2; --line:#3D2E20;
+  --bg:#17110C; --surface:#21180F; --surface-2:#2B2015; --ink:#F3E8D6; --muted:#D8C9B2; --line:#3D2E20; --field-bg:#2B2015; --field-line:#6A5338; --logo-ink:#F3E8D6; --logo-sub:#E0B45C;
   --teal:#1F7A66; --teal-2:#0E4A3E; --on-teal:#F7EEDC; --on-teal-line:rgba(247,238,220,.22);
   --brass:#E0B45C; --brass-hi:#E0B45C; --brass-soft:#43321A; --on-brass:#24170A;
   --terra:#D9774C; --majorelle:#8BA2E8;
@@ -63,7 +63,7 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-html{scroll-padding-top:84px}
+html{scroll-padding-top:100px}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{margin:0;background:var(--bg);color:var(--ink);font:500 17px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--surface)}
@@ -92,8 +92,15 @@ button{font:inherit;color:inherit}
 
 /* header */
 .hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--surface);border-bottom:1px solid var(--line)}
-.hdr .wrap{display:flex;align-items:center;gap:14px;min-height:68px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto;min-width:0}
+.hdr .wrap{display:flex;align-items:center;gap:14px;min-height:84px}
+.logo{display:block;height:62px;width:auto}
+.lg-name{fill:var(--logo-ink)}
+.lg-sub{fill:var(--logo-sub)}
+.ftr-logo{display:inline-block}
+.ftr-logo .logo{height:70px}
+@media (max-width:520px){.hdr .wrap{min-height:72px}.brand .logo{height:48px}}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto;flex:none}
+.hdr .wrap{max-width:1320px}
 .brand-mark{width:42px;height:42px;flex:none}
 .brand-name{font-family:var(--f-display);font-size:22px;letter-spacing:.1em;line-height:1}
 .brand-sub{display:block;font:500 10px/1 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:4px;white-space:nowrap}
@@ -105,7 +112,7 @@ button{font:inherit;color:inherit}
 .lang button{border:0;background:none;padding:5px 10px;border-radius:999px;font:600 12px/1 var(--f-mono);letter-spacing:.06em;cursor:pointer;color:var(--muted)}
 .lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 .menu-btn{display:none;width:42px;height:42px;border-radius:999px;border:1px solid var(--line);background:none;place-items:center;cursor:pointer;flex:none}
-@media (max-width:1180px){
+@media (max-width:1240px){
   .nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--surface);border-bottom:1px solid var(--line);padding-block:8px 16px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));box-shadow:var(--shadow)}
   .nav.open{display:block}
   .nav ul{flex-direction:column}
@@ -180,8 +187,9 @@ button{font:inherit;color:inherit}
 @media (max-width:600px){.fgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.c3,.c6{grid-column:span 2}.c1,.c2{grid-column:span 1}}
 .field{display:flex;flex-direction:column;gap:6px;min-width:0}
 .fhead{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:16px}
-.field label,.flabel{font:700 13px/1.2 var(--f-body);letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
-.field select,.field input,.field textarea{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:600 16px/1.3 var(--f-body);min-width:0}
+.field label,.flabel{font:700 15.5px/1.3 var(--f-body);letter-spacing:0;text-transform:none;color:var(--ink)}
+.field select,.field input,.field textarea{width:100%;min-height:52px;padding:12px 14px;border:1.5px solid var(--field-line);border-radius:12px;background:var(--field-bg);color:var(--ink);font:600 17px/1.3 var(--f-body);min-width:0}
+.field ::placeholder{color:var(--muted);opacity:.7;font-weight:500}
 .field textarea{min-height:84px;resize:vertical}
 .field select:focus,.field input:focus,.field textarea:focus{outline:2px solid var(--brass-hi);outline-offset:0;border-color:transparent}
 .swap{border:0;background:none;padding:0;color:var(--brass);cursor:pointer;display:grid;place-items:center}
@@ -309,19 +317,6 @@ button{font:inherit;color:inherit}
 .route{fill:none;stroke:var(--brass);stroke-width:2.2;stroke-linecap:round}
 @media (prefers-reduced-motion:no-preference){.route{stroke-dasharray:1;stroke-dashoffset:1;animation:draw .8s ease-out forwards}}
 @keyframes draw{to{stroke-dashoffset:0}}
-.apanel{background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:18px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
-.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 11px;font:600 13px/1 var(--f-mono);cursor:pointer;color:var(--ink)}
-.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.apanel h3{font-weight:700;font-size:1.45rem}
-.apt-meta{font:600 14.5px var(--f-mono);color:var(--muted);margin-top:6px}
-.zlist{list-style:none;margin:14px 0 0;padding:0}
-.zlist li{display:flex;justify-content:space-between;gap:10px 14px;padding:12px 0;border-top:1px solid var(--line);align-items:center;flex-wrap:wrap}
-.zname{font-weight:700;font-size:16.5px;line-height:1.3}
-.zmeta{font:600 14px var(--f-mono);color:var(--muted)}
-.zright{display:flex;align-items:center;gap:12px;margin-left:auto}
-.zprice{text-align:right;font-weight:700;font-size:18px;font-variant-numeric:tabular-nums;line-height:1.2}
-.zprice small{display:block;font-weight:600;color:var(--muted);font-size:13.5px}
 .note{font-size:15.5px;color:var(--muted);margin-top:14px}
 
 /* trips */
@@ -364,9 +359,8 @@ td.rt{white-space:normal;min-width:210px}
 .cc small{display:block;color:var(--muted);font-size:14px}
 .cc-price{text-align:right;font-weight:700;font-size:18px;font-variant-numeric:tabular-nums;line-height:1.2}
 .cc-price small{font-weight:500}
-.cc.off{opacity:.55}
-.cc-max{grid-column:2/4;text-align:right;font-size:14.5px;font-weight:600;color:var(--muted)}
-@media (max-width:520px){.cc{grid-template-columns:minmax(0,1fr) auto}.cc .btn{grid-column:1/-1}.cc-max{grid-column:2}}
+.cc-pax{color:var(--teal);font-weight:700}
+@media (max-width:520px){.cc{grid-template-columns:minmax(0,1fr) auto}.cc .btn{grid-column:1/-1}}
 
 /* reviews */
 .revgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start}
@@ -448,7 +442,7 @@ td.rt{white-space:normal;min-width:210px}
 .bk-head h2{font-size:1.7rem}
 .iconbtn{width:40px;height:40px;border-radius:999px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;cursor:pointer;flex:none}
 .stepper{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:14px 22px 16px;list-style:none;margin:0}
-.stepper li{display:flex;flex-direction:column;gap:7px;font:700 12.5px/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);min-width:0}
+.stepper li{display:flex;flex-direction:column;gap:7px;font:700 14px/1.2 var(--f-body);letter-spacing:0;text-transform:none;color:var(--muted);min-width:0}
 .stepper li::before{content:"";height:3px;border-radius:3px;background:var(--line)}
 .stepper li.done::before,.stepper li.cur::before{background:var(--brass-hi)}
 .stepper li.cur{color:var(--ink)}
@@ -460,7 +454,7 @@ td.rt{white-space:normal;min-width:210px}
 .bk-foot{display:flex;align-items:center;justify-content:space-between;gap:10px 14px;padding:14px 22px;border-top:1px solid var(--line);background:var(--surface);flex-wrap:wrap}
 .bk-foot .acts{display:flex;gap:8px;margin-left:auto}
 .bk-err{color:var(--danger);font-size:14px;font-weight:500;flex-basis:100%}
-.bk-total .k{font:700 12.5px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.bk-total .k{font:700 14px var(--f-body);letter-spacing:0;text-transform:none;color:var(--muted)}
 .bk-total .v{font-weight:700;font-size:24px;font-variant-numeric:tabular-nums;line-height:1.2}
 .bk-total .eur{color:var(--muted);font-weight:500;font-size:13.5px;margin-left:4px}
 @media (max-width:640px){
@@ -486,10 +480,6 @@ td.rt{white-space:normal;min-width:210px}
 .vprice b{font-size:20px;font-variant-numeric:tabular-nums}
 .vprice small{display:block;color:var(--muted);font-size:14px}
 @media (max-width:540px){.vopt{grid-template-columns:86px minmax(0,1fr)}.vprice{grid-column:2;text-align:left}}
-.sign-wrap{display:flex;flex-direction:column;gap:8px}
-.sign{background:var(--sign-bg);color:var(--sign-ink);border-radius:6px;border-top:8px solid var(--teal);padding:16px 18px 18px;text-align:center;box-shadow:0 10px 24px -14px rgba(0,0,0,.45);max-width:420px}
-.sign .s-brand{font:500 11px var(--f-mono);letter-spacing:.24em;color:var(--sign-muted);text-transform:uppercase}
-.sign .s-name{font:700 clamp(22px,4vw,30px)/1.15 var(--f-body);margin-top:6px;overflow-wrap:anywhere}
 .sumgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:18px;align-items:start}
 @media (max-width:640px){.sumgrid{grid-template-columns:minmax(0,1fr)}}
 .sum{display:grid;grid-template-columns:auto minmax(0,1fr);gap:9px 16px;margin:0}
@@ -511,8 +501,8 @@ td.rt{white-space:normal;min-width:210px}
 <header class="hdr">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Safara Shuttle">
-      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><polygon points="20,2.3 25.2,7.5 32.5,7.5 32.5,14.8 37.7,20 32.5,25.2 32.5,32.5 25.2,32.5 20,37.7 14.8,32.5 7.5,32.5 7.5,25.2 2.3,20 7.5,14.8 7.5,7.5 14.8,7.5" fill="var(--teal)" stroke="var(--brass-hi)" stroke-width="1.4" stroke-linejoin="round"/><path d="M9.6 25.2v-2.6c0-.9.5-1.5 1.4-1.7l2.7-.6 2.6-3.2c.5-.6 1.2-.9 2-.9h6.2c.8 0 1.5.3 2 .9l2.6 3.2 1.6.4c.9.2 1.4.9 1.4 1.8v2.7z" fill="var(--on-teal)"/><path d="M15.3 20.3l1.9-2.4h3.1v2.4zM21.6 20.3v-2.4h2.8l1.9 2.4z" fill="var(--teal)"/><circle cx="14.3" cy="25.4" r="2.3" fill="var(--brass-hi)" stroke="var(--teal)" stroke-width="1"/><circle cx="25.9" cy="25.4" r="2.3" fill="var(--brass-hi)" stroke="var(--teal)" stroke-width="1"/></svg>
-      <span><span class="brand-name" data-brand>SAFARA</span><span class="brand-sub" data-brand-sub>Shuttle</span></span>
+      <svg class="logo" viewBox="14 20 616 180" role="img" aria-label="Safara Shuttle"><path d="M22 192V104A74 74 0 0 1 170 104V192Z" fill="#0E5A4A" stroke="#D4A245" stroke-width="5"/><path d="M38 180V106A58 58 0 0 1 154 106V180" fill="none" stroke="#D4A245" stroke-width="1.6" opacity=".7"/><text x="96" y="168" text-anchor="middle" font-family="Marcellus,Georgia,serif" font-size="112" fill="#F7EEDC">S</text><text class="lg-name" x="196" y="116" font-family="Instrument Sans,Segoe UI,sans-serif" font-weight="700" font-size="96" letter-spacing="3">SAFARA</text><text class="lg-sub" x="200" y="166" font-family="Instrument Sans,Segoe UI,sans-serif" font-weight="700" font-size="28" letter-spacing="16">SHUTTLE</text></svg>
+      
     </a>
     <nav class="nav" id="nav" aria-label="Menu principal">
       <ul>
@@ -596,7 +586,6 @@ td.rt{white-space:normal;min-width:210px}
             <div class="greet" aria-hidden="true"><span class="ar" lang="ar" dir="rtl">مرحبا بكم</span><span class="lat">Bienvenue · Welcome</span></div>
             <div class="board" id="board"></div>
           </div>
-          <div class="apanel" id="apanel"></div>
         </div>
       </div>
     </div>
@@ -652,7 +641,7 @@ td.rt{white-space:normal;min-width:210px}
 <footer class="ftr">
   <div class="wrap ftr-grid">
     <div>
-      <div class="brand-name" data-brand>SAFARA</div>
+      <a href="#top" class="ftr-logo" aria-label="Safara Shuttle"><svg class="logo" viewBox="14 20 616 180" role="img" aria-label="Safara Shuttle"><path d="M22 192V104A74 74 0 0 1 170 104V192Z" fill="#0E5A4A" stroke="#D4A245" stroke-width="5"/><path d="M38 180V106A58 58 0 0 1 154 106V180" fill="none" stroke="#D4A245" stroke-width="1.6" opacity=".7"/><text x="96" y="168" text-anchor="middle" font-family="Marcellus,Georgia,serif" font-size="112" fill="#F7EEDC">S</text><text class="lg-name" x="196" y="116" font-family="Instrument Sans,Segoe UI,sans-serif" font-weight="700" font-size="96" letter-spacing="3">SAFARA</text><text class="lg-sub" x="200" y="166" font-family="Instrument Sans,Segoe UI,sans-serif" font-weight="700" font-size="28" letter-spacing="16">SHUTTLE</text></svg></a>
       <p style="margin-top:8px" id="fcontact"></p>
       <p id="lic"></p>
       <p id="copyright"></p>
@@ -714,6 +703,7 @@ const CONFIG = {
   reviews: [],
   licence: 'à compléter',            // n° d'agrément transport touristique
   eurPerMad: 0.092,                  // taux indicatif MAD -> EUR
+  usdPerMad: 0.106,                  // taux indicatif MAD -> USD
   // Formule utilisée seulement pour les trajets absents du tableau FIXED (calée sur ce tableau)
   base: 250,       // prise en charge (MAD)
   perKm: 6.6,      // prix par km (MAD), berline Skoda
@@ -729,7 +719,7 @@ const CONFIG = {
 
 /* ====== Véhicules ====== */
 const CLASSES = [
-  {id:'eco', shape:'sedan', pax:4, bags:4, mult:1, img:'car-skoda-superb.jpg', pos:'center 62%',
+  {id:'eco', shape:'sedan', pax:3, bags:4, mult:1, img:'car-skoda-superb.jpg', pos:'center 62%',
    name:{fr:'Berline Business',en:'Business Sedan'}, model:{fr:'Skoda Superb ou similaire',en:'Skoda Superb or similar'},
    best:{fr:'Couples, voyages d’affaires',en:'Couples, business trips'}},
   {id:'prem', shape:'sedan', pax:3, bags:3, mult:1.6, img:'car-mercedes-classe-e.jpg', pos:'center 70%',
@@ -929,15 +919,15 @@ fr:{
  'pay.card':'Carte bancaire','pay.card.p':'Au chauffeur, avec le TPE dans la voiture. Visa et Mastercard.',
  'pay.transfer':'Virement bancaire','pay.transfer.p':'Agences, entreprises et groupes, avant le trajet. Facture sur demande.',
  'pay.cash':'Espèces','pay.cash.p':'En dirhams ou en euros, au chauffeur à la fin du trajet.',
- 'f.pay':'Mode de paiement','sum.pay':'Paiement',
+ 'f.pay':'Paiement','sum.pay':'Paiement',
  'nav.reviews':'Avis',
  'ag.title':'Notre agence','ag.route':'Itinéraire sur Google Maps',
  'ag.p':'Notre base est à Mediouna, entre Casablanca et l’aéroport Mohammed V.',
  'wa.title':'Réservez sur WhatsApp','wa.sub':'Envoyez votre trajet, nous répondons avec le prix.','wa.cta':'Ouvrir WhatsApp',
  'wa.pre':'Bonjour {brand}, je souhaite réserver : {route}, le {date} à {time}, {pax} passager(s).',
- 'calc.title':'Calculez votre prix','calc.km':'Distance','calc.time':'Durée','calc.cars':'Prix pour {n} passager(s), par voiture','calc.max':'Max. {n} passagers',
- 'pers':'pers.','calc.night':'Supplément nuit inclus (+{p} %)',
- 'f.hotelFrom':'Adresse de prise en charge (hôtel, quartier, terminal…)','f.hotelTo':'Adresse d’arrivée (hôtel, adresse…)',
+ 'calc.title':'Calculez votre prix','calc.km':'Distance','calc.time':'Durée','calc.cars':'Prix par voiture','paxRange':'1 à {n} passagers',
+ 'calc.night':'Supplément nuit inclus (+{p} %)',
+ 'f.hotelFrom':'Adresse de départ','f.hotelTo':'Adresse d’arrivée',
  'ph.hotelFrom':'ex. Hôtel …, boulevard d’Anfa, Casablanca','ph.hotelTo':'ex. Hôtel …, avenue …, Marrakech',
  'err.email':'Adresse e-mail invalide.','sum.from':'Prise en charge','sum.to':'Arrivée',
  'bk.mail':'Confirmer par e-mail','sending':'Envoi en cours…',
@@ -953,7 +943,7 @@ fr:{
  'type.long.transfer':'Transfert','type.long.hourly':'Mise à disposition','type.long.trip':'Excursion',
  'f.from':'Départ','f.to':'Arrivée','f.date':'Date','f.time':'Heure','f.pax':'Passagers','f.bags':'Bagages','f.hours':'Durée','f.place':'Lieu de prise en charge','f.trip':'Excursion',
  'f.return':'Aller-retour','f.retDate':'Date du retour','f.retTime':'Heure du retour','f.swap':'Inverser départ et arrivée',
- 'f.name':'Nom complet','f.phone':'Téléphone (WhatsApp)','f.email':'E-mail (pour recevoir la confirmation)','f.flight':'Numéro de vol','f.flightOpt':'Numéro de vol (facultatif)',
+ 'f.name':'Nom complet','f.phone':'Téléphone WhatsApp','f.email':'E-mail (facultatif)','f.flight':'Numéro de vol','f.flightOpt':'Numéro de vol (facultatif)',
  'f.hotel':'Hôtel ou adresse exacte','f.sign':'Nom sur le panneau','f.child':'Siège enfant','f.notes':'Remarques (facultatif)',
  'ph.name':'ex. Sophie Martin','ph.phone':'+33 6 12 34 56 78','ph.flight':'ex. AT 801','ph.hotel':'ex. Hôtel …, avenue …','ph.notes':'Poussette, arrêt en route, vol tardif…',
  'f.wheel':'Fauteuil roulant','sum.wheel':'Fauteuil roulant','wheel.none':'Non','wheel.need':'J’ai besoin d’un fauteuil roulant','wheel.own':'J’apporte mon fauteuil roulant',
@@ -980,26 +970,25 @@ fr:{
  'how.2':'Recevez les détails','how.2.p':'La veille : nom du chauffeur, son WhatsApp et la plaque.',
  'how.3':'Accueil avec panneau','how.3.p':'Le chauffeur vous attend aux arrivées, même si le vol a du retard.',
  'how.4':'Arrivée à bon port','how.4.p':'Bagages portés jusqu’à la porte.',
- 'map.eyebrow':'Aéroports & hôtels','map.title':'Où nous venons vous chercher','map.lede':'Choisissez un aéroport pour voir les zones desservies et les prix.',
- 'map.airport':'Aéroport','map.note':'Toutes les adresses de ces zones sont desservies. Donnez l’adresse exacte en réservant.',
- 'map.ocean':'OCÉAN ATLANTIQUE','map.sea':'MER MÉDITERRANÉE','map.atlas':'Haut Atlas','map.city':'Centre-ville à {km} km · {dur}','map.aria':'Carte des aéroports et des villes desservies au Maroc',
+ 'map.eyebrow':'Aéroports & hôtels','map.title':'Où nous venons vous chercher','map.lede':'Choisissez un aéroport pour voir les villes desservies.',
+ 'map.airport':'Aéroport',
+ 'map.ocean':'OCÉAN ATLANTIQUE','map.sea':'MER MÉDITERRANÉE','map.atlas':'Haut Atlas','map.aria':'Carte des aéroports et des villes desservies au Maroc',
  'book':'Réserver',
  'trips.eyebrow':'Excursions','trips.title':'Partez à la journée avec votre chauffeur','trips.lede':'Prix par voiture, pas par personne. Le chauffeur vous attend pendant les visites.',
  'trips.fromCity':'Départ {c}','days':'{n} jours','perCar':'par berline',
  'prices.eyebrow':'Tarifs','prices.title':'Tarifs au départ de Casablanca','prices.lede':'Prix fixe par voiture, carburant et péages compris. Nuit (22 h – 6 h) : +20 %.',
  'th.route':'Trajet',
- 'prices.note':'Prix en euros à titre indicatif. Votre trajet n’est pas dans le tableau ? Calculez-le plus haut.',
+ 'prices.note':'Le prix est en dirhams ; l’euro ou le dollar est indicatif. Votre trajet n’est pas dans le tableau ? Calculez-le plus haut.',
  'faq.eyebrow':'FAQ','faq.title':'Questions fréquentes',
  'contact.eyebrow':'Contact','contact.title':'Une question avant de réserver ?','contact.p':'Écrivez-nous sur WhatsApp en français, anglais ou arabe. Devis sur mesure pour groupes, mariages et séminaires.',
  'contact.wa':'WhatsApp et téléphone','contact.phone':'Téléphone','contact.mail':'E-mail','contact.open':'Écrire sur WhatsApp','copy':'Copier','copied':'Copié','copyFail':'Copie impossible : sélectionnez le texte',
  'footer.lic':'Agrément transport touristique n° {n}','footer.rights':'Tous droits réservés.','footer.legal':'Mentions légales','footer.cgv':'Conditions de vente','footer.privacy':'Confidentialité',
  'bk.title':'Réservation','bk.close':'Fermer',
- 'step.1':'Trajet','step.2':'Véhicule','step.3':'Coordonnées','step.4':'Récapitulatif',
+ 'step.1':'Trajet','step.2':'Voiture','step.3':'Vos infos','step.4':'Résumé',
  'bk.next':'Continuer','bk.back':'Retour','bk.total':'Total',
  'err.same':'Le départ et l’arrivée doivent être différents.','err.date':'Choisissez une date à partir d’aujourd’hui.','err.ret':'Le retour doit être après l’aller.',
  'err.vehicle':'Ce véhicule est trop petit pour votre groupe. Choisissez-en un autre.','err.name':'Indiquez votre nom complet.','err.phone':'Indiquez un numéro de téléphone avec l’indicatif du pays (ex. +33…).',
  'tooSmall':'Trop petit pour {p} passagers et {b} bagages',
- 'sign.preview':'Votre panneau à l’arrivée',
  'route.info':'≈ {km} km · {dur}',
  'q.out':'Trajet aller','q.ret':'Trajet retour','q.night':'Supplément nuit (+{p} %)','q.hours':'Mise à disposition {n} h',
  'sum.ref':'Référence','sum.type':'Service','sum.route':'Trajet','sum.when':'Date et heure','sum.return':'Retour','sum.vehicle':'Véhicule','sum.group':'Groupe',
@@ -1022,15 +1011,15 @@ en:{
  'pay.card':'Bank card','pay.card.p':'To the chauffeur, with the card terminal in the car. Visa and Mastercard.',
  'pay.transfer':'Bank transfer','pay.transfer.p':'Agencies, companies and groups, before the trip. Invoice on request.',
  'pay.cash':'Cash','pay.cash.p':'In dirhams or euros, to the chauffeur at the end of the trip.',
- 'f.pay':'Payment method','sum.pay':'Payment',
+ 'f.pay':'Payment','sum.pay':'Payment',
  'nav.reviews':'Reviews',
  'ag.title':'Our base','ag.route':'Directions on Google Maps',
  'ag.p':'Our base is in Mediouna, between Casablanca and Mohammed V airport.',
  'wa.title':'Book on WhatsApp','wa.sub':'Send us your trip, we reply with the price.','wa.cta':'Open WhatsApp',
  'wa.pre':'Hello {brand}, I would like to book: {route}, on {date} at {time}, {pax} passenger(s).',
- 'calc.title':'Get your price','calc.km':'Distance','calc.time':'Duration','calc.cars':'Price for {n} passenger(s), per car','calc.max':'Max. {n} passengers',
- 'pers':'pax','calc.night':'Night supplement included (+{p}%)',
- 'f.hotelFrom':'Pickup address (hotel, area, terminal…)','f.hotelTo':'Drop-off address (hotel, address…)',
+ 'calc.title':'Get your price','calc.km':'Distance','calc.time':'Duration','calc.cars':'Price per car','paxRange':'1 to {n} passengers',
+ 'calc.night':'Night supplement included (+{p}%)',
+ 'f.hotelFrom':'Pickup address','f.hotelTo':'Drop-off address',
  'ph.hotelFrom':'e.g. Hotel …, boulevard d’Anfa, Casablanca','ph.hotelTo':'e.g. Hotel …, avenue …, Marrakech',
  'err.email':'Invalid email address.','sum.from':'Pickup','sum.to':'Drop-off',
  'bk.mail':'Confirm by email','sending':'Sending…',
@@ -1046,7 +1035,7 @@ en:{
  'type.long.transfer':'Transfer','type.long.hourly':'Chauffeur by the hour','type.long.trip':'Day trip',
  'f.from':'Pickup','f.to':'Drop-off','f.date':'Date','f.time':'Time','f.pax':'Passengers','f.bags':'Bags','f.hours':'Duration','f.place':'Pickup location','f.trip':'Day trip',
  'f.return':'Return trip','f.retDate':'Return date','f.retTime':'Return time','f.swap':'Swap pickup and drop-off',
- 'f.name':'Full name','f.phone':'Phone (WhatsApp)','f.email':'Email (to receive the confirmation)','f.flight':'Flight number','f.flightOpt':'Flight number (optional)',
+ 'f.name':'Full name','f.phone':'WhatsApp phone','f.email':'Email (optional)','f.flight':'Flight number','f.flightOpt':'Flight number (optional)',
  'f.hotel':'Hotel or exact address','f.sign':'Name on the sign','f.child':'Child seat','f.notes':'Notes (optional)',
  'ph.name':'e.g. James Wilson','ph.phone':'+44 7700 900123','ph.flight':'e.g. AT 801','ph.hotel':'e.g. Hotel …, avenue …','ph.notes':'Stroller, stop on the way, late flight…',
  'f.wheel':'Wheelchair','sum.wheel':'Wheelchair','wheel.none':'No','wheel.need':'I need a wheelchair','wheel.own':'I bring my own wheelchair',
@@ -1073,26 +1062,25 @@ en:{
  'how.2':'Get the details','how.2.p':'The day before: your chauffeur’s name, WhatsApp and number plate.',
  'how.3':'Name-sign welcome','how.3.p':'Your chauffeur waits at arrivals, even if the flight is late.',
  'how.4':'Arrive relaxed','how.4.p':'Bags carried to the door.',
- 'map.eyebrow':'Airports & hotels','map.title':'Where we pick you up','map.lede':'Pick an airport to see the areas we serve and the prices.',
- 'map.airport':'Airport','map.note':'Every address in these areas is covered. Give the exact address when you book.',
- 'map.ocean':'ATLANTIC OCEAN','map.sea':'MEDITERRANEAN SEA','map.atlas':'High Atlas','map.city':'City centre {km} km · {dur}','map.aria':'Map of the airports and cities we serve in Morocco',
+ 'map.eyebrow':'Airports & hotels','map.title':'Where we pick you up','map.lede':'Pick an airport to see the cities we serve.',
+ 'map.airport':'Airport',
+ 'map.ocean':'ATLANTIC OCEAN','map.sea':'MEDITERRANEAN SEA','map.atlas':'High Atlas','map.aria':'Map of the airports and cities we serve in Morocco',
  'book':'Book',
  'trips.eyebrow':'Day trips','trips.title':'Day trips with your own chauffeur','trips.lede':'Price per car, not per person. Your chauffeur waits while you visit.',
  'trips.fromCity':'From {c}','days':'{n} days','perCar':'per sedan',
  'prices.eyebrow':'Prices','prices.title':'Prices from Casablanca','prices.lede':'Fixed price per car, fuel and tolls included. Night (10 pm – 6 am): +20%.',
  'th.route':'Route',
- 'prices.note':'Euro prices are approximate. Route not in the table? Get its price above.',
+ 'prices.note':'Prices are in dirhams; euro or dollar amounts are approximate. Route not in the table? Get its price above.',
  'faq.eyebrow':'FAQ','faq.title':'Common questions',
  'contact.eyebrow':'Contact','contact.title':'A question before you book?','contact.p':'Message us on WhatsApp in English, French or Arabic. Custom quotes for groups, weddings and seminars.',
  'contact.wa':'WhatsApp and phone','contact.phone':'Phone','contact.mail':'Email','contact.open':'Message us on WhatsApp','copy':'Copy','copied':'Copied','copyFail':'Copy blocked: select the text instead',
  'footer.lic':'Tourist transport licence no. {n}','footer.rights':'All rights reserved.','footer.legal':'Legal notice','footer.cgv':'Terms of sale','footer.privacy':'Privacy',
  'bk.title':'Booking','bk.close':'Close',
- 'step.1':'Route','step.2':'Vehicle','step.3':'Details','step.4':'Summary',
+ 'step.1':'Route','step.2':'Car','step.3':'Your details','step.4':'Summary',
  'bk.next':'Continue','bk.back':'Back','bk.total':'Total',
  'err.same':'Pickup and drop-off must be different.','err.date':'Choose a date from today onwards.','err.ret':'The return must be after the outbound trip.',
  'err.vehicle':'This vehicle is too small for your group. Choose another one.','err.name':'Enter your full name.','err.phone':'Enter a phone number with the country code (e.g. +44…).',
  'tooSmall':'Too small for {p} passengers and {b} bags',
- 'sign.preview':'Your sign at arrivals',
  'route.info':'≈ {km} km · {dur}',
  'q.out':'Outbound','q.ret':'Return','q.night':'Night supplement (+{p}%)','q.hours':'Chauffeur for {n} h',
  'sum.ref':'Reference','sum.type':'Service','sum.route':'Route','sum.when':'Date and time','sum.return':'Return','sum.vehicle':'Vehicle','sum.group':'Group',
@@ -1130,7 +1118,16 @@ const locale=()=>LANG==='fr'?'fr-FR':'en-GB';
 function t(k,v){let s=(I18N[LANG]&&I18N[LANG][k]!=null)?I18N[LANG][k]:(I18N.fr[k]!=null?I18N.fr[k]:k); if(v) Object.keys(v).forEach(a=>{s=s.split('{'+a+'}').join(v[a]);}); return s;}
 const L=o=>(o&&typeof o==='object')?(o[LANG]!=null?o[LANG]:o.fr):(o||'');
 const fmtMAD=n=>new Intl.NumberFormat(locale()).format(n)+' MAD';
-const fmtEUR=n=>'≈ '+new Intl.NumberFormat(locale(),{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Math.round(n*CONFIG.eurPerMad));
+/* Devise affichée à côté du prix en dirhams : dollar pour les clients des Amériques, rien pour le Maroc, euro pour les autres */
+const FX=(()=>{
+  const forced=(location.search.match(/[?&]cur=(eur|usd|mad)\b/i)||[])[1]; if(forced) return forced.toUpperCase();
+  let tz=''; try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';}catch(e){}
+  if(/^Africa\/(Casablanca|El_Aaiun)$/.test(tz)) return 'MAD';
+  if(/^America\//.test(tz)) return 'USD';
+  if(!tz){ const r=((navigator.language||'').split('-')[1]||'').toUpperCase(); if(r==='MA') return 'MAD'; if(['US','CA','MX','BR','AR','CO','CL','PE'].includes(r)) return 'USD'; }
+  return 'EUR';
+})();
+const fmtFX=n=>FX==='MAD'?'':'≈ '+new Intl.NumberFormat(locale(),{style:'currency',currency:FX,maximumFractionDigits:0}).format(Math.round(n*(FX==='USD'?CONFIG.usdPerMad:CONFIG.eurPerMad)));
 function fmtDur(min){const h=Math.floor(min/60),m=min%60; if(!h) return t('dur.m',{m}); return m?`${h} h ${String(m).padStart(2,'0')}`:`${h} h`;}
 function ymd(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 const todayStr=()=>ymd(new Date());
@@ -1291,7 +1288,7 @@ function updateQuickHint(){
   const h=$('#qhint');
   if(S.type==='transfer'&&S.from===S.to){h.innerHTML=`<span class="k">${esc(t('err.same'))}</span>`; return;}
   const q=quote(S,'eco');
-  h.innerHTML=`<div class="k">${esc(t('hero.from'))}</div><div class="v">${fmtMAD(q.total)}<span class="eur">${fmtEUR(q.total)}</span></div><div class="routeinfo">${esc(routeInfo())}</div>`;
+  h.innerHTML=`<div class="k">${esc(t('hero.from'))}</div><div class="v">${fmtMAD(q.total)}<span class="eur">${fmtFX(q.total)}</span></div><div class="routeinfo">${esc(routeInfo())}</div>`;
   updateWaLinks();
 }
 
@@ -1411,15 +1408,7 @@ function renderMap(){
   g+=placeLabels(items);
   const svg=$('#map'); svg.innerHTML=g; svg.setAttribute('aria-label',t('map.aria'));
 }
-function renderPanel(){
-  const a=LOC[MAP_SEL]; const hubKm=roadKm(a.id,a.hub);
-  $('#apanel').innerHTML=`<p class="eyebrow">${esc(t('map.airport'))} · ${a.id}</p>
-   <h3 style="margin-top:8px">${esc(L(a.city))}${L(a.name)?' '+esc(L(a.name)):''}</h3>
-   <p class="apt-meta">${esc(t('map.city',{km:hubKm,dur:fmtDur(driveMin(hubKm))}))}</p>
-   <ul class="zlist">${a.serves.map(z=>{const km=roadKm(a.id,z); const p=quote({type:'transfer',from:a.id,to:z,time:'12:00'},'eco').total; return `<li><div><div class="zname">${esc(L(LOC[z].name))}</div><div class="zmeta">${esc(t('route.info',{km,dur:fmtDur(driveMin(km))}))}</div></div><div class="zright"><div class="zprice">${fmtMAD(p)}<small>${fmtEUR(p)}</small></div><button type="button" class="btn btn-ghost btn-sm" data-route="${a.id}|${z}">${esc(t('book'))}</button></div></li>`;}).join('')}</ul>
-   <p class="note">${esc(t('map.note'))}</p>`;
-}
-function selectAirport(id){MAP_SEL=id; renderMap(); renderPanel(); $$('#board [data-board]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.board===id));}
+function selectAirport(id){MAP_SEL=id; renderMap(); $$('#board [data-board]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.board===id));}
 
 /* ====== Excursions, tarifs, FAQ, contact ====== */
 function renderTrips(){
@@ -1431,7 +1420,7 @@ function renderPrices(){
   $('#ptable').innerHTML=head+'<tbody>'+rows+'</tbody>';
 }
 /* ====== Notre agence : logo + carte Google Maps ====== */
-const LOGO_SVG='<svg viewBox="0 0 40 40" aria-hidden="true"><polygon points="20,2.3 25.2,7.5 32.5,7.5 32.5,14.8 37.7,20 32.5,25.2 32.5,32.5 25.2,32.5 20,37.7 14.8,32.5 7.5,32.5 7.5,25.2 2.3,20 7.5,14.8 7.5,7.5 14.8,7.5" fill="var(--teal)" stroke="var(--brass-hi)" stroke-width="1.4" stroke-linejoin="round"/><path d="M9.6 25.2v-2.6c0-.9.5-1.5 1.4-1.7l2.7-.6 2.6-3.2c.5-.6 1.2-.9 2-.9h6.2c.8 0 1.5.3 2 .9l2.6 3.2 1.6.4c.9.2 1.4.9 1.4 1.8v2.7z" fill="var(--on-teal)"/><path d="M15.3 20.3l1.9-2.4h3.1v2.4zM21.6 20.3v-2.4h2.8l1.9 2.4z" fill="var(--teal)"/><circle cx="14.3" cy="25.4" r="2.3" fill="var(--brass-hi)" stroke="var(--teal)" stroke-width="1"/><circle cx="25.9" cy="25.4" r="2.3" fill="var(--brass-hi)" stroke="var(--teal)" stroke-width="1"/></svg>';
+const LOGO_SVG='<svg viewBox="14 20 164 180" aria-hidden="true"><path d="M22 192V104A74 74 0 0 1 170 104V192Z" fill="#0E5A4A" stroke="#D4A245" stroke-width="5"/><path d="M38 180V106A58 58 0 0 1 154 106V180" fill="none" stroke="#D4A245" stroke-width="1.6" opacity=".7"/><text x="96" y="168" text-anchor="middle" font-family="Marcellus,Georgia,serif" font-size="112" fill="#F7EEDC">S</text></svg>';
 function renderAgency(){
   const el=$('#agence'); if(!el) return;
   // La carte Google s'affiche sur le vrai site (safarashuttle.com, GitHub Pages, fichier local)
@@ -1471,9 +1460,8 @@ function renderCalc(){
   c.innerHTML=`<div><h3 class="calc-title">${esc(t('calc.title'))}</h3><div class="fgrid">
     ${fld('c6','c-from',t('f.from'),sel('c-from','from',locOptions(S.from)))}
     ${fld('c6','c-to',t('f.to'),sel('c-to','to',locOptions(S.to)))}
-    ${fld('c2','c-date',t('f.date'),inp('c-date','date','date',S.date,` min="${todayStr()}"`))}
-    ${fld('c2','c-time',t('f.time'),inp('c-time','time','time',S.time,' step="300"'))}
-    ${fld('c2','c-pax',t('f.pax'),sel('c-pax','pax',numOptions(1,17,S.pax)))}
+    ${fld('c3','c-date',t('f.date'),inp('c-date','date','date',S.date,` min="${todayStr()}"`))}
+    ${fld('c3','c-time',t('f.time'),inp('c-time','time','time',S.time,' step="300"'))}
   </div><div id="calcinfo"></div></div><div id="calcout"></div>`;
   renderCalcOut();
 }
@@ -1484,8 +1472,9 @@ function renderCalcOut(){
   const km=roadKm(S.from,S.to), base={type:'transfer',from:S.from,to:S.to,time:S.time};
   info.innerHTML=`<div class="calc-km"><div><span class="k">${esc(t('calc.km'))}</span><b>${km} km</b></div><div><span class="k">${esc(t('calc.time'))}</span><b>${esc(fmtDur(driveMin(km)))}</b></div><div><span class="k">${esc(t('f.date'))}</span><b>${esc(fmtDate(S.date))} · ${esc(S.time)}</b></div></div>
     ${isNight(S.time)?`<p class="calc-night">${esc(t('calc.night',{p:CONFIG.nightPct}))}</p>`:''}`;
-  out.innerHTML=`<p class="calc-sub">${esc(t('calc.cars',{n:S.pax}))}</p>
-    <ul class="cc-list">${CLASSES.map(c=>{const ok=c.pax>=S.pax, p=quote(base,c.id).total; return `<li class="cc${ok?'':' off'}"><div><b>${esc(carShort(c))}</b><small>${esc(L(c.name))} · 1–${c.pax} ${esc(t('pers'))}</small></div>${ok?`<div class="cc-price">${fmtMAD(p)}<small>${fmtEUR(p)}</small></div><button type="button" class="btn btn-primary btn-sm" data-calc-pick="${c.id}">${esc(t('book'))}</button>`:`<div class="cc-max">${esc(t('calc.max',{n:c.pax}))}</div>`}</li>`;}).join('')}</ul>`;
+  // Le prix dépend de la voiture et du trajet, pas du nombre de passagers : une ligne par voiture
+  out.innerHTML=`<p class="calc-sub">${esc(t('calc.cars'))}</p>
+    <ul class="cc-list">${[...CLASSES].sort((a,b)=>a.pax-b.pax).map(c=>{const p=quote(base,c.id).total; return `<li class="cc"><div><b>${esc(carShort(c))}</b><small><strong class="cc-pax">${esc(t('paxRange',{n:c.pax}))}</strong> · ${esc(L(c.name))}</small></div><div class="cc-price">${fmtMAD(p)}<small>${fmtFX(p)}</small></div><button type="button" class="btn btn-primary btn-sm" data-calc-pick="${c.id}">${esc(t('book'))}</button></li>`;}).join('')}</ul>`;
 }
 
 /* ====== Avis clients (réels uniquement) ====== */
@@ -1514,7 +1503,7 @@ async function sendBookingEmail(){
   let st=$('#b-status'); if(st){ st.hidden=false; st.textContent=t('sending'); }
   const q=quote(S), data={_subject:t('mail.subject',{ref:S.ref,brand:CONFIG.brandFull})};
   summaryRows().forEach(([k,v])=>{ data[k]=stripHtml(v); });
-  data[t('bk.total')]=fmtMAD(q.total)+' ('+fmtEUR(q.total)+')';
+  data[t('bk.total')]=fmtMAD(q.total)+(fmtFX(q.total)?' ('+fmtFX(q.total)+')':'');
   if(S.email){ data.email=S.email; data._replyto=S.email; data._autoresponse=t('mail.auto',{ref:S.ref,brand:CONFIG.brandFull}); }
   const ok=await sendForm(data); S.mailBusy=false; st=$('#b-status'); if(!st) return;
   if(ok){ S.mailSent=true; st.textContent=t('bk.mailOk',{mail:CONFIG.email}); }
@@ -1569,7 +1558,7 @@ function renderStep(){
     b.innerHTML=`<div class="vlist" role="radiogroup" aria-label="${esc(t('step.2'))}">${CLASSES.map(c=>{const ok=fits(c), q=quote(S,c.id); return `<label class="vopt${S.vehicle===c.id?' sel':''}${ok?'':' off'}"><input type="radio" name="veh" data-k="vehicle" value="${c.id}"${S.vehicle===c.id?' checked':''}${ok?'':' disabled'}>
       <span class="art">${carArt(c)}</span>
       <span class="vinfo"><b>${esc(L(c.name))}</b><span class="model">${esc(L(c.model))}</span><span class="specs"><span>${ic('user')}${c.pax}</span><span>${ic('bag')}${c.bags}</span></span>${ok?'':`<span class="warn">${esc(t('tooSmall',{p:S.pax,b:S.bags}))}</span>`}</span>
-      <span class="vprice"><b>${fmtMAD(q.total)}</b><small>${fmtEUR(q.total)}</small></span></label>`;}).join('')}</div>`;
+      <span class="vprice"><b>${fmtMAD(q.total)}</b><small>${fmtFX(q.total)}</small></span></label>`;}).join('')}</div>`;
   } else if(STEP===3){
     const showFlight=S.type==='transfer'&&(isApt(S.from)||isApt(S.to));
     const flightLbl=isApt(S.from)?t('f.flight'):t('f.flightOpt');
@@ -1585,7 +1574,6 @@ function renderStep(){
       ${fld('c3','b-wheel',t('f.wheel'),sel('b-wheel','wheel',['none','need','own'].map(v=>`<option value="${v}"${S.wheel===v?' selected':''}>${esc(t('wheel.'+v))}</option>`).join('')))}
       ${fld('c3','b-pay',t('f.pay'),sel('b-pay','pay',['cash','card','transfer'].map(v=>`<option value="${v}"${S.pay===v?' selected':''}>${esc(t('pay.opt.'+v))}</option>`).join('')))}
       ${fld('c6','b-notes',t('f.notes'),`<textarea id="b-notes" data-k="notes" placeholder="${esc(t('ph.notes'))}">${esc(S.notes)}</textarea>`)}
-      <div class="c6 sign-wrap"><span class="flabel">${esc(t('sign.preview'))}</span><div class="sign"><div class="s-brand">${esc(CONFIG.brand)} · ${esc(CONFIG.brandSub)}</div><div class="s-name" id="b-signprev">${esc(S.sign||S.name||'—')}</div></div></div>
     </div>`;
   } else {
     if(!S.ref) S.ref=CONFIG.brand.slice(0,2).toUpperCase()+'-'+Date.now().toString(36).slice(-4).toUpperCase()+Math.floor(Math.random()*36).toString(36).toUpperCase();
@@ -1594,7 +1582,7 @@ function renderStep(){
     b.innerHTML=`<div class="sumgrid"><dl class="sum">${rows}</dl>
       <div class="bill">${q.lines.map(l=>`<div class="ln"><span>${esc(l[0])}</span><span>${fmtMAD(l[1])}</span></div>`).join('')}
         <div class="ln tot"><span>${esc(t('bk.total'))}</span><span>${fmtMAD(q.total)}</span></div>
-        <div class="ln" style="justify-content:flex-end;color:var(--muted)">${fmtEUR(q.total)}</div>
+        <div class="ln" style="justify-content:flex-end;color:var(--muted)">${fmtFX(q.total)}</div>
         <p class="inc">${esc(t('sum.included'))}</p>
         <a class="btn btn-primary" id="b-wa" href="${wa}" target="_blank" rel="noopener">${ic('chat')}${esc(t('bk.send'))}</a>
         <button type="button" class="btn btn-brass" id="b-mail">${ic('mail')}${esc(t('bk.mail'))}</button>
@@ -1632,13 +1620,13 @@ function summaryRows(){
 }
 function buildMessage(q){
   const strip=h=>h.replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'");
-  return [`${t('msg.head')} · ${CONFIG.brandFull}`,''].concat(summaryRows().map(([k,v])=>`${k} : ${strip(v)}`)).concat(['',...q.lines.map(l=>`${l[0]} : ${fmtMAD(l[1])}`),`${t('bk.total')} : ${fmtMAD(q.total)} (${fmtEUR(q.total)})`]).join('\n');
+  return [`${t('msg.head')} · ${CONFIG.brandFull}`,''].concat(summaryRows().map(([k,v])=>`${k} : ${strip(v)}`)).concat(['',...q.lines.map(l=>`${l[0]} : ${fmtMAD(l[1])}`),`${t('bk.total')} : ${fmtMAD(q.total)}${fmtFX(q.total)?' ('+fmtFX(q.total)+')':''}`]).join('\n');
 }
 function updateTotal(){
   const box=$('#bktotal');
   if(S.type==='transfer'&&S.from===S.to){box.innerHTML=''; return;}
   const q=quote(S);
-  box.innerHTML=`<div class="k">${esc(t('bk.total'))} · ${esc(L(CLASS[S.vehicle].name))}</div><div class="v">${fmtMAD(q.total)}<span class="eur">${fmtEUR(q.total)}</span></div>`;
+  box.innerHTML=`<div class="k">${esc(t('bk.total'))} · ${esc(L(CLASS[S.vehicle].name))}</div><div class="v">${fmtMAD(q.total)}<span class="eur">${fmtFX(q.total)}</span></div>`;
 }
 
 /* ====== Événements ====== */
@@ -1699,7 +1687,7 @@ document.addEventListener('keydown',e=>{
 document.addEventListener('click',e=>{
   const el=e.target.closest('[data-open-book],[data-svc],[data-pick],[data-calc-pick],[data-trip],[data-route],[data-apt],[data-board],[data-city],[data-copy],[data-lang]');
   if(!el) return;
-  if(el.matches('[data-calc-pick]')){ S.type='transfer'; S.vehicle=el.dataset.calcPick; return openBooking(3); }
+  if(el.matches('[data-calc-pick]')){ S.type='transfer'; S.vehicle=el.dataset.calcPick; const c=CLASS[S.vehicle]; if(S.pax>c.pax) S.pax=c.pax; if(S.bags>c.bags) S.bags=c.bags; return openBooking(3); }
   if(el.matches('[data-lang]')) return setLang(el.dataset.lang);
   if(el.matches('[data-copy]')) return copyText(el.dataset.copy);
   if(el.matches('[data-open-book]')) return openBooking(1);
@@ -1736,7 +1724,7 @@ function applyStatic(){
   $$('[data-brand-sub]').forEach(el=>{el.textContent=CONFIG.brandSub;});
   $$('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===LANG));
 }
-function renderAll(){ applyStatic(); renderCities(); renderWaCard(); renderAgency(); renderPay(); renderQuick(); renderBoard(); renderTrust(); renderServices(); renderFleet(); renderSteps(); renderMap(); renderPanel(); renderTrips(); renderPrices(); renderCalc(); renderReviews(); renderFAQ(); renderContact(); if(!$('#bkov').hidden) renderStep(); }
+function renderAll(){ applyStatic(); renderCities(); renderWaCard(); renderAgency(); renderPay(); renderQuick(); renderBoard(); renderTrust(); renderServices(); renderFleet(); renderSteps(); renderMap(); renderTrips(); renderPrices(); renderCalc(); renderReviews(); renderFAQ(); renderContact(); if(!$('#bkov').hidden) renderStep(); }
 function setLang(l){ LANG=l; try{localStorage.setItem('siyaha-lang',l);}catch(e){} renderAll(); }
 
 renderAll(); flapIntro(); setInterval(tick,15000);

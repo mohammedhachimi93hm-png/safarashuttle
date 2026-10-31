@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Visite 3D | Safara Shuttle</title>
+<meta name="description" content="Tournez autour du véhicule et entrez à bord, en 3D.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F6EFE2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&family=Marcellus&display=swap">
+<style>
+  :root{
+    --teal:#0E5A4A; --teal-2:#0B4A3D; --gold:#D4A245; --cream:#F6EFE2; --ink:#2A1D14;
+    --ink-2:#4f3e31; --line:rgba(42,29,20,.14); --glass:rgba(246,239,226,.86);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;overflow:hidden;background:var(--cream);color:var(--ink);
+    font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+
+  #stage{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab;outline:none}
+  #stage:active{cursor:grabbing}
+
+  /* Haut de page */
+  .top{position:fixed;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;justify-content:space-between;
+    gap:12px;padding:max(16px,env(safe-area-inset-top)) 24px 16px;pointer-events:none}
+  .top a{pointer-events:auto}
+  .brand{font-family:Marcellus,Georgia,serif;font-size:26px;color:var(--teal);text-decoration:none;white-space:nowrap}
+  .back{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;
+    background:var(--glass);border:1.5px solid var(--line);color:var(--ink);font-weight:700;font-size:16px;
+    text-decoration:none;white-space:nowrap;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .back:hover{border-color:var(--teal);color:var(--teal)}
+
+  /* Titre */
+  .intro{position:fixed;z-index:2;top:96px;left:24px;max-width:min(540px,calc(100% - 48px));pointer-events:none;
+    transition:padding .3s,background .3s,border-radius .3s}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:700;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--teal)}
+  .eyebrow::before{content:"";width:28px;height:3px;border-radius:3px;background:var(--gold)}
+  h1{font-family:Marcellus,Georgia,serif;font-weight:400;font-size:clamp(34px,5.2vw,60px);line-height:1.04;margin:8px 0 10px}
+  .lead{margin:0;font-size:clamp(18px,1.6vw,22px);font-weight:700;color:var(--ink-2)}
+  .tag{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:6px 12px;border-radius:999px;
+    background:rgba(212,162,69,.2);color:#5c3f0e;font-size:14px;font-weight:700}
+  .tag::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold)}
+  .tag[hidden]{display:none}
+
+  /* Commandes en bas */
+  .bar{position:fixed;z-index:3;left:50%;transform:translateX(-50%);bottom:max(24px,env(safe-area-inset-bottom));
+    width:min(640px,calc(100% - 32px));display:flex;flex-direction:column;align-items:center;gap:12px}
+  .hint{margin:0;padding:8px 16px;border-radius:999px;background:var(--glass);border:1px solid var(--line);
+    font-size:16px;font-weight:700;text-align:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .actions{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px}
+  .btn-main{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:58px;padding:0 30px;
+    border:0;border-radius:999px;background:var(--teal);color:#fff;font:700 19px/1 "Instrument Sans",system-ui,sans-serif;
+    cursor:pointer;box-shadow:0 14px 30px -12px rgba(14,90,74,.6);transition:background .2s,transform .15s}
+  .btn-main:hover{background:var(--teal-2)}
+  .btn-main:active{transform:scale(.98)}
+  .btn-main svg{width:22px;height:22px;flex:none}
+  .btn-main .i-out,.is-inside .btn-main .i-in{display:none}
+  .is-inside .btn-main .i-out{display:block}
+  .seats{display:none;padding:5px;gap:4px;border-radius:999px;background:var(--glass);border:1.5px solid var(--line);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .is-inside .seats{display:inline-flex}
+  .chip{min-height:48px;padding:0 22px;border:0;border-radius:999px;background:transparent;color:var(--ink);
+    font:700 17px/1 "Instrument Sans",system-ui,sans-serif;cursor:pointer}
+  .chip[aria-pressed="true"]{background:var(--gold)}
+  button:disabled{cursor:progress}
+  :focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+  /* A l'intérieur : titre plus petit, sur fond clair */
+  .is-inside .intro{background:var(--glass);padding:10px 16px 12px;border-radius:16px;
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .is-inside h1{font-size:clamp(24px,2.6vw,32px);margin:4px 0 0}
+  .is-inside .lead,.is-inside .tag{display:none}
+  .brand{transition:background .3s,padding .3s}
+  .is-inside .brand{background:var(--glass);padding:6px 14px;border-radius:999px;
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+
+  /* Chargement */
+  .loader{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:var(--cream);
+    transition:opacity .6s ease,visibility .6s}
+  .loader.done{opacity:0;visibility:hidden}
+  .loader p{margin:18px 0 0;padding:0 24px;font-weight:700;font-size:18px;text-align:center}
+  .spinner{width:52px;height:52px;margin:0 auto;border-radius:50%;border:4px solid rgba(14,90,74,.15);
+    border-top-color:var(--teal);animation:spin 1s linear infinite}
+  .loader.error .spinner{display:none}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  @media (max-width:640px){
+    .top{padding:max(12px,env(safe-area-inset-top)) 16px 12px}
+    .brand{font-size:21px}
+    .back{font-size:15px;padding:0 14px;min-height:42px}
+    .intro{top:70px;left:16px;max-width:calc(100% - 32px)}
+    .lead{font-size:17px}
+    .hint{font-size:15px}
+    .bar{bottom:max(16px,env(safe-area-inset-bottom))}
+    .actions{width:100%}
+    .btn-main{width:100%;font-size:18px;min-height:56px}
+    .seats{width:100%}
+    .chip{flex:1}
+  }
+  @media (prefers-reduced-motion:reduce){.spinner{animation-duration:3s}}
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+<canvas id="stage" role="img" aria-label="Véhicule en 3D. Glissez pour tourner autour."></canvas>
+
+<header class="top">
+  <a class="brand" href="index.html">Safara Shuttle</a>
+  <a class="back" href="index.html"><span aria-hidden="true">←</span> Retour au site</a>
+</header>
+
+<section class="intro">
+  <span class="eyebrow">Visite 3D</span>
+  <h1 id="carName">Mercedes Classe V</h1>
+  <p class="lead">Tournez autour. Entrez à bord.</p>
+  <span class="tag" id="demoTag" hidden>Modèle 3D provisoire</span>
+</section>
+
+<nav class="bar" aria-label="Commandes de la visite 3D">
+  <p class="hint" id="hint" aria-live="polite">Glissez pour tourner</p>
+  <div class="actions">
+    <div class="seats" role="group" aria-label="Choisir la place">
+      <button class="chip" type="button" data-view="avant" aria-pressed="false">Avant</button>
+      <button class="chip" type="button" data-view="arriere" aria-pressed="false">Arrière</button>
+    </div>
+    <button class="btn-main" id="toggle" type="button">
+      <svg class="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      <svg class="i-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h12"/></svg>
+      <span id="toggleLabel">Voir l’intérieur</span>
+    </button>
+  </div>
+</nav>
+
+<div class="loader" id="loader">
+  <div><div class="spinner"></div><p id="loaderText">Chargement de la 3D…</p></div>
+</div>
+<noscript><p style="position:fixed;inset:auto 0 40%;text-align:center;font-weight:700;z-index:20">Activez JavaScript pour voir la 3D.</p></noscript>
+
+<script>
+  // Si la 3D ne charge pas (pas d'internet...), on le dit clairement.
+  window.__car3dTimer = setTimeout(function () {
+    var t = document.getElementById('loaderText');
+    if (t) t.textContent = 'La 3D ne charge pas. Vérifiez votre connexion.';
+    document.getElementById('loader').classList.add('error');
+  }, 15000);
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+
+/* ================= RÉGLAGES ================= */
+const CONFIG = {
+  vehicleName: 'Mercedes Classe V',
+  // Fichier 3D du vrai véhicule (.glb). Vide = modèle provisoire.
+  // Exemple : 'models/mercedes-classe-v.glb'
+  modelUrl: '',
+  modelLength: 5.14,   // longueur réelle du véhicule, en mètres
+  modelTurn: 0,        // tourner le modèle (degrés) si l'avant n'est pas devant
+  // Places à l'intérieur : position en mètres (0,0,0 = centre du véhicule au sol,
+  // x = vers l'avant, y = hauteur, z = vers la droite). yaw/pitch en degrés.
+  // photo = photo 360° de cette place (optionnel), ex. 'models/interieur-arriere.jpg'
+  views: {
+    avant:   { pos: [0.42, 1.56, -0.45], yaw: -8, pitch: -14, photo: '' },
+    arriere: { pos: [-1.90, 1.42, 0.40], yaw: 8, pitch: -10, photo: '' },
+  },
+  photoTurn: 0,        // tourner les photos 360° (degrés)
+  startView: 'arriere', // place choisie quand on clique « Voir l'intérieur »
+  // Plaque marocaine (numéro FICTIF) : chiffres | lettre | région
+  plate: ['12345', 'ب', '6'],
+  // Vrai modèle : peindre la carrosserie en noir brillant (matériaux dont le nom contient ces mots)
+  blackPaint: true,
+  paintNames: 'body|paint|carpaint|car_paint|exterior|carrosserie',
+  // Vrai modèle : plaques à poser [x, y, z, sens] (sens : 90 = avant, -90 = arrière). Vide = aucune.
+  modelPlates: [],
+};
+// Test local : car-3d.html?model=models/x.glb ou ?photo=models/x.jpg (dossier models/ seulement)
+const params = new URLSearchParams(location.search);
+const safe = (v, re) => (v && re.test(v) ? v : '');
+const pModel = safe(params.get('model'), /^models\/[\w.-]+\.(glb|gltf)$/i);
+const pPhoto = safe(params.get('photo'), /^models\/[\w.-]+\.(jpe?g|png|webp)$/i);
+if (pModel) CONFIG.modelUrl = pModel;
+if (pPhoto) Object.values(CONFIG.views).forEach(v => { v.photo = pPhoto; });
+
+/* ================= PAGE ================= */
+const $ = s => document.querySelector(s);
+const canvas = $('#stage'), loader = $('#loader'), loaderText = $('#loaderText');
+const hint = $('#hint'), toggleBtn = $('#toggle'), toggleLabel = $('#toggleLabel');
+const chips = [...document.querySelectorAll('.chip')];
+$('#carName').textContent = CONFIG.vehicleName;
+
+const touchScreen = matchMedia('(pointer: coarse)').matches;
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const HINT_OUT = touchScreen ? 'Glissez pour tourner · Pincez pour zoomer' : 'Glissez pour tourner · Molette pour zoomer';
+const HINT_IN = 'Glissez pour regarder autour';
+
+function failLoad(msg) {
+  clearTimeout(window.__car3dTimer);
+  loaderText.textContent = msg;
+  loader.classList.add('error');
+}
+
+/* ================= SCÈNE ================= */
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+} catch (e) {
+  failLoad('La 3D ne s’affiche pas sur cet appareil.');
+  throw e;
+}
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#F6EFE2');
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+const camera = new THREE.PerspectiveCamera(30, 1, 0.03, 120);
+
+// Lumière studio douce
+scene.add(new THREE.HemisphereLight(0xfff6e8, 0x8a7a66, 0.7));
+const sun = new THREE.DirectionalLight(0xffffff, 2.0);
+sun.position.set(4, 9, 5);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -4.5, right: 4.5, top: 4.5, bottom: -4.5, near: 1, far: 25 });
+sun.shadow.bias = -0.0004;
+sun.shadow.normalBias = 0.02;
+scene.add(sun);
+const fill = new THREE.DirectionalLight(0xfff1dc, 0.6);
+fill.position.set(-5, 4, -4);
+scene.add(fill);
+// Lumière chaude dans l'habitacle
+[[-0.8, 1.62, 0, 2.4], [0.6, 1.62, 0, 1.4]].forEach(([x, y, z, i]) => {
+  const l = new THREE.PointLight(0xffe2b8, i, 0, 2);
+  l.position.set(x, y, z);
+  scene.add(l);
+});
+
+// Sol : halo clair + anneau doré + ombre
+const floorGroup = new THREE.Group();
+scene.add(floorGroup);
+const glow = new THREE.Mesh(
+  new THREE.CircleGeometry(4.4, 96),
+  new THREE.MeshBasicMaterial({ map: glowTexture(), transparent: true, depthWrite: false, toneMapped: false })
+);
+glow.rotation.x = -Math.PI / 2; glow.position.y = 0.001; glow.renderOrder = -3;
+floorGroup.add(glow);
+const ring = new THREE.Mesh(
+  new THREE.RingGeometry(3.6, 3.64, 160),
+  new THREE.MeshBasicMaterial({ color: 0xD4A245, transparent: true, opacity: 0.85, depthWrite: false, toneMapped: false })
+);
+ring.rotation.x = -Math.PI / 2; ring.position.y = 0.002; ring.renderOrder = -2;
+floorGroup.add(ring);
+const shadowFloor = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.ShadowMaterial({ opacity: 0.24, depthWrite: false }));
+shadowFloor.rotation.x = -Math.PI / 2; shadowFloor.position.y = 0.003; shadowFloor.receiveShadow = true; shadowFloor.renderOrder = -1;
+floorGroup.add(shadowFloor);
+
+function glowTexture() {
+  const c = document.createElement('canvas'); c.width = c.height = 256;
+  const g = c.getContext('2d');
+  const grd = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+  grd.addColorStop(0, 'rgba(255,255,255,0.75)');
+  grd.addColorStop(0.6, 'rgba(255,255,255,0.35)');
+  grd.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = grd; g.fillRect(0, 0, 256, 256);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+
+/* ================= MODÈLE PROVISOIRE (van) ================= */
+// Noir brillant (toute la flotte est noire)
+function blackPaint(normalMap = null) {
+  return new THREE.MeshPhysicalMaterial({
+    color: 0x0a0b0d, metalness: 0.35, roughness: 0.18, clearcoat: 1, clearcoatRoughness: 0.04,
+    envMapIntensity: 1.3, normalMap,
+  });
+}
+
+// Plaque marocaine : fond blanc, caractères noirs, « 12345 | ب | 6 »
+let plateMat = null;
+function plateMaterial() {
+  if (plateMat) return plateMat;
+  const c = document.createElement('canvas'); c.width = 1040; c.height = 220;
+  const g = c.getContext('2d');
+  g.fillStyle = '#ffffff'; g.fillRect(0, 0, 1040, 220);
+  g.strokeStyle = '#111111'; g.lineWidth = 10;
+  g.beginPath(); g.roundRect ? g.roundRect(8, 8, 1024, 204, 18) : g.rect(8, 8, 1024, 204); g.stroke();
+  const [num, letter, region] = CONFIG.plate;
+  g.fillStyle = '#111111'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillRect(632, 40, 9, 140);
+  g.fillRect(832, 40, 9, 140);
+  g.font = 'bold 150px Arial, Helvetica, sans-serif';
+  g.fillText(num, 325, 118);
+  g.fillText(region, 935, 118);
+  g.font = 'bold 140px Arial, "Noto Naskh Arabic", "Geeza Pro", Tahoma, sans-serif';
+  g.fillText(letter, 736, 104);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  plateMat = new THREE.MeshStandardMaterial({ map: t, roughness: 0.35 });
+  return plateMat;
+}
+// Pose une plaque (520 × 110 mm) ; turn = 90 → vers l'avant, -90 → vers l'arrière
+function addPlate(parent, x, y, z, turn) {
+  const p = new THREE.Group();
+  p.position.set(x, y, z);
+  p.rotation.y = THREE.MathUtils.degToRad(turn);
+  parent.add(p);
+  add(p, box(0.54, 0.125, 0.012), M.gloss, 0, 0, 0.006);
+  add(p, new THREE.PlaneGeometry(0.52, 0.11), plateMaterial(), 0, 0, 0.0125, false);
+  return p;
+}
+
+const M = {
+  paint: blackPaint(),
+  gloss: new THREE.MeshStandardMaterial({ color: 0x0b0c0d, metalness: 0.4, roughness: 0.2 }),
+  plastic: new THREE.MeshStandardMaterial({ color: 0x1c1c1c, roughness: 0.75 }),
+  chrome: new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 1, roughness: 0.1 }),
+  glass: new THREE.MeshPhysicalMaterial({ color: 0x1a2422, roughness: 0.05, transparent: true, opacity: 0.55, side: THREE.DoubleSide, depthWrite: false, envMapIntensity: 1.5 }),
+  windshield: new THREE.MeshPhysicalMaterial({ color: 0x223230, roughness: 0.05, transparent: true, opacity: 0.2, side: THREE.DoubleSide, depthWrite: false, envMapIntensity: 1.2 }),
+  tire: new THREE.MeshStandardMaterial({ color: 0x151515, roughness: 0.9 }),
+  rimDark: new THREE.MeshStandardMaterial({ color: 0x2a2c2f, metalness: 0.6, roughness: 0.4 }),
+  rim: new THREE.MeshStandardMaterial({ color: 0xd5d8dc, metalness: 1, roughness: 0.22 }),
+  liner: new THREE.MeshStandardMaterial({ color: 0x0a0a0a, roughness: 1, side: THREE.DoubleSide }),
+  light: new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xfff4dc, emissiveIntensity: 2.2 }),
+  tail: new THREE.MeshStandardMaterial({ color: 0x5a0000, emissive: 0xc0151b, emissiveIntensity: 1.6, roughness: 0.3 }),
+  leather: new THREE.MeshStandardMaterial({ color: 0x8c5a3a, roughness: 0.55 }),
+  trim: new THREE.MeshStandardMaterial({ color: 0x2c2622, roughness: 0.7 }),
+  headliner: new THREE.MeshStandardMaterial({ color: 0xe9e0cf, roughness: 0.9 }),
+  carpet: new THREE.MeshStandardMaterial({ color: 0x2a2521, roughness: 1 }),
+  wood: new THREE.MeshStandardMaterial({ color: 0x6b4a33, roughness: 0.35 }),
+  gold: new THREE.MeshBasicMaterial({ color: 0xD4A245, toneMapped: false }),
+  goldMetal: new THREE.MeshStandardMaterial({ color: 0xD4A245, metalness: 1, roughness: 0.3 }),
+};
+
+function add(parent, geo, mat, x = 0, y = 0, z = 0, shadow = true) {
+  const m = new THREE.Mesh(geo, mat);
+  m.position.set(x, y, z);
+  m.castShadow = shadow;
+  parent.add(m);
+  return m;
+}
+const box = (w, h, d) => new THREE.BoxGeometry(w, h, d);
+const rbox = (w, h, d, r = 0.04) => new RoundedBoxGeometry(w, h, d, 3, r);
+function quad(a, b, c, d, mat) {
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(new Float32Array([...a, ...b, ...c, ...a, ...c, ...d]), 3));
+  g.computeVertexNormals();
+  return new THREE.Mesh(g, mat);
+}
+
+function seat({ width = 0.52, heads = [0], arms = false } = {}) {
+  const g = new THREE.Group();
+  add(g, rbox(0.40, 0.24, Math.min(width * 0.8, 1.3), 0.03), M.plastic, 0, 0.12, 0);
+  add(g, rbox(0.54, 0.14, width, 0.05), M.leather, 0, 0.33, 0);
+  const back = add(g, rbox(0.14, 0.64, width, 0.05), M.leather, -0.25, 0.70, 0);
+  back.rotation.z = 0.14;
+  heads.forEach(z => { const h = add(g, rbox(0.10, 0.17, 0.28, 0.04), M.leather, -0.30, 1.10, z); h.rotation.z = 0.14; });
+  if (arms) [-1, 1].forEach(s => add(g, rbox(0.38, 0.05, 0.06, 0.02), M.trim, -0.02, 0.56, s * (width / 2 + 0.04)));
+  return g;
+}
+
+function wheel() {
+  const w = new THREE.Group();
+  add(w, new THREE.CylinderGeometry(0.34, 0.34, 0.24, 48), M.tire).rotation.x = Math.PI / 2;
+  add(w, new THREE.CylinderGeometry(0.235, 0.235, 0.02, 48), M.rimDark, 0, 0, 0.115).rotation.x = Math.PI / 2;
+  add(w, new THREE.TorusGeometry(0.228, 0.014, 10, 48), M.rim, 0, 0, 0.125);
+  for (let i = 0; i < 5; i++) {
+    const a = (i / 5) * Math.PI * 2;
+    add(w, box(0.20, 0.045, 0.025), M.rim, Math.cos(a) * 0.11, Math.sin(a) * 0.11, 0.13).rotation.z = a;
+  }
+  add(w, new THREE.CylinderGeometry(0.055, 0.055, 0.03, 24), M.rim, 0, 0, 0.135).rotation.x = Math.PI / 2;
+  return w;
+}
+
+function screenTexture() {
+  const c = document.createElement('canvas'); c.width = 768; c.height = 256;
+  const g = c.getContext('2d');
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+  const draw = () => {
+    const grd = g.createLinearGradient(0, 0, 768, 256);
+    grd.addColorStop(0, '#0E5A4A'); grd.addColorStop(1, '#06352b');
+    g.fillStyle = grd; g.fillRect(0, 0, 768, 256);
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillStyle = '#D4A245'; g.font = '64px Marcellus, Georgia, serif';
+    g.fillText('Bienvenue à bord', 384, 108);
+    g.fillStyle = 'rgba(246,239,226,.9)'; g.font = '600 30px "Instrument Sans", Arial, sans-serif';
+    g.fillText('SAFARA SHUTTLE', 384, 182);
+    tex.needsUpdate = true;
+  };
+  draw();
+  if (document.fonts) document.fonts.load('64px Marcellus').then(draw).catch(() => {});
+  return tex;
+}
+function gaugeTexture() {
+  const c = document.createElement('canvas'); c.width = 384; c.height = 128;
+  const g = c.getContext('2d');
+  g.fillStyle = '#0d1614'; g.fillRect(0, 0, 384, 128);
+  g.lineCap = 'round';
+  [[96, -0.7], [288, 0.4]].forEach(([x, a]) => {
+    g.strokeStyle = '#D4A245'; g.lineWidth = 6;
+    g.beginPath(); g.arc(x, 70, 44, Math.PI * 0.75, Math.PI * 2.25); g.stroke();
+    g.strokeStyle = 'rgba(246,239,226,.9)'; g.lineWidth = 4;
+    g.beginPath(); g.moveTo(x, 70); g.lineTo(x + Math.sin(a) * 36, 70 - Math.cos(a) * 36); g.stroke();
+  });
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+
+function buildDemoVan() {
+  const car = new THREE.Group();
+  const A = Math.PI - Math.acos(0.22 / 0.46); // angle de l'arche avant à x = 1.38
+
+  // Flancs (profil latéral, gauche + droite)
+  const side = new THREE.Shape();
+  side.moveTo(-2.45, 0.30);
+  side.lineTo(-2.06, 0.30); side.lineTo(-2.06, 0.34);
+  side.absarc(-1.6, 0.34, 0.46, Math.PI, 0, true);
+  side.lineTo(-1.14, 0.30); side.lineTo(1.14, 0.30); side.lineTo(1.14, 0.34);
+  side.absarc(1.6, 0.34, 0.46, Math.PI, A, true);
+  side.lineTo(1.38, 1.12); side.lineTo(-2.45, 1.12);
+  side.quadraticCurveTo(-2.55, 1.12, -2.55, 1.02);
+  side.lineTo(-2.55, 0.40);
+  side.quadraticCurveTo(-2.55, 0.30, -2.45, 0.30);
+  const sideGeo = new THREE.ExtrudeGeometry(side, { depth: 0.04, bevelEnabled: true, bevelThickness: 0.02, bevelSize: 0.02, bevelSegments: 3, curveSegments: 32 });
+  sideGeo.translate(0, 0, -0.02);
+  [-1, 1].forEach(s => add(car, sideGeo, M.paint, 0, 0, s * 0.925));
+
+  // Avant (capot + nez), plein sur toute la largeur
+  const nose = new THREE.Shape();
+  nose.moveTo(1.38, 1.12);
+  nose.lineTo(1.38, 0.34 + 0.46 * Math.sin(A));
+  nose.absarc(1.6, 0.34, 0.46, A, 0, true);
+  nose.lineTo(2.06, 0.30); nose.lineTo(2.42, 0.30);
+  nose.quadraticCurveTo(2.56, 0.30, 2.56, 0.44);
+  nose.lineTo(2.56, 0.80);
+  nose.quadraticCurveTo(2.56, 0.94, 2.40, 0.985);
+  nose.quadraticCurveTo(2.10, 1.07, 1.86, 1.12);
+  nose.lineTo(1.38, 1.12);
+  const noseGeo = new THREE.ExtrudeGeometry(nose, { depth: 1.83, bevelEnabled: true, bevelThickness: 0.05, bevelSize: 0.04, bevelSegments: 4, curveSegments: 32 });
+  noseGeo.translate(0, 0, -0.915);
+  add(car, noseGeo, M.paint);
+
+  // Arrière, toit, montants
+  add(car, rbox(0.14, 0.88, 1.93, 0.045), M.paint, -2.52, 0.74, 0);
+  add(car, rbox(3.80, 0.10, 1.93, 0.045), M.paint, -0.68, 1.86, 0);
+  [-1, 1].forEach(s => {
+    add(car, rbox(3.2, 0.04, 0.05, 0.015), M.gloss, -0.75, 1.93, s * 0.72);          // barres de toit
+    add(car, box(0.10, 0.66, 0.03), M.gloss, 0.80, 1.48, s * 0.955);                 // montant B
+    add(car, box(0.10, 0.66, 0.03), M.gloss, -0.70, 1.48, s * 0.955);                // montant C
+    add(car, box(0.08, 0.66, 0.15), M.paint, -2.545, 1.49, s * 0.89);                // coin arrière
+    const ap = add(car, box(0.93, 0.07, 0.06), M.gloss, 1.515, 1.48, s * 0.935);    // montant A
+    ap.rotation.z = Math.atan2(0.67, -0.66);
+    add(car, box(4.36, 0.016, 0.012), M.chrome, -0.33, 1.15, s * 0.963);            // ligne chromée
+    add(car, box(0.16, 0.03, 0.02), M.chrome, 0.62, 1.02, s * 0.968);               // poignées
+    add(car, box(0.16, 0.03, 0.02), M.chrome, -0.55, 1.02, s * 0.968);
+    add(car, box(0.10, 0.04, 0.12), M.paint, 1.74, 1.20, s * 0.99);                 // rétroviseurs
+    add(car, rbox(0.16, 0.13, 0.24, 0.04), M.paint, 1.70, 1.25, s * 1.08);
+    add(car, box(0.03, 0.46, 0.09), M.tail, -2.595, 1.22, s * 0.90);                // feux arrière
+    add(car, box(0.04, 0.10, 0.42), M.gloss, 2.59, 0.72, s * 0.62);                 // phares
+    add(car, box(0.012, 0.014, 0.40), M.light, 2.615, 0.775, s * 0.62);
+  });
+
+  // Vitres
+  const g = M.glass;
+  [-1, 1].forEach(s => {
+    const z = s * 0.955;
+    car.add(quad([1.80, 1.13, z], [1.17, 1.83, z], [-2.50, 1.83, z], [-2.50, 1.13, z], g));
+  });
+  car.add(quad([1.86, 1.16, -0.90], [1.86, 1.16, 0.90], [1.20, 1.83, 0.88], [1.20, 1.83, -0.88], M.windshield));
+  car.add(quad([-2.575, 1.18, -0.82], [-2.575, 1.18, 0.82], [-2.575, 1.82, 0.82], [-2.575, 1.82, -0.82], g));
+
+  // Face avant
+  add(car, box(0.03, 0.16, 0.78), M.gloss, 2.595, 0.68, 0);
+  [0.64, 0.68, 0.72].forEach(y => add(car, box(0.012, 0.014, 0.74), M.chrome, 2.613, y, 0));
+  add(car, rbox(0.10, 0.14, 1.95, 0.04), M.plastic, -2.585, 0.37, 0);
+  addPlate(car, 2.6, 0.53, 0, 90);
+  addPlate(car, -2.597, 0.80, 0, -90);
+
+  // Roues + passages de roue + dessous
+  const linerGeo = new THREE.CylinderGeometry(0.41, 0.41, 0.30, 32, 1, true, Math.PI / 2, Math.PI);
+  [-1.6, 1.6].forEach(x => [-1, 1].forEach(s => {
+    const wh = wheel(); wh.position.set(x, 0.34, s * 0.83); if (s < 0) wh.rotation.y = Math.PI; car.add(wh);
+    add(car, linerGeo, M.liner, x, 0.34, s * 0.81, false).rotation.x = Math.PI / 2;
+  }));
+  add(car, box(5.0, 0.20, 1.30), M.plastic, 0, 0.40, 0);
+
+  // ===== Intérieur =====
+  add(car, box(3.75, 0.05, 1.77), M.carpet, -0.575, 0.525, 0, false);              // plancher
+  [-1, 1].forEach(s => {
+    add(car, box(3.75, 0.62, 0.03), M.trim, -0.575, 0.86, s * 0.87, false);        // panneaux de porte
+    add(car, box(3.75, 0.012, 0.012), M.goldMetal, -0.575, 1.10, s * 0.853, false);
+    add(car, rbox(0.82, 0.26, 0.245, 0.04), M.trim, -1.6, 0.68, s * 0.7625, false); // passages de roue
+    add(car, box(3.4, 0.012, 0.02), M.gold, -0.65, 1.783, s * 0.70, false);        // LED d'ambiance
+  });
+  add(car, box(3.70, 0.02, 1.76), M.headliner, -0.65, 1.80, 0, false);              // ciel de toit
+
+  // Tableau de bord
+  add(car, box(0.12, 0.62, 1.76), M.trim, 1.31, 0.86, 0);
+  add(car, rbox(0.57, 0.06, 1.80, 0.025), M.trim, 1.535, 1.17, 0);
+  const scr = new THREE.Group(); scr.position.set(1.30, 1.30, 0.10); scr.rotation.z = -0.22; car.add(scr);
+  add(scr, rbox(0.03, 0.18, 0.50, 0.012), M.gloss, 0.012, 0, 0);
+  add(scr, new THREE.PlaneGeometry(0.48, 0.16), new THREE.MeshBasicMaterial({ map: screenTexture(), toneMapped: false }), -0.004, 0, 0, false).rotation.y = -Math.PI / 2;
+  const gauge = new THREE.Group(); gauge.position.set(1.27, 1.27, -0.45); gauge.rotation.z = -0.25; car.add(gauge);
+  add(gauge, rbox(0.03, 0.12, 0.34, 0.01), M.gloss, 0.012, 0, 0);
+  add(gauge, new THREE.PlaneGeometry(0.32, 0.106), new THREE.MeshBasicMaterial({ map: gaugeTexture(), toneMapped: false }), -0.004, 0, 0, false).rotation.y = -Math.PI / 2;
+
+  // Volant
+  const sw = new THREE.Group(); sw.position.set(1.02, 1.14, -0.45); sw.rotation.z = 0.45; car.add(sw);
+  add(sw, new THREE.TorusGeometry(0.18, 0.022, 12, 40), M.trim).rotation.y = Math.PI / 2;
+  add(sw, new THREE.CylinderGeometry(0.05, 0.05, 0.05, 20), M.gloss).rotation.z = Math.PI / 2;
+  add(sw, box(0.02, 0.025, 0.32), M.trim);
+  add(sw, box(0.02, 0.10, 0.025), M.trim, 0, -0.09, 0);
+  add(sw, new THREE.CylinderGeometry(0.03, 0.03, 0.22, 12), M.plastic, 0.12, 0, 0).rotation.z = Math.PI / 2;
+
+  // Console + sièges + table
+  add(car, rbox(0.62, 0.28, 0.26, 0.04), M.trim, 0.86, 0.69, 0);
+  [-1, 1].forEach(s => {
+    const f = seat({ arms: true }); f.position.set(0.72, 0.55, s * 0.45); car.add(f);
+    const c = seat({ arms: true }); c.position.set(-0.42, 0.55, s * 0.45); c.rotation.y = Math.PI; car.add(c);
+  });
+  const bench = seat({ width: 1.56, heads: [-0.52, 0, 0.52] }); bench.position.set(-1.88, 0.55, 0); car.add(bench);
+  add(car, new THREE.CylinderGeometry(0.04, 0.05, 0.40, 16), M.chrome, -1.12, 0.75, 0);
+  add(car, rbox(0.42, 0.035, 0.70, 0.015), M.wood, -1.12, 0.97, 0);
+
+  return car;
+}
+
+/* ================= VRAI MODÈLE (.glb) ================= */
+const carRoot = new THREE.Group();
+scene.add(carRoot);
+
+function fitModel(model) {
+  const wrap = new THREE.Group();
+  wrap.add(model);
+  model.rotation.y = THREE.MathUtils.degToRad(CONFIG.modelTurn);
+  wrap.updateMatrixWorld(true);
+  const bb = new THREE.Box3().setFromObject(model);
+  const size = bb.getSize(new THREE.Vector3());
+  if (size.z > size.x) { model.rotation.y += Math.PI / 2; wrap.updateMatrixWorld(true); bb.setFromObject(model); bb.getSize(size); }
+  wrap.scale.setScalar(CONFIG.modelLength / size.x);
+  wrap.updateMatrixWorld(true);
+  bb.setFromObject(wrap);
+  const c = bb.getCenter(new THREE.Vector3());
+  wrap.position.set(-c.x, -bb.min.y, -c.z);
+  // Carrosserie en noir brillant (on ne touche pas aux vitres, chromes, feux, pneus, intérieur...)
+  const isPaint = new RegExp(CONFIG.paintNames, 'i');
+  const skip = /glass|window|chrome|light|lamp|tire|tyre|rim|wheel|interior|seat|plastic|rubber|mirror|plate/i;
+  const swapped = new Map();
+  model.traverse(o => {
+    if (!o.isMesh) return;
+    o.castShadow = true;
+    if (!CONFIG.blackPaint) return;
+    const swap = m => {
+      if (!m || !isPaint.test(m.name || '') || skip.test(m.name || '')) return m;
+      if (!swapped.has(m)) { const p = blackPaint(m.normalMap || null); p.name = m.name; swapped.set(m, p); }
+      return swapped.get(m);
+    };
+    o.material = Array.isArray(o.material) ? o.material.map(swap) : swap(o.material);
+  });
+  // Plaques sur le vrai modèle (positions en mètres, après mise à l'échelle)
+  const out = new THREE.Group();
+  out.add(wrap);
+  CONFIG.modelPlates.forEach(([x, y, z, turn]) => addPlate(out, x, y, z, turn));
+  return out;
+}
+
+function useModel(obj, isDemo) {
+  carRoot.clear();
+  carRoot.add(obj);
+  $('#demoTag').hidden = !isDemo;
+}
+
+function ready() {
+  clearTimeout(window.__car3dTimer);
+  requestAnimationFrame(() => loader.classList.add('done'));
+}
+
+function loadModel(url) {
+  const gl = new GLTFLoader();
+  const draco = new DRACOLoader();
+  draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/gltf/');
+  gl.setDRACOLoader(draco);
+  gl.load(url,
+    gltf => { useModel(fitModel(gltf.scene), false); ready(); },
+    xhr => { if (xhr.lengthComputable) loaderText.textContent = `Chargement… ${Math.round(xhr.loaded / xhr.total * 100)} %`; },
+    err => { console.warn('Modèle 3D introuvable : modèle provisoire affiché.', err); useModel(buildDemoVan(), true); ready(); });
+}
+if (CONFIG.modelUrl) {
+  loadModel(CONFIG.modelUrl);
+} else {
+  useModel(buildDemoVan(), true);
+  ready();
+}
+
+/* ================= PHOTO 360° (option intérieur) ================= */
+const texLoader = new THREE.TextureLoader();
+const photoCache = new Map();
+let photoMesh = null, photoFadeStart = 0;
+function loadPhoto(url) {
+  if (!photoCache.has(url)) {
+    photoCache.set(url, new Promise((res, rej) => texLoader.load(url, t => {
+      t.colorSpace = THREE.SRGBColorSpace;
+      t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      res(t);
+    }, undefined, rej)));
+  }
+  return photoCache.get(url);
+}
+function showPhoto(key, pos) {
+  const url = CONFIG.views[key].photo;
+  if (!url) return;
+  loadPhoto(url).then(tex => {
+    if (mode !== 'inside' || currentView !== key || tween) return;
+    if (!photoMesh) {
+      const geo = new THREE.SphereGeometry(40, 64, 32);
+      geo.scale(-1, 1, 1);
+      photoMesh = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ transparent: true, depthWrite: false, toneMapped: false }));
+      scene.add(photoMesh);
+    }
+    photoMesh.material.map = tex;
+    photoMesh.material.opacity = 0;
+    photoMesh.material.needsUpdate = true;
+    photoMesh.position.copy(pos);
+    photoMesh.rotation.y = Math.PI + THREE.MathUtils.degToRad(CONFIG.photoTurn);
+    photoMesh.visible = true;
+    carRoot.visible = false; floorGroup.visible = false;
+    photoFadeStart = performance.now();
+  }).catch(err => console.warn('Photo 360° introuvable : intérieur 3D affiché.', err));
+}
+function hidePhoto() {
+  if (photoMesh) photoMesh.visible = false;
+  carRoot.visible = true; floorGroup.visible = true;
+}
+
+/* ================= CAMÉRA + COMMANDES ================= */
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.enablePan = false;
+
+const EXT_TARGET = new THREE.Vector3(0, 0.85, 0);
+const HOME_DIR = new THREE.Vector3(0.80, 0.26, 0.56).normalize();
+let mode = 'outside', currentView = CONFIG.startView, touched = false, tween = null;
+
+const outsideFov = () => (camera.aspect < 0.8 ? 40 : 30);
+const insideFov = () => (camera.aspect < 0.8 ? 80 : 68);
+function homeDistance() {
+  const vf = THREE.MathUtils.degToRad(outsideFov()) / 2;
+  const hf = Math.atan(Math.tan(vf) * camera.aspect);
+  const wide = camera.aspect > 1;
+  return Math.max(3.0 / Math.tan(vf), (wide ? 4.0 : 2.9) / Math.tan(hf), 5.5);
+}
+// Décalage de l'image : sur grand écran, la voiture va un peu à droite (le titre est à gauche)
+const shift = { x: 0, y: 0 };
+function wantedShift(m = mode) {
+  if (m !== 'outside') return { x: 0, y: 0 };
+  return camera.aspect > 1.1 ? { x: 0.09, y: 0.05 } : { x: 0, y: 0.03 };
+}
+function applyShift() {
+  const w = canvas.clientWidth || window.innerWidth, h = canvas.clientHeight || window.innerHeight;
+  camera.setViewOffset(w, h, -shift.x * w, -shift.y * h, w, h);
+}
+function placeHome() {
+  camera.position.copy(EXT_TARGET).addScaledVector(HOME_DIR, homeDistance());
+  controls.target.copy(EXT_TARGET);
+  camera.lookAt(EXT_TARGET);
+}
+function setOutsideControls() {
+  controls.enableZoom = true; controls.zoomSpeed = 0.9; controls.rotateSpeed = 0.9;
+  controls.minDistance = 4.0; controls.maxDistance = homeDistance() * 1.4;
+  controls.minPolarAngle = 0.2; controls.maxPolarAngle = 1.48;
+  controls.autoRotate = !touched && !reduceMotion; controls.autoRotateSpeed = 0.8;
+}
+function setInsideControls() {
+  controls.enableZoom = false; controls.rotateSpeed = -0.32;
+  controls.minDistance = 0; controls.maxDistance = Infinity;
+  controls.minPolarAngle = 0.25; controls.maxPolarAngle = Math.PI - 0.25;
+  controls.autoRotate = false;
+}
+controls.addEventListener('start', () => {
+  if (tween) return;
+  touched = true;
+  controls.autoRotate = false;
+});
+
+function viewPose(key) {
+  const v = CONFIG.views[key];
+  const yaw = THREE.MathUtils.degToRad(v.yaw), pitch = THREE.MathUtils.degToRad(v.pitch);
+  return {
+    pos: new THREE.Vector3(...v.pos),
+    dir: new THREE.Vector3(Math.cos(pitch) * Math.cos(yaw), Math.sin(pitch), -Math.cos(pitch) * Math.sin(yaw)),
+  };
+}
+function currentLookPoint() {
+  if (mode === 'outside') return controls.target.clone();
+  const d = new THREE.Vector3(); camera.getWorldDirection(d);
+  return camera.position.clone().addScaledVector(d, 2);
+}
+function flyTo({ fromLook, pos, look, fov, via, duration, done }) {
+  const from = camera.position.clone();
+  tween = {
+    start: performance.now(), duration: reduceMotion ? 1 : duration,
+    curve: via ? new THREE.QuadraticBezierCurve3(from, via, pos.clone()) : new THREE.LineCurve3(from, pos.clone()),
+    fromLook, toLook: look.clone(), fromFov: camera.fov, toFov: fov, done,
+    fromShift: { ...shift }, toShift: wantedShift(),
+  };
+  controls.enabled = false;
+  setBusy(true);
+}
+function goInside(key) {
+  if (tween) return;
+  const fromLook = currentLookPoint();
+  const { pos, dir } = viewPose(key);
+  let via = null;
+  if (mode === 'outside') {
+    const side = camera.position.z >= 0 ? 1 : -1; // entrer par le côté où l'on se trouve
+    via = new THREE.Vector3(pos.x + 0.6, pos.y + 0.5, side * 3.4);
+  }
+  const wasOutside = mode === 'outside';
+  hidePhoto();
+  mode = 'inside'; currentView = key; updateUI();
+  flyTo({
+    fromLook, pos, look: pos.clone().addScaledVector(dir, 2), fov: insideFov(), via,
+    duration: wasOutside ? 1700 : 1100,
+    done() {
+      controls.target.copy(pos).addScaledVector(dir, 0.01);
+      setInsideControls();
+      controls.update();
+      showPhoto(key, pos);
+    },
+  });
+}
+function goOutside() {
+  if (tween) return;
+  const fromLook = currentLookPoint();
+  const p = camera.position;
+  hidePhoto();
+  mode = 'outside'; updateUI();
+  setOutsideControls();
+  flyTo({
+    fromLook, pos: EXT_TARGET.clone().addScaledVector(HOME_DIR, homeDistance()), look: EXT_TARGET, fov: outsideFov(),
+    via: new THREE.Vector3(p.x + 0.8, p.y + 0.9, 3.6), duration: 1600,
+    done() { controls.target.copy(EXT_TARGET); controls.update(); },
+  });
+}
+
+// Molette à l'intérieur = zoom (angle de vue)
+canvas.addEventListener('wheel', e => {
+  if (mode !== 'inside' || tween) return;
+  e.preventDefault();
+  camera.fov = THREE.MathUtils.clamp(camera.fov + e.deltaY * 0.03, 35, 85);
+  camera.updateProjectionMatrix();
+}, { passive: false });
+
+/* ================= INTERFACE ================= */
+function updateUI() {
+  const inside = mode === 'inside';
+  document.body.classList.toggle('is-inside', inside);
+  toggleLabel.textContent = inside ? 'Voir l’extérieur' : 'Voir l’intérieur';
+  hint.textContent = inside ? HINT_IN : HINT_OUT;
+  chips.forEach(c => c.setAttribute('aria-pressed', String(inside && c.dataset.view === currentView)));
+  canvas.setAttribute('aria-label', inside
+    ? 'Intérieur du véhicule en 3D. Glissez pour regarder autour.'
+    : 'Véhicule en 3D. Glissez pour tourner autour.');
+}
+function setBusy(b) {
+  toggleBtn.disabled = b;
+  chips.forEach(c => { c.disabled = b; });
+}
+toggleBtn.addEventListener('click', () => (mode === 'outside' ? goInside(currentView) : goOutside()));
+chips.forEach(c => c.addEventListener('click', () => {
+  if (mode === 'inside' && c.dataset.view !== currentView) goInside(c.dataset.view);
+}));
+
+function resize() {
+  const w = canvas.clientWidth || window.innerWidth, h = canvas.clientHeight || window.innerHeight;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  if (!tween) {
+    camera.fov = mode === 'outside' ? outsideFov() : insideFov();
+    Object.assign(shift, wantedShift());
+  }
+  applyShift();
+  if (mode === 'outside' && !tween) {
+    controls.maxDistance = homeDistance() * 1.4;
+    if (!touched) placeHome();
+  }
+}
+window.addEventListener('resize', resize);
+
+/* ================= BOUCLE ================= */
+const look = new THREE.Vector3();
+function frame(now) {
+  requestAnimationFrame(frame);
+  if (tween) {
+    const k = Math.min(1, (now - tween.start) / tween.duration);
+    const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+    camera.position.copy(tween.curve.getPoint(e));
+    look.lerpVectors(tween.fromLook, tween.toLook, e);
+    camera.fov = THREE.MathUtils.lerp(tween.fromFov, tween.toFov, e);
+    shift.x = THREE.MathUtils.lerp(tween.fromShift.x, tween.toShift.x, e);
+    shift.y = THREE.MathUtils.lerp(tween.fromShift.y, tween.toShift.y, e);
+    applyShift();
+    camera.lookAt(look);
+    if (k >= 1) {
+      const t = tween; tween = null;
+      controls.enabled = true;
+      setBusy(false);
+      if (t.done) t.done();
+    }
+  } else {
+    controls.update();
+  }
+  if (photoMesh && photoMesh.visible && photoMesh.material.opacity < 1) {
+    photoMesh.material.opacity = Math.min(1, (now - photoFadeStart) / 450);
+  }
+  renderer.render(scene, camera);
+}
+
+setOutsideControls();
+resize();
+placeHome();
+updateUI();
+requestAnimationFrame(frame);
+
+// Pour les essais dans la console du navigateur
+window.carViewer = {
+  goInside, goOutside, loadModel, camera, controls,
+  get carRoot() { return carRoot; },
+  setPhoto(key, url) {
+    const keys = key === 'all' ? Object.keys(CONFIG.views) : [key];
+    keys.forEach(k => { CONFIG.views[k].photo = url; });
+    if (mode === 'inside' && !tween && keys.includes(currentView)) showPhoto(currentView, viewPose(currentView).pos);
+  },
+  get mode() { return mode; },
+};
+</script>
+</body>
+</html>
