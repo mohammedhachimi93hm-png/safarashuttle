@@ -40,8 +40,8 @@
     "opens": "00:00",
     "closes": "23:59"
   }],
-  "hasMap": "https://maps.app.goo.gl/sG957xzgNAQWQL4M8",
-  "sameAs": ["https://maps.app.goo.gl/sG957xzgNAQWQL4M8"],
+  "geo": {"@type": "GeoCoordinates", "latitude": 33.457348, "longitude": -7.514808},
+  "hasMap": "https://www.google.com/maps?q=33.457348,-7.514808",
   "knowsLanguage": ["fr", "en", "ar"]
 }
 </script>
@@ -752,8 +752,8 @@ const CONFIG = {
   // Réservations et avis envoyés par e-mail (service gratuit FormSubmit). Le 1er envoi demande une activation dans la boîte support@.
   formEndpoint: 'https://formsubmit.co/ajax/support@safarashuttle.com',
   googleReviewsUrl: '',              // lien de votre fiche Google (avis), à ajouter plus tard
-  mapsUrl: 'https://maps.app.goo.gl/sG957xzgNAQWQL4M8',   // fiche Google Maps de l'agence
-  mapsQuery: 'Taxi aéroport vip, 29490, Mediouna',          // sert à afficher la carte Google dans le site
+  mapsUrl: 'https://www.google.com/maps/dir/?api=1&destination=33.457348,-7.514808',   // itinéraire vers l'agence (depuis la position du client)
+  mapsQuery: '33.457348,-7.514808',          // position de l'agence (Mediouna), carte Google dans le site
   address: 'Mediouna 29490, Grand Casablanca, Maroc',
   // Avis clients réels uniquement, ex. {name:'Sara', from:'Paris', stars:5, text:'…', photo:'clients/sara.jpg'}
   reviews: [],
@@ -1488,7 +1488,7 @@ function renderAgency(){
   // La carte Google s'affiche sur le vrai site (safarashuttle.com, GitHub Pages, fichier local)
   const canEmbed=location.protocol==='file:'||/(^|\.)safarashuttle\.com$|github\.io$|^localhost$/.test(location.hostname);
   const map=canEmbed
-    ?`<iframe title="${esc(t('ag.title'))} · ${esc(CONFIG.brandFull)}" src="https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1s${encodeURIComponent(CONFIG.mapsQuery).replace(/%20/g,'+')}!6i14!3m1!1s${LANG}!5m1!1s${LANG}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>`
+    ?`<iframe title="${esc(t('ag.title'))} · ${esc(CONFIG.brandFull)}" src="https://maps.google.com/maps?q=${encodeURIComponent(CONFIG.mapsQuery)}&z=16&hl=${LANG}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>`
     :`<div class="agency-pin zellige">${LOGO_SVG}<b>${esc(CONFIG.brand)}</b><span>Mediouna · Casablanca</span></div>`;
   el.innerHTML=`<div class="agency-map">${map}</div><div class="agency-info">
     <div class="agency-brand">${LOGO_SVG}<div><b>${esc(CONFIG.brand)}</b><small>${esc(CONFIG.brandSub)} · ${esc(t('ag.title'))}</small></div></div>
