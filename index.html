@@ -20,7 +20,7 @@
 <style>
 /* Layout: full-bleed city photo hero over a zellige ground, zellige friezes between bands, horseshoe arches framing the fleet and the arrivals board */
 :root{
-  --bg:#F6EFE2; --surface:#FFFBF3; --surface-2:#EFE3CC; --ink:#2A1D14; --muted:#6E5B4B; --line:#E2D3B9;
+  --bg:#F6EFE2; --surface:#FFFBF3; --surface-2:#EFE3CC; --ink:#2A1D14; --muted:#4E4034; --line:#E2D3B9;
   --teal:#0E5A4A; --teal-2:#0A4337; --on-teal:#F7EEDC; --on-teal-line:rgba(247,238,220,.22);
   --brass:#8E5F16; --brass-hi:#D4A245; --brass-soft:#F1DFB8; --on-brass:#24170A;
   --terra:#B4532A; --majorelle:#2D4BA0; --wa:#1E9E57;
@@ -38,7 +38,7 @@
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#17110C; --surface:#21180F; --surface-2:#2B2015; --ink:#F3E8D6; --muted:#BFAE97; --line:#3D2E20;
+    --bg:#17110C; --surface:#21180F; --surface-2:#2B2015; --ink:#F3E8D6; --muted:#D8C9B2; --line:#3D2E20;
     --teal:#1F7A66; --teal-2:#0E4A3E; --on-teal:#F7EEDC; --on-teal-line:rgba(247,238,220,.22);
     --brass:#E0B45C; --brass-hi:#E0B45C; --brass-soft:#43321A; --on-brass:#24170A;
     --terra:#D9774C; --majorelle:#8BA2E8;
@@ -48,7 +48,7 @@
   }
 }
 :root[data-theme="dark"]{
-  --bg:#17110C; --surface:#21180F; --surface-2:#2B2015; --ink:#F3E8D6; --muted:#BFAE97; --line:#3D2E20;
+  --bg:#17110C; --surface:#21180F; --surface-2:#2B2015; --ink:#F3E8D6; --muted:#D8C9B2; --line:#3D2E20;
   --teal:#1F7A66; --teal-2:#0E4A3E; --on-teal:#F7EEDC; --on-teal-line:rgba(247,238,220,.22);
   --brass:#E0B45C; --brass-hi:#E0B45C; --brass-soft:#43321A; --on-brass:#24170A;
   --terra:#D9774C; --majorelle:#8BA2E8;
@@ -59,17 +59,17 @@
 *{box-sizing:border-box}
 html{scroll-padding-top:84px}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 17px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--surface)}
 h1,h2,h3{margin:0;line-height:1.1;text-wrap:balance}
 h1,h2{font-family:var(--f-display);font-weight:400;letter-spacing:-.005em}
-h3{font-weight:600;font-size:1.1rem}
+h3{font-weight:700;font-size:1.15rem}
 p{margin:0}
 a{color:inherit}
 button{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--brass-hi);outline-offset:2px}
 .wrap{max-width:1200px;margin-inline:auto;padding-left:max(clamp(16px,4vw,40px),env(safe-area-inset-left,0px));padding-right:max(clamp(16px,4vw,40px),env(safe-area-inset-right,0px))}
-.eyebrow{font:500 12px/1.2 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
+.eyebrow{font:600 14px/1.3 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--brass)}
 .ic{width:22px;height:22px;flex:none}
 
 /* buttons */
@@ -92,7 +92,7 @@ button{font:inherit;color:inherit}
 .brand-name{font-family:var(--f-display);font-size:22px;letter-spacing:.1em;line-height:1}
 .brand-sub{display:block;font:500 10px/1 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:4px;white-space:nowrap}
 .nav ul{display:flex;gap:2px;list-style:none;margin:0;padding:0}
-.nav a{display:block;padding:8px 11px;border-radius:8px;text-decoration:none;font-size:15px;color:var(--muted);white-space:nowrap}
+.nav a{display:block;padding:8px 11px;border-radius:8px;text-decoration:none;font-size:15.5px;font-weight:600;color:var(--ink);white-space:nowrap}
 .nav a:hover{color:var(--ink);background:var(--surface-2)}
 .lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;flex:none}
 .lang button{border:0;background:none;padding:5px 10px;border-radius:999px;font:600 12px/1 var(--f-mono);letter-spacing:.06em;cursor:pointer;color:var(--muted)}
@@ -125,22 +125,23 @@ button{font:inherit;color:inherit}
 .hero h1{font-size:clamp(2.35rem,5.2vw,4.1rem);margin-top:14px;color:var(--on-teal)}
 .hero .eyebrow{color:var(--brass-hi);font-size:clamp(14px,1.45vw,18px);font-weight:600;letter-spacing:.14em;display:flex;flex-direction:column;align-items:flex-start;gap:8px;line-height:1.35}
 .hero .eyebrow .ar{font-size:clamp(40px,4.2vw,56px);line-height:1.05;letter-spacing:0}
-.hero .lede{margin-top:18px;font-size:1.1rem;opacity:.88;max-width:54ch}
+.hero .lede{margin-top:18px;font-size:1.2rem;font-weight:500;max-width:52ch}
 .hero .qb{color:var(--ink)}
 .hero-side{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:32px;align-self:stretch;min-width:0}
 .wa-card{width:min(420px,100%);background:var(--teal-2);background:color-mix(in srgb,var(--teal-2) 90%,transparent);backdrop-filter:blur(6px);box-shadow:0 20px 50px -20px rgba(0,0,0,.6)}
-.wa-title{display:flex;align-items:center;gap:10px;font:400 1.55rem/1.2 var(--f-display);margin-top:14px;color:var(--on-teal)}
+.wa-title{display:flex;align-items:center;gap:10px;font:700 1.45rem/1.2 var(--f-body);margin-top:14px;color:var(--on-teal)}
 .wa-title .ic{color:var(--brass-hi);width:26px;height:26px}
-.wa-sub{opacity:.85;font-size:14.5px;margin-top:6px;margin-bottom:4px}
+.wa-sub{font-size:16px;margin-top:6px;margin-bottom:4px}
+.wa-card .btn{width:100%;min-height:52px;font-size:16.5px}
 .wa-float{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;background:var(--wa);color:#fff;font-weight:700;text-decoration:none;box-shadow:0 10px 26px -8px rgba(0,0,0,.5)}
 .wa-float .ic{width:22px;height:22px}
 .wa-float:hover{filter:brightness(1.08)}
 @media (max-width:600px){.wa-float span{display:none}.wa-float{padding:14px}}
 .cities{justify-self:end;display:flex;flex-direction:column;align-items:flex-end;gap:14px;text-align:right;max-width:100%}
 .city-name{display:block;font:400 clamp(2.1rem,4.4vw,3.4rem)/1 var(--f-display);text-shadow:0 2px 18px rgba(0,0,0,.35)}
-.city-tag{display:block;font:500 12px/1.4 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;opacity:.85;margin-top:10px}
+.city-tag{display:block;font:600 14px/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;margin-top:10px}
 .city-tabs{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:2px 18px}
-.city-tabs button{position:relative;border:0;background:none;color:var(--on-teal);opacity:.72;padding:9px 0;font:600 12px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+.city-tabs button{position:relative;border:0;background:none;color:var(--on-teal);opacity:.8;padding:9px 0;font:700 13.5px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
 .city-tabs button:hover,.city-tabs button[aria-pressed="true"]{opacity:1}
 .city-tabs button::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--brass-hi)}
 .city-tabs button[aria-pressed="true"]::after{width:100%}
@@ -160,16 +161,17 @@ button{font:inherit;color:inherit}
 /* forms */
 .qb{margin-top:28px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:0 18px 18px}
 .tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin:0 -18px 16px;padding:0 10px;overflow-x:auto}
-.tab{border:0;background:none;padding:15px 10px 12px;font-weight:600;font-size:15px;color:var(--muted);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;display:flex;gap:8px;align-items:center}
+.tab{border:0;background:none;padding:15px 10px 12px;font-weight:700;font-size:16px;color:var(--muted);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;display:flex;gap:8px;align-items:center}
 .tab .ic{width:18px;height:18px}
+@media (max-width:480px){.tabs{gap:0;padding:0 4px}.tab{flex:1;justify-content:center;padding:14px 4px 12px}.tab .ic{display:none}}
 .tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--brass-hi)}
 .fgrid{display:grid;gap:12px;grid-template-columns:repeat(6,minmax(0,1fr))}
 .c1{grid-column:span 1}.c2{grid-column:span 2}.c3{grid-column:span 3}.c6{grid-column:span 6}
 @media (max-width:600px){.fgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.c3,.c6{grid-column:span 2}.c1,.c2{grid-column:span 1}}
 .field{display:flex;flex-direction:column;gap:6px;min-width:0}
 .fhead{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:16px}
-.field label,.flabel{font:500 11.5px/1.2 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.field select,.field input,.field textarea{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:500 15px/1.3 var(--f-body);min-width:0}
+.field label,.flabel{font:700 13px/1.2 var(--f-body);letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+.field select,.field input,.field textarea{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:600 16px/1.3 var(--f-body);min-width:0}
 .field textarea{min-height:84px;resize:vertical}
 .field select:focus,.field input:focus,.field textarea:focus{outline:2px solid var(--brass-hi);outline-offset:0;border-color:transparent}
 .swap{border:0;background:none;padding:0;color:var(--brass);cursor:pointer;display:grid;place-items:center}
@@ -177,10 +179,10 @@ button{font:inherit;color:inherit}
 .check{display:flex;align-items:center;gap:10px;font-weight:500;cursor:pointer;min-height:40px}
 .check input{width:20px;height:20px;accent-color:var(--teal)}
 .qb-foot{display:flex;align-items:center;justify-content:space-between;gap:12px 16px;margin-top:16px;flex-wrap:wrap}
-.hint .k{font-size:13px;color:var(--muted)}
-.hint .v{font-weight:700;font-size:21px;font-variant-numeric:tabular-nums}
+.hint .k{font-size:15px;color:var(--muted)}
+.hint .v{font-weight:700;font-size:24px;font-variant-numeric:tabular-nums}
 .hint .eur{color:var(--muted);font-weight:500;font-size:14px;margin-left:4px}
-.routeinfo{font:500 13px/1.4 var(--f-mono);color:var(--muted)}
+.routeinfo{font:600 14.5px/1.4 var(--f-mono);color:var(--muted)}
 
 /* arch + arrivals board */
 .zellige{background-color:var(--teal);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23D9B068' stroke-opacity='.34' stroke-width='1.2'%3E%3Crect x='17' y='17' width='22' height='22'/%3E%3Crect x='17' y='17' width='22' height='22' transform='rotate(45 28 28)'/%3E%3Ccircle cx='28' cy='28' r='4.5'/%3E%3Cpath d='M0 0l9 9M56 0l-9 9M0 56l9-9M56 56l-9-9'/%3E%3C/g%3E%3C/svg%3E");background-size:56px 56px}
@@ -188,9 +190,9 @@ button{font:inherit;color:inherit}
 .arch::before{content:"";position:absolute;inset:9px;border:1px solid var(--brass-hi);opacity:.6;border-radius:50% 50% 14px 14px / 161px 161px 14px 14px;z-index:-1;pointer-events:none}
 .greet{position:absolute;top:44px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
 .greet .ar{font-size:30px;line-height:1.1;color:var(--brass-hi)}
-.greet .lat{font:400 14px/1 var(--f-display);letter-spacing:.2em;text-transform:uppercase}
+.greet .lat{font:700 14px/1 var(--f-body);letter-spacing:.2em;text-transform:uppercase}
 .board{background:var(--board);color:var(--board-fg);border-radius:14px;padding:12px 12px 4px;font-family:var(--f-mono);box-shadow:0 18px 40px -18px rgba(0,0,0,.6)}
-.board-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--board-dim);padding:2px 4px 10px;border-bottom:1px solid var(--board-line)}
+.board-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--board-dim);padding:2px 4px 10px;border-bottom:1px solid var(--board-line)}
 .board-head b{color:var(--board-fg);font-weight:600}
 .board-head .clock{color:var(--board-fg);font-variant-numeric:tabular-nums}
 .board-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;width:100%;padding:7px 4px;border:0;border-bottom:1px solid var(--board-line);background:none;color:inherit;text-align:left;cursor:pointer;font:inherit}
@@ -200,8 +202,8 @@ button{font:inherit;color:inherit}
 .flap{display:inline-flex;gap:2px}
 .flap span{position:relative;display:inline-grid;place-items:center;width:21px;height:27px;background:var(--board-tile);border-radius:3px;font:600 15px/1 var(--f-mono);color:var(--board-fg)}
 .flap span::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--board)}
-.bcity{font:600 13.5px/1.2 var(--f-body);color:var(--board-text);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bsub{display:block;font:400 11px/1.3 var(--f-mono);color:var(--board-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bcity{font:700 15px/1.2 var(--f-body);color:var(--board-text);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bsub{display:block;font:500 12.5px/1.3 var(--f-mono);color:var(--board-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bstat{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--board-ok);white-space:nowrap}
 .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
 @media (prefers-reduced-motion:no-preference){.dot{animation:pulse 2.4s ease-in-out infinite}}
@@ -214,8 +216,8 @@ button{font:inherit;color:inherit}
 @media (max-width:620px){.trust ul{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .trust li{display:flex;gap:12px;align-items:flex-start;padding-block:6px}
 .trust .ic{color:var(--brass);margin-top:2px}
-.trust b{display:block;font-size:15px;line-height:1.3}
-.trust span{font-size:13.5px;color:var(--muted);line-height:1.4}
+.trust b{display:block;font-size:16.5px;font-weight:700;line-height:1.3}
+.trust span{font-size:15px;color:var(--muted);line-height:1.4}
 
 /* bands */
 .band{padding-block:clamp(56px,8vw,96px)}
@@ -224,22 +226,21 @@ button{font:inherit;color:inherit}
 .shead h2{font-size:clamp(1.9rem,3.6vw,2.8rem)}
 .shead h2::after{content:"";display:block;width:150px;height:14px;margin-top:18px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='14' viewBox='0 0 150 14'%3E%3Cg fill='%23D4A245'%3E%3Crect y='6.5' width='62' height='1'/%3E%3Crect x='88' y='6.5' width='62' height='1'/%3E%3Crect x='69' y='1' width='12' height='12'/%3E%3Crect x='69' y='1' width='12' height='12' transform='rotate(45 75 7)'/%3E%3C/g%3E%3C/svg%3E") no-repeat left center/150px 14px}
 .shead .eyebrow::before,.contact .eyebrow::before{content:"";display:inline-block;width:11px;height:11px;margin-right:9px;vertical-align:-1px;background:currentColor;clip-path:polygon(50% 0,61% 25%,85% 15%,75% 39%,100% 50%,75% 61%,85% 85%,61% 75%,50% 100%,39% 75%,15% 85%,25% 61%,0 50%,25% 39%,15% 15%,39% 25%)}
-.pay-title{display:flex;align-items:center;font:400 clamp(1.5rem,2.6vw,2rem)/1.15 var(--f-display);margin-top:48px;color:var(--ink)}
+.pay-title{display:flex;align-items:center;font:700 clamp(1.4rem,2.4vw,1.8rem)/1.15 var(--f-body);margin-top:48px;color:var(--ink)}
 .pay-title .star{color:var(--brass-hi);width:14px;height:14px;margin-right:12px}
-.pay-sub{color:var(--muted);margin-top:8px}
+.pay-sub{color:var(--muted);font-size:17px;margin-top:8px}
 .pay{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:20px}
 .pay article{display:flex;gap:14px;align-items:flex-start;padding:20px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg)}
 .pay .ic{width:32px;height:32px;color:var(--teal);flex:none}
-.pay h4{margin:0;font-size:1.05rem}
-.pay p{font-size:14.5px;color:var(--muted);margin-top:4px}
+.pay h4{margin:0;font-size:1.15rem;font-weight:700}
+.pay p{font-size:16px;color:var(--muted);margin-top:4px}
 @media (max-width:760px){.pay{grid-template-columns:minmax(0,1fr)}}
-.paynote{flex-basis:100%;font-size:13px;color:var(--muted);border-top:1px dashed var(--line);padding-top:12px}
-.shead p{color:var(--muted);font-size:1.05rem;max-width:64ch}
+.shead p{color:var(--muted);font-size:1.15rem;max-width:60ch}
 
 .svc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
 .svc article{padding-top:20px;border-top:2px solid var(--ink);display:flex;flex-direction:column;gap:10px}
 .svc .ic{width:28px;height:28px;color:var(--brass)}
-.svc p{color:var(--muted);font-size:15px;flex:1}
+.svc p{color:var(--muted);font-size:16.5px;flex:1}
 @media (max-width:1020px){.svc{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){.svc{grid-template-columns:minmax(0,1fr)}}
 
@@ -252,26 +253,23 @@ button{font:inherit;color:inherit}
 .car-art.photo svg,.vopt .art.photo svg{display:none}
 .vopt .art{position:relative;overflow:hidden}
 .vopt .art.photo{aspect-ratio:3/2;padding:0}
-.ph-note{display:none;position:absolute;right:8px;bottom:6px;font:500 10px/1.4 var(--f-mono);color:#fff;background:rgba(0,0,0,.5);padding:1px 6px;border-radius:4px}
-.car-art.photo .ph-note{display:block}
 .car-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
-.car-class{font:500 11px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
-.car .model{color:var(--muted);font-size:14px;margin-top:-2px}
-.specs{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px}
+.car-class{font:700 13.5px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brass)}
+.specs{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:16px;font-weight:600}
 .specs span{display:inline-flex;align-items:center;gap:6px}
-.specs .ic{width:18px;height:18px;color:var(--muted)}
-.best{font-size:14px;color:var(--muted)}
-.best b{color:var(--ink);font-weight:500}
+.specs .ic{width:20px;height:20px;color:var(--brass)}
+.best{font-size:15.5px;color:var(--muted)}
+.best b{color:var(--ink);font-weight:700}
 .car-foot{margin-top:auto;padding-top:14px;border-top:1px dashed var(--line);display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap}
-.from{font-size:12.5px;color:var(--muted);line-height:1.3}
-.from b{display:block;font-size:19px;color:var(--ink);font-variant-numeric:tabular-nums}
+.from{font-size:14px;color:var(--muted);line-height:1.3}
+.from b{display:block;font-size:22px;color:var(--ink);font-variant-numeric:tabular-nums}
 @media (max-width:1020px){.fleet{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.fleet{grid-template-columns:minmax(0,1fr)}}
 
 .steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;list-style:none;padding:0;margin:0}
 .steps li{display:flex;flex-direction:column;gap:10px;padding-top:20px;border-top:1px solid var(--line)}
 .steps .n{font-family:var(--f-display);font-size:46px;line-height:1;color:var(--brass-hi)}
-.steps p{color:var(--muted);font-size:15px}
+.steps p{color:var(--muted);font-size:16.5px}
 @media (max-width:1020px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){.steps{grid-template-columns:minmax(0,1fr)}}
 
@@ -287,8 +285,6 @@ button{font:inherit;color:inherit}
 .apt-l{font:600 12.5px var(--f-mono);fill:var(--muted);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round;pointer-events:none}
 .apt-l.on{fill:var(--ink);font-size:13.5px}
 .city-l{pointer-events:none}
-.grat{stroke:var(--line);stroke-width:1;stroke-dasharray:2 6;fill:none}
-.grat-l{font:500 11px var(--f-mono);fill:var(--muted)}
 .sea-l{font:400 13px var(--f-display);fill:var(--muted);letter-spacing:.3em}
 .atlas-l{font:italic 400 14px var(--f-display);fill:var(--muted);letter-spacing:.12em}
 .city{fill:var(--muted);opacity:.55}
@@ -306,70 +302,66 @@ button{font:inherit;color:inherit}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
 .chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 11px;font:600 13px/1 var(--f-mono);cursor:pointer;color:var(--ink)}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.apanel h3{font-family:var(--f-display);font-weight:400;font-size:1.55rem}
-.apt-meta{font:500 13px var(--f-mono);color:var(--muted);margin-top:6px}
+.apanel h3{font-weight:700;font-size:1.45rem}
+.apt-meta{font:600 14.5px var(--f-mono);color:var(--muted);margin-top:6px}
 .zlist{list-style:none;margin:14px 0 0;padding:0}
 .zlist li{display:flex;justify-content:space-between;gap:10px 14px;padding:12px 0;border-top:1px solid var(--line);align-items:center;flex-wrap:wrap}
-.zname{font-weight:600;line-height:1.3}
-.zmeta{font:500 12.5px var(--f-mono);color:var(--muted)}
+.zname{font-weight:700;font-size:16.5px;line-height:1.3}
+.zmeta{font:600 14px var(--f-mono);color:var(--muted)}
 .zright{display:flex;align-items:center;gap:12px;margin-left:auto}
-.zprice{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2}
-.zprice small{display:block;font-weight:500;color:var(--muted);font-size:12px}
-.note{font-size:13.5px;color:var(--muted);margin-top:14px}
+.zprice{text-align:right;font-weight:700;font-size:18px;font-variant-numeric:tabular-nums;line-height:1.2}
+.zprice small{display:block;font-weight:600;color:var(--muted);font-size:13.5px}
+.note{font-size:15.5px;color:var(--muted);margin-top:14px}
 
 /* trips */
 .trips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .trip{border:1px solid var(--line);border-top:4px solid var(--tc,var(--teal));border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:10px;background:var(--surface)}
-.trip-top{display:flex;justify-content:space-between;gap:8px;font:500 11.5px var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.trip-top{display:flex;justify-content:space-between;gap:8px;font:700 13.5px var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
 .trip-top .dur{color:var(--brass)}
-.trip h3{font-family:var(--f-display);font-weight:400;font-size:1.45rem}
-.trip p{color:var(--muted);font-size:15px;flex:1}
+.trip h3{font-weight:700;font-size:1.35rem;line-height:1.2}
+.trip p{color:var(--muted);font-size:16.5px;flex:1}
 .trip-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;padding-top:14px;border-top:1px dashed var(--line);flex-wrap:wrap}
 @media (max-width:1020px){.trips{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.trips{grid-template-columns:minmax(0,1fr)}}
 
 /* prices */
 .tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--bg)}
-table{width:100%;border-collapse:collapse;min-width:760px;font-variant-numeric:tabular-nums}
-th,td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+table{width:100%;border-collapse:collapse;min-width:760px;font-variant-numeric:tabular-nums;font-weight:600}
+th,td{padding:12px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
 tbody tr:last-child td{border-bottom:0}
-thead th{font:500 11.5px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--surface-2);vertical-align:bottom}
-thead th small{display:block;text-transform:none;letter-spacing:0;font-size:11px;opacity:.85}
+thead th{font:700 13px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--surface-2);vertical-align:bottom}
+thead th small{display:block;text-transform:none;letter-spacing:0;font:600 14px var(--f-body);color:var(--ink)}
 .num{text-align:right}
 tbody tr:hover{background:var(--surface-2)}
-td.rt{white-space:normal;min-width:240px}
+td.rt{white-space:normal;min-width:210px}
 @media (max-width:600px){td.rt{min-width:170px}}
-.rt b{display:block;font-weight:600}
-.rt span{font:500 12px var(--f-mono);color:var(--muted)}
+.rt b{display:block;font-weight:700}
+.rt span{font:600 13.5px var(--f-mono);color:var(--muted)}
 
 /* price calculator */
 .calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:26px;background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:32px;box-shadow:var(--shadow)}
 @media (max-width:900px){.calc{grid-template-columns:minmax(0,1fr)}}
-.calc-title{font:400 1.55rem/1.2 var(--f-display);margin-bottom:14px}
+.calc-title{font:700 1.45rem/1.2 var(--f-body);margin-bottom:14px}
 .calc-km{display:flex;flex-wrap:wrap;gap:12px 32px;margin:18px 0 6px;padding:14px 16px;border-radius:12px;background:var(--surface-2)}
-.calc-km .k{display:block;font:500 11px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.calc-km .k{display:block;font:700 12.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .calc-km b{font-size:1.35rem;font-variant-numeric:tabular-nums}
-.calc-sub{margin:16px 0 8px;font-weight:600}
-.calc-night{font-size:13px;color:var(--terra);margin-top:4px}
+.calc-sub{margin:0 0 10px;font-weight:700;font-size:1.15rem}
+.calc-night{font-size:15px;font-weight:700;color:var(--terra);margin-top:4px}
 .cc-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .cc{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
-.cc b{display:block;line-height:1.25}
-.cc small{display:block;color:var(--muted);font-size:12.5px}
-.cc-price{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2}
+.cc b{display:block;font-size:16.5px;line-height:1.25}
+.cc small{display:block;color:var(--muted);font-size:14px}
+.cc-price{text-align:right;font-weight:700;font-size:18px;font-variant-numeric:tabular-nums;line-height:1.2}
 .cc-price small{font-weight:500}
 .cc.off{opacity:.55}
-.cc-max{grid-column:2/4;text-align:right;font-size:13px;color:var(--muted)}
+.cc-max{grid-column:2/4;text-align:right;font-size:14.5px;font-weight:600;color:var(--muted)}
 @media (max-width:520px){.cc{grid-template-columns:minmax(0,1fr) auto}.cc .btn{grid-column:1/-1}.cc-max{grid-column:2}}
-.calc-grid h4{margin:0 0 10px;font-size:1rem}
-.gtable{min-width:0}
-.gtable th,.gtable td{padding:7px 12px}
-.gtable tr.on td{background:var(--brass-soft);font-weight:700}
 
 /* reviews */
 .revgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start}
 @media (max-width:900px){.revgrid{grid-template-columns:minmax(0,1fr)}}
 .rev-empty{border:1px dashed var(--line);border-radius:18px;padding:32px 24px;text-align:center;background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:10px}
-.rev-empty h3{font:400 1.45rem var(--f-display)}
+.rev-empty h3{font:700 1.4rem var(--f-body)}
 .rev-empty p{color:var(--muted);max-width:46ch}
 .stars{color:var(--brass-hi);letter-spacing:2px}
 .stars.big{font-size:30px}
@@ -378,7 +370,7 @@ td.rt{white-space:normal;min-width:240px}
 .rev blockquote{margin:8px 0;font-size:15.5px}
 .rev figcaption{font-size:13px;color:var(--muted)}
 .revform{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)}
-.revform h3{font:400 1.45rem var(--f-display)}
+.revform h3{font:700 1.4rem var(--f-body)}
 .rate{position:relative;display:inline-flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px}
 .rate input{position:absolute;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none}
 .rate label{font-size:30px;line-height:1;color:var(--line);cursor:pointer}
@@ -390,24 +382,24 @@ td.rt{white-space:normal;min-width:240px}
 .faq{max-width:840px}
 .faq details{border-top:1px solid var(--line)}
 .faq details:last-child{border-bottom:1px solid var(--line)}
-.faq summary{list-style:none;cursor:pointer;padding:18px 44px 18px 0;font-weight:600;font-size:1.05rem;position:relative}
+.faq summary{list-style:none;cursor:pointer;padding:18px 44px 18px 0;font-weight:700;font-size:1.15rem;position:relative}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"+";position:absolute;right:6px;top:12px;font:400 26px/1 var(--f-display);color:var(--brass)}
 .faq details[open] summary::after{content:"–"}
-.faq details p{padding:0 0 20px;color:var(--muted);max-width:68ch}
+.faq details p{padding:0 0 20px;color:var(--muted);font-size:17px;max-width:64ch}
 
 /* contact */
 .contact{color:var(--on-teal)}
 .contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:center}
 .contact h2{font-size:clamp(1.9rem,3.6vw,2.8rem)}
 .contact .eyebrow{color:var(--brass-hi)}
-.contact p{margin-top:14px;opacity:.85;max-width:52ch}
+.contact p{margin-top:14px;font-size:1.15rem;max-width:50ch}
 .contact-card{background:var(--teal-2);border:1px solid var(--on-teal-line);border-radius:18px;padding:8px 20px 20px}
 .crow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--on-teal-line)}
 .crow .ic{color:var(--brass-hi)}
-.crow .lab{display:block;font:500 11px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;opacity:.7}
-.crow .val{font-size:1.1rem;font-weight:600;user-select:all;overflow-wrap:anywhere}
-.copy{border:1px solid var(--on-teal-line);background:none;color:var(--on-teal);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer}
+.crow .lab{display:block;font:700 12.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--brass-hi)}
+.crow .val{font-size:1.25rem;font-weight:700;user-select:all;overflow-wrap:anywhere}
+.copy{border:1px solid var(--on-teal-line);background:none;color:var(--on-teal);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600;cursor:pointer}
 .copy:hover{border-color:var(--on-teal)}
 .contact-card .btn{margin-top:18px;width:100%}
 @media (max-width:860px){.contact-grid{grid-template-columns:minmax(0,1fr)}}
@@ -425,14 +417,14 @@ td.rt{white-space:normal;min-width:240px}
 .agency-brand svg{width:58px;height:58px;flex:none}
 .agency-brand b{display:block;font:400 1.7rem/1 var(--f-display);letter-spacing:.12em}
 .agency-brand small{display:block;font:500 11px var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--brass-hi);margin-top:6px}
-.agency-info p{opacity:.88;margin:0}
+.agency-info p{margin:0;font-size:1.05rem}
 .agency-addr{display:flex;gap:10px;align-items:flex-start;font-weight:600}
 .agency-addr .ic{color:var(--brass-hi);margin-top:2px}
 .agency-info .btn{align-self:flex-start;margin-top:4px}
 @media (max-width:860px){.agency{grid-template-columns:minmax(0,1fr)}.agency-map{min-height:260px}}
 
 /* footer */
-.ftr{background:var(--surface);border-top:1px solid var(--line);padding-block:36px 40px;font-size:14px;color:var(--muted)}
+.ftr{background:var(--surface);border-top:1px solid var(--line);padding-block:36px 40px;font-size:15.5px;color:var(--muted)}
 .ftr-grid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px 40px;align-items:flex-start}
 .ftr nav{display:flex;flex-wrap:wrap;gap:8px 20px}
 .ftr a{text-decoration:none}
@@ -445,7 +437,7 @@ td.rt{white-space:normal;min-width:240px}
 .bk-head h2{font-size:1.7rem}
 .iconbtn{width:40px;height:40px;border-radius:999px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;cursor:pointer;flex:none}
 .stepper{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:14px 22px 16px;list-style:none;margin:0}
-.stepper li{display:flex;flex-direction:column;gap:7px;font:500 11.5px/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);min-width:0}
+.stepper li{display:flex;flex-direction:column;gap:7px;font:700 12.5px/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);min-width:0}
 .stepper li::before{content:"";height:3px;border-radius:3px;background:var(--line)}
 .stepper li.done::before,.stepper li.cur::before{background:var(--brass-hi)}
 .stepper li.cur{color:var(--ink)}
@@ -457,8 +449,8 @@ td.rt{white-space:normal;min-width:240px}
 .bk-foot{display:flex;align-items:center;justify-content:space-between;gap:10px 14px;padding:14px 22px;border-top:1px solid var(--line);background:var(--surface);flex-wrap:wrap}
 .bk-foot .acts{display:flex;gap:8px;margin-left:auto}
 .bk-err{color:var(--danger);font-size:14px;font-weight:500;flex-basis:100%}
-.bk-total .k{font:500 11px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.bk-total .v{font-weight:700;font-size:21px;font-variant-numeric:tabular-nums;line-height:1.2}
+.bk-total .k{font:700 12.5px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.bk-total .v{font-weight:700;font-size:24px;font-variant-numeric:tabular-nums;line-height:1.2}
 .bk-total .eur{color:var(--muted);font-weight:500;font-size:13.5px;margin-left:4px}
 @media (max-width:640px){
   .bk-ov{padding:0}
@@ -475,13 +467,13 @@ td.rt{white-space:normal;min-width:240px}
 .vopt.off{opacity:.5;cursor:not-allowed}
 .vopt .art{background:var(--surface-2);border-radius:10px;padding:8px 8px 2px;color:var(--ink)}
 .vopt .art svg{display:block;width:100%;height:auto}
-.vinfo b{display:block;font-size:16px}
-.vinfo .model{font-size:13.5px;color:var(--muted)}
-.vinfo .specs{margin-top:4px;font-size:13px}
+.vinfo b{display:block;font-size:17px}
+.vinfo .model{font-size:15px;color:var(--muted)}
+.vinfo .specs{margin-top:4px;font-size:14.5px}
 .vinfo .warn{display:block;color:var(--danger);font-size:13px;font-weight:500;margin-top:4px}
 .vprice{text-align:right;line-height:1.25}
-.vprice b{font-size:18px;font-variant-numeric:tabular-nums}
-.vprice small{display:block;color:var(--muted);font-size:12.5px}
+.vprice b{font-size:20px;font-variant-numeric:tabular-nums}
+.vprice small{display:block;color:var(--muted);font-size:14px}
 @media (max-width:540px){.vopt{grid-template-columns:86px minmax(0,1fr)}.vprice{grid-column:2;text-align:left}}
 .sign-wrap{display:flex;flex-direction:column;gap:8px}
 .sign{background:var(--sign-bg);color:var(--sign-ink);border-radius:6px;border-top:8px solid var(--teal);padding:16px 18px 18px;text-align:center;box-shadow:0 10px 24px -14px rgba(0,0,0,.45);max-width:420px}
@@ -490,15 +482,15 @@ td.rt{white-space:normal;min-width:240px}
 .sumgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:18px;align-items:start}
 @media (max-width:640px){.sumgrid{grid-template-columns:minmax(0,1fr)}}
 .sum{display:grid;grid-template-columns:auto minmax(0,1fr);gap:9px 16px;margin:0}
-.sum dt{color:var(--muted);font-size:13px;padding-top:2px}
-.sum dd{margin:0;font-weight:500;overflow-wrap:anywhere}
+.sum dt{color:var(--muted);font-size:15px;padding-top:2px}
+.sum dd{margin:0;font-weight:700;overflow-wrap:anywhere}
 .ref{display:inline-block;font:600 14px var(--f-mono);letter-spacing:.08em;background:var(--brass-soft);color:var(--ink);padding:3px 8px;border-radius:6px}
 .bill{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px}
-.bill .ln{display:flex;justify-content:space-between;gap:12px;font-size:14.5px;font-variant-numeric:tabular-nums}
+.bill .ln{display:flex;justify-content:space-between;gap:12px;font-size:16px;font-variant-numeric:tabular-nums}
 .bill .tot{border-top:1px solid var(--line);padding-top:10px;margin-top:4px;font-weight:700;font-size:19px}
-.bill .inc{font-size:13px;color:var(--muted)}
+.bill .inc{font-size:14.5px;color:var(--muted)}
 .bill .btn{width:100%;white-space:normal;text-align:center}
-.after{font-size:13.5px;color:var(--muted)}
+.after{font-size:15px;color:var(--muted)}
 #b-msg{width:100%;min-height:160px;font:13px/1.45 var(--f-mono);border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--surface);color:var(--ink)}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-weight:600;font-size:14px;z-index:200;box-shadow:var(--shadow)}
 </style>
@@ -546,7 +538,6 @@ td.rt{white-space:normal;min-width:240px}
           <div class="qb-foot">
             <div class="hint" aria-live="polite" id="qhint"></div>
             <button type="submit" class="btn btn-primary" data-i18n="hero.cta">Voir les véhicules et prix</button>
-            <p class="paynote" data-i18n="hero.pay">Paiement : carte bancaire (TPE), virement ou espèces</p>
           </div>
         </form>
       </div>
@@ -921,21 +912,21 @@ fr:{
  'cta.book':'Réserver','menu':'Menu',
  'hero.eyebrow':'Au départ de Casablanca · Partout au Maroc',
  'hero.title':'De l’aéroport à votre destination, sans attendre.',
- 'hero.lede':'Chauffeurs agréés en Skoda, Mercedes, Vito, Ford Tourneo et Sprinter. Le prix fixe s’affiche avant de réserver, le chauffeur suit votre vol et vous attend avec un panneau à votre nom.',
- 'hero.cities':'Choisir une ville','hero.pay':'Paiement : carte bancaire (TPE dans la voiture), virement bancaire ou espèces.',
- 'trust.pay':'Carte, virement ou espèces','trust.pay.s':'TPE à bord, MAD ou euros',
- 'pay.title':'Modes de paiement','pay.sub':'Vous choisissez au moment de réserver. Aucun paiement en ligne n’est demandé.',
- 'pay.card':'Carte bancaire (TPE)','pay.card.p':'Payez par carte au chauffeur grâce au terminal de paiement (TPE) dans la voiture. Visa et Mastercard acceptées.',
- 'pay.transfer':'Virement bancaire','pay.transfer.p':'Pour les agences, entreprises et groupes : virement avant le trajet, facture fournie sur demande.',
- 'pay.cash':'Espèces','pay.cash.p':'En dirhams (MAD) ou en euros, directement au chauffeur à la fin du trajet.',
+ 'hero.lede':'Prix fixe affiché avant de réserver. Le chauffeur suit votre vol et vous attend avec un panneau à votre nom.',
+ 'hero.cities':'Choisir une ville',
+ 'trust.pay':'Carte, virement ou espèces','trust.pay.s':'MAD ou euros',
+ 'pay.title':'Modes de paiement','pay.sub':'Aucun paiement en ligne. Vous choisissez en réservant.',
+ 'pay.card':'Carte bancaire','pay.card.p':'Au chauffeur, avec le TPE dans la voiture. Visa et Mastercard.',
+ 'pay.transfer':'Virement bancaire','pay.transfer.p':'Agences, entreprises et groupes, avant le trajet. Facture sur demande.',
+ 'pay.cash':'Espèces','pay.cash.p':'En dirhams ou en euros, au chauffeur à la fin du trajet.',
  'f.pay':'Mode de paiement','sum.pay':'Paiement',
  'nav.reviews':'Avis',
  'ag.title':'Notre agence','ag.route':'Itinéraire sur Google Maps',
- 'ag.p':'Notre base est à Mediouna, entre Casablanca et l’aéroport Mohammed V. Nos chauffeurs partent d’ici vers tout le Maroc.',
- 'wa.title':'Réservez sur WhatsApp','wa.sub':'Envoyez votre trajet : nous répondons avec le prix et la confirmation.','wa.cta':'Réserver sur WhatsApp',
+ 'ag.p':'Notre base est à Mediouna, entre Casablanca et l’aéroport Mohammed V.',
+ 'wa.title':'Réservez sur WhatsApp','wa.sub':'Envoyez votre trajet, nous répondons avec le prix.','wa.cta':'Ouvrir WhatsApp',
  'wa.pre':'Bonjour {brand}, je souhaite réserver : {route}, le {date} à {time}, {pax} passager(s).',
  'calc.title':'Calculez votre prix','calc.km':'Distance','calc.time':'Durée','calc.cars':'Prix pour {n} passager(s), par voiture','calc.max':'Max. {n} passagers',
- 'calc.grid':'Prix selon le nombre de passagers','calc.gridPax':'Passagers','calc.gridCar':'Voiture conseillée','calc.gridPrice':'Prix','pers':'pers.','calc.night':'Supplément nuit inclus (+{p} %)',
+ 'pers':'pers.','calc.night':'Supplément nuit inclus (+{p} %)',
  'f.hotelFrom':'Adresse de prise en charge (hôtel, quartier, terminal…)','f.hotelTo':'Adresse d’arrivée (hôtel, adresse…)',
  'ph.hotelFrom':'ex. Hôtel …, boulevard d’Anfa, Casablanca','ph.hotelTo':'ex. Hôtel …, avenue …, Marrakech',
  'err.email':'Adresse e-mail invalide.','sum.from':'Prise en charge','sum.to':'Arrivée',
@@ -943,8 +934,8 @@ fr:{
  'bk.mailOk':'E-mail envoyé à {mail}. Nous vous répondons sur WhatsApp et par e-mail.',
  'bk.mailFail':'L’e-mail n’est pas parti. Votre demande WhatsApp suffit, ou écrivez à',
  'mail.subject':'Nouvelle réservation {ref} · {brand}','mail.auto':'Merci ! Nous avons bien reçu votre demande {ref}. Nous vous confirmons très vite sur WhatsApp et par e-mail. {brand}',
- 'rev.eyebrow':'Avis clients','rev.title':'Ce que disent nos clients','rev.lede':'Après votre trajet, laissez-nous votre avis. Il est publié ici après vérification.',
- 'rev.emptyT':'Les premiers avis arrivent','rev.emptyP':'Safara Shuttle ouvre son site. Les avis de nos clients seront publiés ici après leurs trajets.','rev.google':'Voir nos avis Google',
+ 'rev.eyebrow':'Avis clients','rev.title':'Ce que disent nos clients','rev.lede':'Votre avis est publié après vérification.',
+ 'rev.emptyT':'Les premiers avis arrivent','rev.emptyP':'Soyez parmi les premiers à donner votre avis.','rev.google':'Voir nos avis Google',
  'rev.formT':'Laisser un avis','rev.from':'Ville ou pays','rev.fromPh':'ex. Lyon, France','rev.rating':'Votre note','rev.text':'Votre avis','rev.send':'Envoyer mon avis',
  'rev.ok':'Merci ! Votre avis sera publié après vérification.','rev.fail':'L’envoi n’a pas marché. Envoyez votre avis sur','rev.err':'Indiquez votre nom et quelques mots sur votre trajet.',
  'pay.opt.card':'Carte bancaire (TPE dans la voiture)','pay.opt.transfer':'Virement bancaire','pay.opt.cash':'Espèces (MAD ou euros)',
@@ -960,37 +951,36 @@ fr:{
  'hero.from':'Berline Skoda, à partir de','hero.cta':'Voir les véhicules et prix',
  'board.title':'Arrivées','board.sub':'aéroports desservis','board.local':'Heure locale','board.status':'24/7',
  'apt.label':'{code} · Aéroport {city} {name}',
- 'trust.fixed':'Prix fixe, tout compris','trust.fixed.s':'Carburant, péages et attente inclus',
- 'trust.flight':'Suivi de votre vol','trust.flight.s':'Le chauffeur s’adapte aux retards',
- 'trust.wait':'60 min d’attente offertes','trust.wait.s':'À l’aéroport, après l’atterrissage',
- 'trust.cancel':'Annulation gratuite','trust.cancel.s':'Jusqu’à 24 h avant le départ',
- 'trust.lic':'Chauffeurs agréés','trust.lic.s':'Agrément transport touristique',
+ 'trust.fixed':'Prix fixe, tout compris','trust.fixed.s':'Carburant et péages inclus',
+ 'trust.flight':'Suivi de votre vol','trust.flight.s':'Même en cas de retard',
+ 'trust.wait':'60 min d’attente offertes','trust.wait.s':'À l’aéroport',
+ 'trust.cancel':'Annulation gratuite','trust.cancel.s':'Jusqu’à 24 h avant',
+ 'trust.lic':'Chauffeurs agréés','trust.lic.s':'Transport touristique',
  'svc.eyebrow':'Services','svc.title':'Un chauffeur pour chaque étape du voyage',
- 'svc.air':'Transferts aéroport','svc.air.p':'Accueil dans le hall des arrivées, aide aux bagages, puis direction votre hôtel, votre domicile ou votre rendez-vous.',
- 'svc.city':'Ville à ville','svc.city.p':'Marrakech–Casablanca, Fès–Chefchaouen, Agadir–Essaouira : porte à porte, sans changement.',
- 'svc.hour':'Chauffeur à l’heure','svc.hour.p':'Une voiture et son chauffeur de 3 à 12 heures : rendez-vous, shopping, mariage, événement.',
- 'svc.trip':'Excursions et circuits','svc.trip.p':'Atlas, désert, côte atlantique : le chauffeur vous attend pendant les visites.',
- 'svc.book':'Réserver ce service',
- 'fleet.eyebrow':'Nos voitures touristiques','fleet.title':'Réservez votre voiture avec chauffeur','fleet.lede':'Skoda Superb, Mercedes Classe E, Vito, Ford Tourneo, Classe V et Sprinter : voitures récentes et climatisées, Wi-Fi et eau à bord. Choisissez votre voiture, nous nous occupons du reste.',
- 'orSimilar':'ou modèle similaire de la même catégorie','photoNote':'Photo d’illustration',
+ 'svc.air':'Transferts aéroport','svc.air.p':'Accueil aux arrivées, aide aux bagages, puis direct à votre hôtel.',
+ 'svc.city':'Ville à ville','svc.city.p':'Marrakech–Casablanca, Fès–Chefchaouen… porte à porte, sans changement.',
+ 'svc.hour':'Chauffeur à l’heure','svc.hour.p':'Voiture et chauffeur de 3 à 12 h : rendez-vous, shopping, mariage.',
+ 'svc.trip':'Excursions et circuits','svc.trip.p':'Atlas, désert, côte atlantique : à la journée ou sur plusieurs jours.',
+ 'svc.book':'Réserver',
+ 'fleet.eyebrow':'Nos voitures touristiques','fleet.title':'Réservez votre voiture avec chauffeur','fleet.lede':'Voitures récentes et climatisées, Wi-Fi et eau à bord. Photos d’illustration : ce modèle ou un modèle similaire.',
  'pax':'{n} passagers','bags':'{n} bagages','bestFor':'Idéal pour :','from':'À partir de','fleet.book':'Réserver cette voiture',
  'how.eyebrow':'Comment ça se passe','how.title':'Quatre étapes, aucune surprise',
- 'how.1':'Réservez en 2 minutes','how.1.p':'Choisissez le trajet, la voiture et l’heure. Le prix s’affiche avant de confirmer.',
- 'how.2':'Recevez les détails','how.2.p':'La veille, vous recevez le nom du chauffeur, son WhatsApp et la plaque de la voiture.',
- 'how.3':'Accueil avec panneau','how.3.p':'Le chauffeur vous attend aux arrivées avec votre nom, même si le vol a du retard.',
- 'how.4':'Arrivée à bon port','how.4.p':'Bagages portés jusqu’à la porte, où que vous alliez au Maroc.',
- 'map.eyebrow':'Aéroports & hôtels','map.title':'Où nous venons vous chercher','map.lede':'Choisissez un aéroport pour voir les zones d’hôtels desservies, la distance et le prix du transfert en berline.',
- 'map.airport':'Aéroport','map.note':'Toutes les adresses de ces zones sont desservies : hôtels, résidences, bureaux. Donnez l’adresse exacte au moment de réserver.',
+ 'how.1':'Réservez en 2 minutes','how.1.p':'Choisissez le trajet, la voiture et l’heure.',
+ 'how.2':'Recevez les détails','how.2.p':'La veille : nom du chauffeur, son WhatsApp et la plaque.',
+ 'how.3':'Accueil avec panneau','how.3.p':'Le chauffeur vous attend aux arrivées, même si le vol a du retard.',
+ 'how.4':'Arrivée à bon port','how.4.p':'Bagages portés jusqu’à la porte.',
+ 'map.eyebrow':'Aéroports & hôtels','map.title':'Où nous venons vous chercher','map.lede':'Choisissez un aéroport pour voir les zones desservies et les prix.',
+ 'map.airport':'Aéroport','map.note':'Toutes les adresses de ces zones sont desservies. Donnez l’adresse exacte en réservant.',
  'map.ocean':'OCÉAN ATLANTIQUE','map.sea':'MER MÉDITERRANÉE','map.atlas':'Haut Atlas','map.city':'Centre-ville à {km} km · {dur}','map.aria':'Carte des aéroports et des villes desservies au Maroc',
- 'lon.w':'O','book':'Réserver',
- 'trips.eyebrow':'Excursions','trips.title':'Partez à la journée avec votre chauffeur','trips.lede':'Prix par voiture et non par personne. Le chauffeur attend sur place pendant vos visites.',
+ 'book':'Réserver',
+ 'trips.eyebrow':'Excursions','trips.title':'Partez à la journée avec votre chauffeur','trips.lede':'Prix par voiture, pas par personne. Le chauffeur vous attend pendant les visites.',
  'trips.fromCity':'Départ {c}','days':'{n} jours','perCar':'par berline',
- 'prices.eyebrow':'Tarifs','prices.title':'Tarifs au départ de Casablanca','prices.lede':'Choisissez votre départ à Casablanca (aéroport Mohammed V, hôtel, gare), votre destination au Maroc, la date, l’heure et le nombre de passagers (1 à 17). Prix fixe par voiture, carburant et péages compris. Supplément de nuit (22 h – 6 h) : +20 %.',
+ 'prices.eyebrow':'Tarifs','prices.title':'Tarifs au départ de Casablanca','prices.lede':'Prix fixe par voiture, carburant et péages compris. Nuit (22 h – 6 h) : +20 %.',
  'th.route':'Trajet',
- 'prices.note':'L’équivalent en euros est indicatif. Votre trajet n’est pas dans la liste ? Le formulaire de réservation calcule le prix de n’importe quel trajet.',
+ 'prices.note':'Prix en euros à titre indicatif. Votre trajet n’est pas dans le tableau ? Calculez-le plus haut.',
  'faq.eyebrow':'FAQ','faq.title':'Questions fréquentes',
- 'contact.eyebrow':'Contact','contact.title':'Une question avant de réserver ?','contact.p':'Écrivez-nous sur WhatsApp en français, en anglais ou en arabe. Pour les groupes, mariages et séminaires, nous préparons un devis sur mesure.',
- 'contact.wa':'WhatsApp','contact.phone':'Téléphone','contact.mail':'E-mail','contact.open':'Écrire sur WhatsApp','copy':'Copier','copied':'Copié','copyFail':'Copie impossible : sélectionnez le texte',
+ 'contact.eyebrow':'Contact','contact.title':'Une question avant de réserver ?','contact.p':'Écrivez-nous sur WhatsApp en français, anglais ou arabe. Devis sur mesure pour groupes, mariages et séminaires.',
+ 'contact.wa':'WhatsApp et téléphone','contact.phone':'Téléphone','contact.mail':'E-mail','contact.open':'Écrire sur WhatsApp','copy':'Copier','copied':'Copié','copyFail':'Copie impossible : sélectionnez le texte',
  'footer.lic':'Agrément transport touristique n° {n}','footer.rights':'Tous droits réservés.','footer.legal':'Mentions légales','footer.cgv':'Conditions de vente','footer.privacy':'Confidentialité',
  'bk.title':'Réservation','bk.close':'Fermer',
  'step.1':'Trajet','step.2':'Véhicule','step.3':'Coordonnées','step.4':'Récapitulatif',
@@ -1014,21 +1004,21 @@ en:{
  'cta.book':'Book','menu':'Menu',
  'hero.eyebrow':'From Casablanca · Anywhere in Morocco',
  'hero.title':'From the airport to your destination, no waiting.',
- 'hero.lede':'Licensed chauffeurs in a Skoda, Mercedes, Vito, Ford Tourneo or Sprinter. You see a fixed price before you book, your chauffeur tracks your flight and waits for you with a name sign.',
- 'hero.cities':'Choose a city','hero.pay':'Pay by bank card (card terminal in the car), bank transfer or cash.',
- 'trust.pay':'Card, transfer or cash','trust.pay.s':'Card terminal on board, MAD or euros',
- 'pay.title':'Payment methods','pay.sub':'You choose when you book. No online payment is required.',
- 'pay.card':'Bank card (terminal)','pay.card.p':'Pay by card with the chauffeur using the card terminal in the car. Visa and Mastercard accepted.',
- 'pay.transfer':'Bank transfer','pay.transfer.p':'For agencies, companies and groups: transfer before the trip, invoice on request.',
- 'pay.cash':'Cash','pay.cash.p':'In dirhams (MAD) or euros, paid to the chauffeur at the end of the trip.',
+ 'hero.lede':'Fixed price shown before you book. Your chauffeur tracks your flight and waits for you with a name sign.',
+ 'hero.cities':'Choose a city',
+ 'trust.pay':'Card, transfer or cash','trust.pay.s':'MAD or euros',
+ 'pay.title':'Payment methods','pay.sub':'No online payment. You choose when you book.',
+ 'pay.card':'Bank card','pay.card.p':'To the chauffeur, with the card terminal in the car. Visa and Mastercard.',
+ 'pay.transfer':'Bank transfer','pay.transfer.p':'Agencies, companies and groups, before the trip. Invoice on request.',
+ 'pay.cash':'Cash','pay.cash.p':'In dirhams or euros, to the chauffeur at the end of the trip.',
  'f.pay':'Payment method','sum.pay':'Payment',
  'nav.reviews':'Reviews',
  'ag.title':'Our base','ag.route':'Directions on Google Maps',
- 'ag.p':'Our base is in Mediouna, between Casablanca and Mohammed V airport. Our chauffeurs leave from here to anywhere in Morocco.',
- 'wa.title':'Book on WhatsApp','wa.sub':'Send us your trip: we reply with the price and the confirmation.','wa.cta':'Book on WhatsApp',
+ 'ag.p':'Our base is in Mediouna, between Casablanca and Mohammed V airport.',
+ 'wa.title':'Book on WhatsApp','wa.sub':'Send us your trip, we reply with the price.','wa.cta':'Open WhatsApp',
  'wa.pre':'Hello {brand}, I would like to book: {route}, on {date} at {time}, {pax} passenger(s).',
  'calc.title':'Get your price','calc.km':'Distance','calc.time':'Duration','calc.cars':'Price for {n} passenger(s), per car','calc.max':'Max. {n} passengers',
- 'calc.grid':'Price by number of passengers','calc.gridPax':'Passengers','calc.gridCar':'Suggested car','calc.gridPrice':'Price','pers':'pax','calc.night':'Night supplement included (+{p}%)',
+ 'pers':'pax','calc.night':'Night supplement included (+{p}%)',
  'f.hotelFrom':'Pickup address (hotel, area, terminal…)','f.hotelTo':'Drop-off address (hotel, address…)',
  'ph.hotelFrom':'e.g. Hotel …, boulevard d’Anfa, Casablanca','ph.hotelTo':'e.g. Hotel …, avenue …, Marrakech',
  'err.email':'Invalid email address.','sum.from':'Pickup','sum.to':'Drop-off',
@@ -1036,8 +1026,8 @@ en:{
  'bk.mailOk':'Email sent to {mail}. We will reply on WhatsApp and by email.',
  'bk.mailFail':'The email could not be sent. Your WhatsApp request is enough, or write to',
  'mail.subject':'New booking {ref} · {brand}','mail.auto':'Thank you! We received your request {ref}. We will confirm shortly on WhatsApp and by email. {brand}',
- 'rev.eyebrow':'Guest reviews','rev.title':'What our guests say','rev.lede':'After your trip, leave us a review. It is published here once checked.',
- 'rev.emptyT':'First reviews coming soon','rev.emptyP':'Safara Shuttle is opening its website. Guest reviews will appear here after their trips.','rev.google':'See our Google reviews',
+ 'rev.eyebrow':'Guest reviews','rev.title':'What our guests say','rev.lede':'Your review is published once checked.',
+ 'rev.emptyT':'First reviews coming soon','rev.emptyP':'Be one of the first to leave a review.','rev.google':'See our Google reviews',
  'rev.formT':'Leave a review','rev.from':'City or country','rev.fromPh':'e.g. London, UK','rev.rating':'Your rating','rev.text':'Your review','rev.send':'Send my review',
  'rev.ok':'Thank you! Your review will be published once checked.','rev.fail':'Sending failed. Send your review on','rev.err':'Enter your name and a few words about your trip.',
  'pay.opt.card':'Bank card (terminal in the car)','pay.opt.transfer':'Bank transfer','pay.opt.cash':'Cash (MAD or euros)',
@@ -1053,37 +1043,36 @@ en:{
  'hero.from':'Skoda sedan, from','hero.cta':'See cars and prices',
  'board.title':'Arrivals','board.sub':'airports we serve','board.local':'Local time','board.status':'24/7',
  'apt.label':'{code} · {city} {name} Airport',
- 'trust.fixed':'Fixed, all-in price','trust.fixed.s':'Fuel, tolls and waiting included',
- 'trust.flight':'Flight tracking','trust.flight.s':'Your chauffeur adjusts to delays',
- 'trust.wait':'60 min free waiting','trust.wait.s':'At the airport, after landing',
- 'trust.cancel':'Free cancellation','trust.cancel.s':'Up to 24 h before pickup',
- 'trust.lic':'Licensed chauffeurs','trust.lic.s':'Tourist transport licence',
+ 'trust.fixed':'Fixed, all-in price','trust.fixed.s':'Fuel and tolls included',
+ 'trust.flight':'Flight tracking','trust.flight.s':'Even if it is late',
+ 'trust.wait':'60 min free waiting','trust.wait.s':'At the airport',
+ 'trust.cancel':'Free cancellation','trust.cancel.s':'Up to 24 h before',
+ 'trust.lic':'Licensed chauffeurs','trust.lic.s':'Tourist transport',
  'svc.eyebrow':'Services','svc.title':'A chauffeur for every part of the trip',
- 'svc.air':'Airport transfers','svc.air.p':'Met in the arrivals hall, help with your bags, then straight to your hotel, home or meeting.',
- 'svc.city':'City to city','svc.city.p':'Marrakech–Casablanca, Fez–Chefchaouen, Agadir–Essaouira: door to door, no changes.',
- 'svc.hour':'Chauffeur by the hour','svc.hour.p':'A car and chauffeur for 3 to 12 hours: meetings, shopping, weddings, events.',
- 'svc.trip':'Day trips and tours','svc.trip.p':'Atlas, desert, Atlantic coast: your chauffeur waits while you visit.',
- 'svc.book':'Book this service',
- 'fleet.eyebrow':'Our tourist cars','fleet.title':'Book your car with a chauffeur','fleet.lede':'Skoda Superb, Mercedes E-Class, Vito, Ford Tourneo, V-Class and Sprinter: recent air-conditioned cars with Wi-Fi and water on board. Choose your car, we take care of the rest.',
- 'orSimilar':'or a similar model in the same class','photoNote':'Illustrative photo',
+ 'svc.air':'Airport transfers','svc.air.p':'Met at arrivals, help with your bags, then straight to your hotel.',
+ 'svc.city':'City to city','svc.city.p':'Marrakech–Casablanca, Fez–Chefchaouen… door to door, no changes.',
+ 'svc.hour':'Chauffeur by the hour','svc.hour.p':'Car and chauffeur for 3 to 12 h: meetings, shopping, weddings.',
+ 'svc.trip':'Day trips and tours','svc.trip.p':'Atlas, desert, Atlantic coast: for a day or several days.',
+ 'svc.book':'Book',
+ 'fleet.eyebrow':'Our tourist cars','fleet.title':'Book your car with a chauffeur','fleet.lede':'Recent air-conditioned cars, Wi-Fi and water on board. Illustrative photos: this model or a similar one.',
  'pax':'{n} passengers','bags':'{n} bags','bestFor':'Best for:','from':'From','fleet.book':'Book this car',
  'how.eyebrow':'How it works','how.title':'Four steps, no surprises',
- 'how.1':'Book in 2 minutes','how.1.p':'Choose your route, car and time. You see the price before you confirm.',
- 'how.2':'Get the details','how.2.p':'The day before, you receive your chauffeur’s name, WhatsApp number and number plate.',
- 'how.3':'Name-sign welcome','how.3.p':'Your chauffeur waits at arrivals with your name, even if the flight is late.',
- 'how.4':'Arrive relaxed','how.4.p':'Bags carried to the door, wherever you go in Morocco.',
- 'map.eyebrow':'Airports & hotels','map.title':'Where we pick you up','map.lede':'Pick an airport to see the hotel areas we serve, the distance and the sedan transfer price.',
- 'map.airport':'Airport','map.note':'Every address in these areas is covered: hotels, homes, offices. Give the exact address when you book.',
+ 'how.1':'Book in 2 minutes','how.1.p':'Choose your route, car and time.',
+ 'how.2':'Get the details','how.2.p':'The day before: your chauffeur’s name, WhatsApp and number plate.',
+ 'how.3':'Name-sign welcome','how.3.p':'Your chauffeur waits at arrivals, even if the flight is late.',
+ 'how.4':'Arrive relaxed','how.4.p':'Bags carried to the door.',
+ 'map.eyebrow':'Airports & hotels','map.title':'Where we pick you up','map.lede':'Pick an airport to see the areas we serve and the prices.',
+ 'map.airport':'Airport','map.note':'Every address in these areas is covered. Give the exact address when you book.',
  'map.ocean':'ATLANTIC OCEAN','map.sea':'MEDITERRANEAN SEA','map.atlas':'High Atlas','map.city':'City centre {km} km · {dur}','map.aria':'Map of the airports and cities we serve in Morocco',
- 'lon.w':'W','book':'Book',
- 'trips.eyebrow':'Day trips','trips.title':'Day trips with your own chauffeur','trips.lede':'Price per car, not per person. Your chauffeur waits on site while you visit.',
+ 'book':'Book',
+ 'trips.eyebrow':'Day trips','trips.title':'Day trips with your own chauffeur','trips.lede':'Price per car, not per person. Your chauffeur waits while you visit.',
  'trips.fromCity':'From {c}','days':'{n} days','perCar':'per sedan',
- 'prices.eyebrow':'Prices','prices.title':'Prices from Casablanca','prices.lede':'Choose your pickup in Casablanca (Mohammed V airport, hotel, station), your destination in Morocco, the date, the time and the number of passengers (1 to 17). Fixed price per car, fuel and tolls included. Night supplement (10 pm – 6 am): +20%.',
+ 'prices.eyebrow':'Prices','prices.title':'Prices from Casablanca','prices.lede':'Fixed price per car, fuel and tolls included. Night (10 pm – 6 am): +20%.',
  'th.route':'Route',
- 'prices.note':'Euro amounts are approximate. Route not listed? The booking form prices any route.',
+ 'prices.note':'Euro prices are approximate. Route not in the table? Get its price above.',
  'faq.eyebrow':'FAQ','faq.title':'Common questions',
- 'contact.eyebrow':'Contact','contact.title':'A question before you book?','contact.p':'Message us on WhatsApp in English, French or Arabic. For groups, weddings and seminars we prepare a custom quote.',
- 'contact.wa':'WhatsApp','contact.phone':'Phone','contact.mail':'Email','contact.open':'Message us on WhatsApp','copy':'Copy','copied':'Copied','copyFail':'Copy blocked: select the text instead',
+ 'contact.eyebrow':'Contact','contact.title':'A question before you book?','contact.p':'Message us on WhatsApp in English, French or Arabic. Custom quotes for groups, weddings and seminars.',
+ 'contact.wa':'WhatsApp and phone','contact.phone':'Phone','contact.mail':'Email','contact.open':'Message us on WhatsApp','copy':'Copy','copied':'Copied','copyFail':'Copy blocked: select the text instead',
  'footer.lic':'Tourist transport licence no. {n}','footer.rights':'All rights reserved.','footer.legal':'Legal notice','footer.cgv':'Terms of sale','footer.privacy':'Privacy',
  'bk.title':'Booking','bk.close':'Close',
  'step.1':'Route','step.2':'Vehicle','step.3':'Details','step.4':'Summary',
@@ -1115,9 +1104,7 @@ const FAQ = [
  {q:{fr:'Comment annuler ?',en:'How do I cancel?'},
   a:{fr:'Envoyez-nous un message WhatsApp avec votre référence. L’annulation est gratuite jusqu’à 24 heures avant la prise en charge.',en:'Send us a WhatsApp message with your reference. Cancellation is free up to 24 hours before pickup.'}},
  {q:{fr:'Avez-vous des sièges enfant ?',en:'Do you have child seats?'},
-  a:{fr:'Oui : siège bébé, siège enfant et rehausseur, sans supplément. Choisissez-les pendant la réservation.',en:'Yes: infant seats, child seats and boosters at no extra cost. Pick them when you book.'}},
- {q:{fr:'Comment payer ?',en:'How do I pay?'},
-  a:{fr:'Trois possibilités : carte bancaire au chauffeur (TPE dans la voiture), virement bancaire avant le trajet, ou espèces en dirhams ou en euros. Vous choisissez au moment de réserver.',en:'Three options: bank card with the chauffeur (card terminal in the car), bank transfer before the trip, or cash in dirhams or euros. You choose when you book.'}}
+  a:{fr:'Oui : siège bébé, siège enfant et rehausseur, sans supplément. Choisissez-les pendant la réservation.',en:'Yes: infant seats, child seats and boosters at no extra cost. Pick them when you book.'}}
 ];
 
 /* ====== Outils ====== */
@@ -1325,7 +1312,7 @@ function stopAuto(){ cityAuto=false; clearInterval(cityTimer); $('#hero').classL
 function carArt(c){
   if(!c.img) return carSVG(c.shape);
   const base=c.img.replace(/\.(png|jpe?g)$/i,'');
-  return carSVG(c.shape)+`<img src="${CONFIG.imgDir}${base}.png" data-alt="${CONFIG.imgDir}${c.img}" alt="${esc(L(c.model))}" decoding="async" style="object-position:${c.pos||'center'}"><span class="ph-note">${esc(t('photoNote'))}</span>`;
+  return carSVG(c.shape)+`<img src="${CONFIG.imgDir}${base}.png" data-alt="${CONFIG.imgDir}${c.img}" alt="${esc(L(c.model))}" decoding="async" style="object-position:${c.pos||'center'}">`;
 }
 function wireImgs(root){
   $$('img',root).forEach(img=>{
@@ -1353,7 +1340,7 @@ function renderServices(){
 }
 function renderFleet(){
   $('#fleet').innerHTML=CLASSES.map(c=>`<article class="car"><div class="car-art">${carArt(c)}</div><div class="car-body">
-    <span class="car-class">${esc(L(c.name))}</span><h3>${esc(L(c.model).replace(/ ou similaire| or similar/,''))}</h3><p class="model">${esc(t('orSimilar'))}</p>
+    <span class="car-class">${esc(L(c.name))}</span><h3>${esc(L(c.model).replace(/ ou similaire| or similar/,''))}</h3>
     <div class="specs"><span>${ic('user')}${esc(t('pax',{n:c.pax}))}</span><span>${ic('bag')}${esc(t('bags',{n:c.bags}))}</span></div>
     <p class="best">${esc(t('bestFor'))} <b>${esc(L(c.best))}</b></p>
     <div class="car-foot"><div class="from">${esc(t('from'))}<b>${fmtMAD(legPrice('CMN','casa-centre',c.id))}</b></div><button type="button" class="btn btn-primary btn-sm" data-pick="${c.id}">${esc(t('fleet.book'))}</button></div>
@@ -1396,8 +1383,6 @@ function renderMap(){
   const a=LOC[MAP_SEL]; const served=new Set(a.serves.map(z=>LOC[z].city));
   let g='';
   g+=`<rect class="other" width="${PJ.w}" height="${PJ.h}"/><path class="ocean" d="${OCEAN}"/>`;
-  [22,26,30,34].forEach(la=>{g+=`<path class="grat" d="M0 ${Y(la)}H${PJ.w}"/><text class="grat-l" x="6" y="${Y(la)-5}">${la}°N</text>`;});
-  [-16,-12,-8,-4].forEach(lo=>{g+=`<path class="grat" d="M${X(lo)} 0V${PJ.h}"/><text class="grat-l" x="${X(lo)+5}" y="${PJ.h-8}">${-lo}°${t('lon.w')}</text>`;});
   g+=`<path class="land" d="${MOROCCO}"/>`;
   g+=`<text class="sea-l" transform="translate(${X(-16.2)} ${Y(28.5)}) rotate(-62)" text-anchor="middle">${esc(t('map.ocean'))}</text>`;
   g+=`<text class="sea-l" x="${X(-3.0)}" y="${Y(35.78)}" text-anchor="middle">${esc(t('map.sea'))}</text>`;
@@ -1459,9 +1444,8 @@ function waText(){
 const waLink=()=>`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(waText())}`;
 function updateWaLinks(){ const h=waLink(); ['#wa-hero','#wafloat'].forEach(s=>{ const a=$(s); if(a) a.href=h; }); }
 function renderWaCard(){
-  const row=(i,lab,val)=>`<div class="crow">${ic(i)}<div><span class="lab">${esc(lab)}</span><span class="val">${esc(val)}</span></div><button type="button" class="copy" data-copy="${esc(val)}">${esc(t('copy'))}</button></div>`;
   $('#wacard').innerHTML=`<p class="wa-title">${ic('chat')}<span>${esc(t('wa.title'))}</span></p><p class="wa-sub">${esc(t('wa.sub'))}</p>`
-    +row('chat',t('contact.wa'),CONFIG.phoneDisplay)+row('phone',t('contact.phone'),CONFIG.phoneDisplay)+row('mail',t('contact.mail'),CONFIG.email)
+    +`<div class="crow">${ic('chat')}<div><span class="lab">${esc(t('contact.wa'))}</span><span class="val">${esc(CONFIG.phoneDisplay)}</span></div><button type="button" class="copy" data-copy="${esc(CONFIG.phoneDisplay)}">${esc(t('copy'))}</button></div>`
     +`<a class="btn btn-brass" id="wa-hero" href="${waLink()}" target="_blank" rel="noopener">${ic('chat')}${esc(t('wa.cta'))}</a>`;
   updateWaLinks();
 }
@@ -1476,19 +1460,18 @@ function renderCalc(){
     ${fld('c2','c-date',t('f.date'),inp('c-date','date','date',S.date,` min="${todayStr()}"`))}
     ${fld('c2','c-time',t('f.time'),inp('c-time','time','time',S.time,' step="300"'))}
     ${fld('c2','c-pax',t('f.pax'),sel('c-pax','pax',numOptions(1,17,S.pax)))}
-  </div><div id="calcout"></div></div><div class="calc-grid" id="calcgrid"></div>`;
+  </div><div id="calcinfo"></div></div><div id="calcout"></div>`;
   renderCalcOut();
 }
 function renderCalcOut(){
-  const out=$('#calcout'), grid=$('#calcgrid'); if(!out) return;
-  if(S.from===S.to){ out.innerHTML=`<p class="note">${esc(t('err.same'))}</p>`; grid.innerHTML=''; return; }
+  const out=$('#calcout'), info=$('#calcinfo'); if(!out) return;
+  if(S.from===S.to){ info.innerHTML=`<p class="note">${esc(t('err.same'))}</p>`; out.innerHTML=''; return; }
   updateWaLinks();
   const km=roadKm(S.from,S.to), base={type:'transfer',from:S.from,to:S.to,time:S.time};
-  out.innerHTML=`<div class="calc-km"><div><span class="k">${esc(t('calc.km'))}</span><b>${km} km</b></div><div><span class="k">${esc(t('calc.time'))}</span><b>${esc(fmtDur(driveMin(km)))}</b></div><div><span class="k">${esc(t('f.date'))}</span><b>${esc(fmtDate(S.date))} · ${esc(S.time)}</b></div></div>
-    ${isNight(S.time)?`<p class="calc-night">${esc(t('calc.night',{p:CONFIG.nightPct}))}</p>`:''}
-    <p class="calc-sub">${esc(t('calc.cars',{n:S.pax}))}</p>
+  info.innerHTML=`<div class="calc-km"><div><span class="k">${esc(t('calc.km'))}</span><b>${km} km</b></div><div><span class="k">${esc(t('calc.time'))}</span><b>${esc(fmtDur(driveMin(km)))}</b></div><div><span class="k">${esc(t('f.date'))}</span><b>${esc(fmtDate(S.date))} · ${esc(S.time)}</b></div></div>
+    ${isNight(S.time)?`<p class="calc-night">${esc(t('calc.night',{p:CONFIG.nightPct}))}</p>`:''}`;
+  out.innerHTML=`<p class="calc-sub">${esc(t('calc.cars',{n:S.pax}))}</p>
     <ul class="cc-list">${CLASSES.map(c=>{const ok=c.pax>=S.pax, p=quote(base,c.id).total; return `<li class="cc${ok?'':' off'}"><div><b>${esc(carShort(c))}</b><small>${esc(L(c.name))} · 1–${c.pax} ${esc(t('pers'))}</small></div>${ok?`<div class="cc-price">${fmtMAD(p)}<small>${fmtEUR(p)}</small></div><button type="button" class="btn btn-primary btn-sm" data-calc-pick="${c.id}">${esc(t('book'))}</button>`:`<div class="cc-max">${esc(t('calc.max',{n:c.pax}))}</div>`}</li>`;}).join('')}</ul>`;
-  grid.innerHTML=`<h4>${esc(t('calc.grid'))}</h4><div class="tablebox"><table class="gtable"><thead><tr><th>${esc(t('calc.gridPax'))}</th><th>${esc(t('calc.gridCar'))}</th><th class="num">${esc(t('calc.gridPrice'))}</th></tr></thead><tbody>${Array.from({length:17},(_,i)=>i+1).map(n=>{const c=CLASSES.filter(x=>x.pax>=n).sort((a,b)=>quote(base,a.id).total-quote(base,b.id).total)[0], p=quote(base,c.id).total; return `<tr${n===+S.pax?' class="on"':''}><td>${n}</td><td>${esc(carShort(c))}</td><td class="num">${fmtMAD(p)}</td></tr>`;}).join('')}</tbody></table></div>`;
 }
 
 /* ====== Avis clients (réels uniquement) ====== */
@@ -1529,7 +1512,7 @@ function renderFAQ(){ $('#faqlist').innerHTML=FAQ.map((f,i)=>`<details${i===0?' 
 function renderContact(){
   const wa=`https://wa.me/${CONFIG.whatsapp}`;
   const row=(i,lab,val)=>`<div class="crow">${ic(i)}<div><span class="lab">${esc(lab)}</span><span class="val">${esc(val)}</span></div><button type="button" class="copy" data-copy="${esc(val)}">${esc(t('copy'))}</button></div>`;
-  $('#ccard').innerHTML=row('chat',t('contact.wa'),CONFIG.phoneDisplay)+row('phone',t('contact.phone'),CONFIG.phoneDisplay)+row('mail',t('contact.mail'),CONFIG.email)+`<a class="btn btn-brass" href="${wa}" target="_blank" rel="noopener">${ic('chat')}${esc(t('contact.open'))}</a>`;
+  $('#ccard').innerHTML=row('chat',t('contact.wa'),CONFIG.phoneDisplay)+row('mail',t('contact.mail'),CONFIG.email)+`<a class="btn btn-brass" href="${wa}" target="_blank" rel="noopener">${ic('chat')}${esc(t('contact.open'))}</a>`;
   $('#lic').textContent=t('footer.lic',{n:CONFIG.licence});
   $('#fcontact').textContent=`WhatsApp ${CONFIG.phoneDisplay} · ${CONFIG.email} · ${CONFIG.address}`;
   $('#copyright').textContent=`© ${new Date().getFullYear()} ${CONFIG.brandFull}. ${t('footer.rights')}`;
