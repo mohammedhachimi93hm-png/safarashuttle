@@ -254,7 +254,8 @@ button{font:inherit;color:inherit}
 @media (max-width:1020px){.svc{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){.svc{grid-template-columns:minmax(0,1fr)}}
 
-.fleet{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.fleet{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
+.fleet .car{flex:0 1 calc((100% - 40px) / 3);min-width:0}
 .car{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
 .car-art{position:relative;margin:12px 12px 0;background:var(--surface-2);border-radius:50% 50% 8px 8px / 70px 70px 8px 8px;padding:40px 22px 6px;color:var(--ink);overflow:hidden}
 .car-art svg{display:block;width:100%;height:auto;max-height:118px}
@@ -273,8 +274,8 @@ button{font:inherit;color:inherit}
 .car-foot{margin-top:auto;padding-top:14px;border-top:1px dashed var(--line);display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap}
 .from{font-size:14px;color:var(--muted);line-height:1.3}
 .from b{display:block;font-size:22px;color:var(--ink);font-variant-numeric:tabular-nums}
-@media (max-width:1020px){.fleet{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:640px){.fleet{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:1020px){.fleet .car{flex-basis:calc((100% - 20px) / 2)}}
+@media (max-width:640px){.fleet .car{flex-basis:100%}}
 
 .steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;list-style:none;padding:0;margin:0}
 .steps li{display:flex;flex-direction:column;gap:10px;padding-top:20px;border-top:1px solid var(--line)}
@@ -716,7 +717,7 @@ const CONFIG = {
   base: 250,       // prise en charge (MAD)
   perKm: 6.6,      // prix par km (MAD), berline Skoda
   minFare: 350,    // prix minimum d'un transfert (MAD)
-  dayRates: {eco:2000, prem:2500, vito:3000, tourneo:3000, van:3000, bus:4800}, // mise à disposition 9 h / 100 km
+  dayRates: {eco:2000, prem:2500, vito:3000, tourneo:3000, bus:4800}, // mise à disposition 9 h / 100 km
   roadFactor: 1.3, // distance route ≈ distance à vol d'oiseau × 1,3
   hourRate: 220,   // mise à disposition, prix par heure (MAD)
   minHours: 3,
@@ -739,9 +740,6 @@ const CLASSES = [
   {id:'tourneo', shape:'van', pax:8, bags:8, mult:1.13, img:'car-ford-tourneo.jpg', pos:'center 62%',
    name:{fr:'Van Famille',en:'Family Van'}, model:{fr:'Ford Tourneo Custom ou similaire',en:'Ford Tourneo Custom or similar'},
    best:{fr:'Grandes familles, golf, surf',en:'Large families, golf, surf trips'}},
-  {id:'van', shape:'van', pax:7, bags:7, mult:1.13, img:'car-mercedes-classe-v.jpg', pos:'center 58%',
-   name:{fr:'Van VIP',en:'VIP Van'}, model:{fr:'Mercedes-Benz Classe V ou similaire',en:'Mercedes-Benz V-Class or similar'},
-   best:{fr:'Clients VIP, familles exigeantes',en:'VIP guests, discerning families'}},
   {id:'bus', shape:'bus', pax:17, bags:17, mult:1.8, img:'car-mercedes-sprinter.jpg', pos:'center 74%',
    name:{fr:'Minibus',en:'Minibus'}, model:{fr:'Mercedes-Benz Sprinter ou similaire',en:'Mercedes-Benz Sprinter or similar'},
    best:{fr:'Groupes, séminaires, golf',en:'Groups, seminars, golf trips'}}
@@ -904,7 +902,7 @@ const ROUTES = [
   ['casa-centre','benimellal'],['casa-centre','meknes'],['casa-centre','marrakech-medina'],['casa-centre','fes-medina'],['casa-centre','essaouira'],
   ['casa-centre','tetouan'],['casa-centre','tanger-centre'],['casa-centre','chefchaouen'],['casa-centre','agadir-baie'],['casa-centre','dakhla-lagune']
 ];
-const TABLE_CLASSES = ['eco','van','prem','bus'];
+const TABLE_CLASSES = ['eco','vito','prem','bus'];
 const TRIP_COLOR = {ourika:'teal',agafay:'terra',essaouira:'majorelle',aitbenhaddou:'brass-hi',merzouga:'terra',chefchaouen:'majorelle'};
 
 /* ====== Villes du hero (photos dans images/) ====== */
@@ -1215,7 +1213,7 @@ const FIXED_OF = {
   'fes-medina':'fes', 'fes-ville':'fes', FEZ:'fes', essaouira:'essaouira', ESU:'essaouira', tetouan:'tetouan',
   'tanger-centre':'tanger', TNG:'tanger', chefchaouen:'chefchaouen', 'agadir-baie':'agadir', AGA:'agadir'
 };
-const FIXED_COL = {eco:0, vito:1, tourneo:1, van:1, prem:2};
+const FIXED_COL = {eco:0, vito:1, tourneo:1, prem:2};
 const r50=n=>Math.round(n/50)*50;
 function fixedKey(a,b){
   const ca=isCasa(a), cb=isCasa(b);
