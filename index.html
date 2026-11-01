@@ -864,6 +864,8 @@ const CONFIG = {
   imgVer: '6',     // change ce numéro quand une photo change : les navigateurs prennent la nouvelle tout de suite
   // Réservations et avis envoyés par e-mail (service gratuit FormSubmit). Le 1er envoi demande une activation dans la boîte support@.
   formEndpoint: 'https://formsubmit.co/ajax/support@safarashuttle.com',
+  // Suivi : visites, réservations et clics WhatsApp vont dans le Google Sheet du propriétaire (adresse /exec du script Google). Vide = rien n'est envoyé.
+  logUrl: 'https://script.google.com/macros/s/AKfycbxuzFwxHQ-AX0AoyJDBjRI_ZrmDWsRnsY-phxdKLYuuHnbve23sYb88_1NnLqZVxf7f/exec',
   googleReviewsUrl: 'https://search.google.com/local/writereview?placeid=ChIJryN0Y5U3pg0Rllcx0LqLhVs',   // laisser un avis sur la fiche Google
   mapsUrl: 'https://www.google.com/maps/dir/?api=1&destination=33.457348,-7.514808',   // itinéraire vers l'agence (depuis la position du client)
   mapsQuery: '33.457348,-7.514808',          // position de l'agence (Mediouna), carte Google dans le site
@@ -1721,6 +1723,60 @@ async function sendBookingEmail(){
   else st.innerHTML=`${esc(t('bk.mailFail'))} <a href="mailto:${CONFIG.email}?subject=${encodeURIComponent(data._subject)}&body=${encodeURIComponent(buildMessage(q))}">${esc(CONFIG.email)}</a>`;
 }
 
+/* ====== Suivi : chaque visite, réservation et clic WhatsApp s'ajoute dans le Google Sheet du propriétaire ======
+   Aucun cookie, aucune adresse IP : seulement d'où vient le visiteur, son pays approximatif (fuseau horaire),
+   son appareil et sa langue. Hors safarashuttle.com rien n'est envoyé (sauf test avec ?log=1). */
+const TZ_COUNTRY={'Africa/Casablanca':'Maroc','Africa/El_Aaiun':'Maroc','Europe/Paris':'France','Europe/Madrid':'Espagne','Atlantic/Canary':'Espagne','Africa/Ceuta':'Espagne',
+  'Europe/London':'Royaume-Uni','Europe/Dublin':'Irlande','Europe/Brussels':'Belgique','Europe/Amsterdam':'Pays-Bas','Europe/Luxembourg':'Luxembourg','Europe/Berlin':'Allemagne',
+  'Europe/Zurich':'Suisse','Europe/Vienna':'Autriche','Europe/Rome':'Italie','Europe/Lisbon':'Portugal','Europe/Stockholm':'Suède','Europe/Oslo':'Norvège','Europe/Copenhagen':'Danemark',
+  'Europe/Helsinki':'Finlande','Europe/Warsaw':'Pologne','Europe/Prague':'Tchéquie','Europe/Budapest':'Hongrie','Europe/Bucharest':'Roumanie','Europe/Athens':'Grèce',
+  'Europe/Istanbul':'Turquie','Europe/Moscow':'Russie','Europe/Kiev':'Ukraine','Europe/Kyiv':'Ukraine','Africa/Algiers':'Algérie','Africa/Tunis':'Tunisie','Africa/Cairo':'Égypte',
+  'Africa/Dakar':'Sénégal','Africa/Abidjan':'Côte d’Ivoire','Africa/Lagos':'Nigeria','Africa/Johannesburg':'Afrique du Sud','Asia/Dubai':'Émirats arabes unis',
+  'Asia/Riyadh':'Arabie saoudite','Asia/Qatar':'Qatar','Asia/Kuwait':'Koweït','Asia/Jerusalem':'Israël','Asia/Tokyo':'Japon','Asia/Shanghai':'Chine','Asia/Hong_Kong':'Hong Kong',
+  'Asia/Seoul':'Corée du Sud','Asia/Singapore':'Singapour','Asia/Kolkata':'Inde','Asia/Calcutta':'Inde','Australia/Sydney':'Australie','Australia/Melbourne':'Australie',
+  'America/New_York':'États-Unis','America/Chicago':'États-Unis','America/Denver':'États-Unis','America/Los_Angeles':'États-Unis','America/Phoenix':'États-Unis',
+  'America/Toronto':'Canada','America/Montreal':'Canada','America/Vancouver':'Canada','America/Mexico_City':'Mexique','America/Sao_Paulo':'Brésil','America/Argentina/Buenos_Aires':'Argentine'};
+const TRK=(()=>{
+  const ua=navigator.userAgent||'';
+  const on=!!CONFIG.logUrl&&(/(^|\.)safarashuttle\.com$/.test(location.hostname)||/[?&]log=1\b/.test(location.search))
+    &&!navigator.webdriver&&!/bot|crawl|spider|slurp|headless|lighthouse|pagespeed|preview/i.test(ua);
+  let tz=''; try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';}catch(e){}
+  const country=TZ_COUNTRY[tz]||(tz?tz.split('/').pop().replace(/_/g,' ')+' ('+tz.split('/')[0]+')':'');
+  const device=(/iPad|Tablet/i.test(ua)||(/Android/i.test(ua)&&!/Mobi/i.test(ua))||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1))?'Tablette'
+    :/Mobi|iPhone|Android/i.test(ua)?'Téléphone':'Ordinateur';
+  const utm=((location.search.match(/[?&]utm_source=([^&#]+)/)||[])[1]||'').toLowerCase();
+  let ref=''; try{ ref=document.referrer?new URL(document.referrer).hostname.replace(/^www\./,''):''; }catch(e){}
+  if(ref===location.hostname.replace(/^www\./,'')) ref='';
+  const s=decodeURIComponent(utm)||ref;
+  const KNOWN=[[/google_?maps|maps\.google|business\.google/,'Google Maps'],[/google/,'Google'],[/bing/,'Bing'],[/facebook|fb\.|^fb$/,'Facebook'],
+    [/instagram/,'Instagram'],[/whatsapp|wa\.me/,'WhatsApp'],[/tiktok/,'TikTok'],[/youtube/,'YouTube'],[/tripadvisor/,'TripAdvisor'],[/chatgpt|openai/,'ChatGPT'],
+    [/yahoo/,'Yahoo'],[/duckduckgo/,'DuckDuckGo'],[/linkedin/,'LinkedIn'],[/snapchat/,'Snapchat'],[/^t\.co$|twitter|^x\.com$/,'X (Twitter)']];
+  const k=KNOWN.find(([re])=>re.test(s));
+  return {on, country, device, src:!s?'Direct':k?k[1]:s, lang:(navigator.language||'').slice(0,5)};
+})();
+function track(type,data){
+  if(!TRK.on) return;
+  const body=JSON.stringify(Object.assign({type, src:TRK.src, country:TRK.country, device:TRK.device, lang:TRK.lang,
+    page:location.pathname.replace(/index\.html$/,'')||'/'},data||{}));
+  try{ if(navigator.sendBeacon&&navigator.sendBeacon(CONFIG.logUrl,new Blob([body],{type:'text/plain;charset=UTF-8'}))) return; }catch(e){}
+  try{ fetch(CONFIG.logUrl,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'text/plain;charset=UTF-8'},body}).catch(()=>{}); }catch(e){}
+}
+function trackBooking(via){ try{
+  const key=S.ref+'|'+via; if(S.logged===key) return; S.logged=key;
+  const q=quote(S), c=CLASS[S.vehicle];
+  const route=S.type==='transfer'?locLabel(S.from)+' → '+locLabel(S.to)+(S.roundtrip?' · '+t('f.return'):'')
+    :S.type==='hourly'?locLabel(S.place)+' · '+t('hours',{n:S.hours}):L(TRIP[S.trip].name);
+  track('booking',{ref:S.ref, name:S.name, phone:S.phone, email:S.email, service:t('type.long.'+S.type), route,
+    when:S.date.split('-').reverse().join('/')+' · '+S.time, car:L(c.model), pax:S.pax, price:q.total, via, details:buildMessage(q)});
+}catch(e){} }
+const WA_BTN={'wafloat':'Bouton vert (en bas de l’écran)','wa-hero':'Carte WhatsApp (haut de page)','b-wa':'Réservation envoyée par WhatsApp'};
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a[href*="wa.me/"]');
+  if(a){ const box=a.id&&WA_BTN[a.id]?a:a.closest('[id]'); track('wa',{btn:(box&&WA_BTN[box.id])||('Lien WhatsApp'+(box?' · '+box.id:''))}); return; }
+  const cp=e.target.closest('[data-copy]');
+  if(cp&&cp.dataset.copy===CONFIG.phoneDisplay) track('wa',{btn:'Numéro copié'});
+},true);
+
 function shortLabel(id){const l=LOC[id]; return l.kind==='airport'?`${L(l.city)} (${l.id})`:L(l.name).split(',')[0];}
 function renderFAQ(){ $('#faqlist').innerHTML=FAQ.map((f,i)=>`<details${i===0?' open':''}><summary>${esc(L(f.q))}</summary><p>${esc(L(f.a))}</p></details>`).join(''); }
 function renderContact(){
@@ -1869,8 +1925,8 @@ $('#bkbody').addEventListener('input',e=>{
 $('#bkbody').addEventListener('click',e=>{
   const tb=e.target.closest('[data-type]'); if(tb){S.type=tb.dataset.type; showErr(''); renderStep(); return;}
   if(e.target.closest('[data-swap]')){const f=S.from; S.from=S.to; S.to=f; renderStep(); return;}
-  if(e.target.closest('#b-mail')){ sendBookingEmail(); return; }
-  if(e.target.closest('#b-wa')){ sendBookingEmail(); return; }
+  if(e.target.closest('#b-mail')){ trackBooking('E-mail'); sendBookingEmail(); return; }
+  if(e.target.closest('#b-wa')){ trackBooking('WhatsApp'); sendBookingEmail(); return; }
   if(e.target.closest('#b-copy')){const ta=$('#b-msg'); copyText(ta.value,()=>{ta.hidden=false; ta.focus(); ta.select();});}
 });
 $('#bknext').addEventListener('click',()=>{const err=validate(STEP); showErr(err); if(err) return; STEP=Math.min(4,STEP+1); renderStep(); $('#bk-title').focus();});
@@ -1948,6 +2004,7 @@ function renderAll(){ applyStatic(); renderCities(); renderWaCard(); renderAgenc
 function setLang(l){ LANG=l; try{localStorage.setItem('siyaha-lang',l);}catch(e){} renderAll(); }
 
 renderAll(); flapIntro(); setInterval(tick,15000);
+track('visit');
 if(/[?&]avis=merci/.test(location.search)){ const st=$('#r-status'); if(st){ st.hidden=false; st.textContent=t('rev.ok'); } }
 
 /* ====== Application (PWA) ====== */
