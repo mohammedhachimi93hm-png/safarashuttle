@@ -149,14 +149,14 @@ button{font:inherit;color:inherit}
 .ic{width:22px;height:22px;flex:none}
 
 /* buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:999px;border:1px solid transparent;font-weight:600;font-size:15px;cursor:pointer;text-decoration:none;transition:background .15s,border-color .15s,color .15s;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:53px;padding:0 23px;border-radius:999px;border:1px solid transparent;font-weight:700;font-size:17px;cursor:pointer;text-decoration:none;transition:background .15s,border-color .15s,color .15s;white-space:nowrap}
 .btn-primary{background:var(--teal);color:var(--on-teal)}
 .btn-primary:hover{background:var(--teal-2)}
 .btn-brass{background:var(--brass-hi);color:var(--on-brass)}
 .btn-brass:hover{filter:brightness(1.06)}
 .btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
 .btn-ghost:hover{border-color:var(--ink)}
-.btn-sm{min-height:34px;padding:0 14px;font-size:13.5px}
+.btn-sm{min-height:39px;padding:0 16px;font-size:15.5px}
 .linkbtn{background:none;border:0;padding:4px 0;font-weight:600;color:var(--ink);border-bottom:1px solid var(--brass-hi);cursor:pointer;align-self:flex-start}
 .linkbtn:hover{color:var(--brass)}
 
@@ -217,7 +217,7 @@ button{font:inherit;color:inherit}
 .wa-title{display:flex;align-items:center;gap:10px;font:700 1.45rem/1.2 var(--f-body);margin-top:14px;color:var(--on-teal)}
 .wa-title .ic{color:var(--brass-hi);width:26px;height:26px}
 .wa-sub{font-size:16px;margin-top:6px;margin-bottom:4px}
-.wa-card .btn{width:100%;min-height:52px;font-size:16.5px}
+.wa-card .btn{width:100%;min-height:60px;font-size:19px}
 .wa-card .crow{grid-template-columns:minmax(0,1fr) auto}
 .wa-card .crow>.ic{display:none}
 .wa-card .crow .val{white-space:nowrap;font-size:1.2rem}
@@ -248,7 +248,7 @@ button{font:inherit;color:inherit}
 /* forms */
 .qb{margin-top:28px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:0 18px 18px}
 .tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin:0 -18px 16px;padding:0 10px;overflow-x:auto}
-.tab{border:0;background:none;padding:15px 10px 12px;font-weight:700;font-size:16px;color:var(--muted);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;display:flex;gap:8px;align-items:center}
+.tab{border:0;background:none;padding:16px 12px 13px;font-weight:700;font-size:17px;color:var(--muted);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;display:flex;gap:8px;align-items:center}
 .tab .ic{width:18px;height:18px}
 @media (max-width:480px){.tabs{gap:0;padding:0 4px}.tab{flex:1;justify-content:center;padding:14px 4px 12px}.tab .ic{display:none}}
 .tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--brass-hi)}
@@ -257,15 +257,15 @@ button{font:inherit;color:inherit}
 @media (max-width:600px){.fgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.c3,.c6{grid-column:span 2}.c1,.c2{grid-column:span 1}}
 .field{display:flex;flex-direction:column;gap:6px;min-width:0}
 .fhead{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:16px}
-.field label,.flabel{font:700 15.5px/1.3 var(--f-body);letter-spacing:0;text-transform:none;color:var(--ink)}
-.field select,.field input,.field textarea{width:100%;min-height:52px;padding:12px 14px;border:1.5px solid var(--field-line);border-radius:12px;background:var(--field-bg);color:var(--ink);font:600 17px/1.3 var(--f-body);min-width:0}
-.field ::placeholder{color:var(--muted);opacity:.7;font-weight:500}
-.field textarea{min-height:84px;resize:vertical}
+.field label,.flabel{font:700 16.5px/1.3 var(--f-body);letter-spacing:0;text-transform:none;color:var(--ink)}
+.field select,.field input,.field textarea{width:100%;min-height:58px;padding:14px 16px;border:2px solid var(--field-line);border-radius:12px;background:var(--field-bg);color:var(--ink);font:600 18px/1.3 var(--f-body);min-width:0}
+.field ::placeholder{color:var(--muted);opacity:.75;font-weight:500}
+.field textarea{min-height:96px;resize:vertical}
 .field select:focus,.field input:focus,.field textarea:focus{outline:2px solid var(--brass-hi);outline-offset:0;border-color:transparent}
 .swap{border:0;background:none;padding:0;color:var(--brass);cursor:pointer;display:grid;place-items:center}
 .swap .ic{width:18px;height:18px}
-.check{display:flex;align-items:center;gap:10px;font-weight:500;cursor:pointer;min-height:40px}
-.check input{width:20px;height:20px;accent-color:var(--teal)}
+.check{display:flex;align-items:center;gap:12px;font-weight:600;font-size:16.5px;cursor:pointer;min-height:46px}
+.check input{width:24px;height:24px;accent-color:var(--teal)}
 .qb-foot{display:flex;align-items:center;justify-content:space-between;gap:12px 16px;margin-top:16px;flex-wrap:wrap}
 .hint .k{font-size:15px;color:var(--muted)}
 .hint .v{font-weight:700;font-size:24px;font-variant-numeric:tabular-nums}
@@ -559,7 +559,7 @@ a.copy{text-decoration:none;display:inline-block}
 .stepper li span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bk-body{padding:4px 22px 24px;overflow-y:auto;flex:1;min-height:0}
 .seg{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border:1px solid var(--line);border-radius:999px;margin-bottom:18px;background:var(--bg)}
-.seg button{border:0;background:none;padding:8px 14px;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;color:var(--muted)}
+.seg button{border:0;background:none;padding:10px 16px;border-radius:999px;font-weight:700;font-size:16px;cursor:pointer;color:var(--muted)}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 .bk-foot{display:flex;align-items:center;justify-content:space-between;gap:10px 14px;padding:14px 22px;border-top:1px solid var(--line);background:var(--surface);flex-wrap:wrap}
 .bk-foot .acts{display:flex;gap:8px;margin-left:auto}
@@ -1780,10 +1780,13 @@ const TZ_COUNTRY={'Africa/Casablanca':'Maroc','Africa/El_Aaiun':'Maroc','Europe/
   'America/Toronto':'Canada','America/Montreal':'Canada','America/Vancouver':'Canada','America/Mexico_City':'Mexique','America/Sao_Paulo':'Brésil','America/Argentina/Buenos_Aires':'Argentine'};
 const TRK=(()=>{
   const ua=navigator.userAgent||'';
-  const on=!!CONFIG.logUrl&&(/(^|\.)safarashuttle\.com$/.test(location.hostname)||/[?&]log=1\b/.test(location.search))
-    &&!navigator.webdriver&&!/bot|crawl|spider|slurp|headless|lighthouse|pagespeed|preview/i.test(ua);
+  // ?notrack=1 une fois : ce navigateur (propriétaire, développeur) n'est plus compté ; ?track=1 pour le compter à nouveau
+  let mute=false; try{ if(/[?&]notrack=1\b/.test(location.search)) localStorage.setItem('safara-notrack','1');
+    if(/[?&]track=1\b/.test(location.search)) localStorage.removeItem('safara-notrack'); mute=localStorage.getItem('safara-notrack')==='1'; }catch(e){}
+  const on=!!CONFIG.logUrl&&!mute&&(/(^|\.)safarashuttle\.com$/.test(location.hostname)||/[?&]log=1\b/.test(location.search))
+    &&!navigator.webdriver&&!/bot|crawl|spider|slurp|headless|lighthouse|pagespeed|preview|Claude\//i.test(ua);
   let tz=''; try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';}catch(e){}
-  const country=TZ_COUNTRY[tz]||(tz?tz.split('/').pop().replace(/_/g,' ')+' ('+tz.split('/')[0]+')':'');
+  const country=TZ_COUNTRY[tz]||(!tz||/^(UTC|GMT|Etc\/)/.test(tz)?'Inconnu':tz.split('/').pop().replace(/_/g,' ')+' ('+tz.split('/')[0]+')');
   const device=(/iPad|Tablet/i.test(ua)||(/Android/i.test(ua)&&!/Mobi/i.test(ua))||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1))?'Tablette'
     :/Mobi|iPhone|Android/i.test(ua)?'Téléphone':'Ordinateur';
   const utm=((location.search.match(/[?&]utm_source=([^&#]+)/)||[])[1]||'').toLowerCase();
@@ -1803,21 +1806,37 @@ function track(type,data){
   try{ if(navigator.sendBeacon&&navigator.sendBeacon(CONFIG.logUrl,new Blob([body],{type:'text/plain;charset=UTF-8'}))) return; }catch(e){}
   try{ fetch(CONFIG.logUrl,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'text/plain;charset=UTF-8'},body}).catch(()=>{}); }catch(e){}
 }
+/* Ville et pays approximatifs d'après l'adresse IP (service GeoJS), seulement pour une réservation ou un clic WhatsApp.
+   L'adresse IP n'est ni envoyée au tableau ni gardée. */
+let GEO=null;
+function geo(){
+  if(!TRK.on) return Promise.resolve(null);
+  if(!GEO) GEO=fetch('https://get.geojs.io/v1/ip/geo.json',{cache:'no-store',credentials:'omit'}).then(r=>r.ok?r.json():null).then(g=>{
+    if(!g) return null;
+    let country=g.country||''; try{ if(g.country_code) country=new Intl.DisplayNames(['fr'],{type:'region'}).of(g.country_code)||country; }catch(e){}
+    return {country, city:[g.city, g.region&&g.region!==g.city?g.region:''].filter(Boolean).join(', ')};
+  }).catch(()=>null);
+  return GEO;
+}
+function withGeo(fn){ Promise.race([geo(), new Promise(r=>setTimeout(()=>r(null),1500))]).then(g=>fn({country:(g&&g.country)||TRK.country, city:(g&&g.city)||''})); }
 function trackBooking(via){ try{
   const key=S.ref+'|'+via; if(S.logged===key) return; S.logged=key;
   const q=quote(S), c=CLASS[S.vehicle];
   const route=S.type==='transfer'?locLabel(S.from)+' → '+locLabel(S.to)+(S.roundtrip?' · '+t('f.return'):'')
     :S.type==='hourly'?locLabel(S.place)+' · '+t('hours',{n:S.hours}):L(TRIP[S.trip].name);
-  track('booking',{ref:S.ref, name:S.name, phone:S.phone, email:S.email, service:t('type.long.'+S.type), route,
-    when:S.date.split('-').reverse().join('/')+' · '+S.time, car:L(c.model), pax:S.pax, price:q.total, via, details:buildMessage(q)});
+  const data={ref:S.ref, name:S.name, phone:S.phone, email:S.email, service:t('type.long.'+S.type), route,
+    when:S.date.split('-').reverse().join('/')+' · '+S.time, car:L(c.model), pax:S.pax, price:q.total, via, details:buildMessage(q)};
+  withGeo(g=>track('booking',Object.assign(data,g)));
 }catch(e){} }
 const WA_BTN={'wafloat':'Bouton vert (en bas de l’écran)','wa-hero':'Carte WhatsApp (haut de page)','b-wa':'Réservation envoyée par WhatsApp'};
 document.addEventListener('click',e=>{
   const a=e.target.closest('a[href*="wa.me/"]');
-  if(a){ const box=a.id&&WA_BTN[a.id]?a:a.closest('[id]'); track('wa',{btn:(box&&WA_BTN[box.id])||('Lien WhatsApp'+(box?' · '+box.id:''))}); return; }
+  if(a){ const box=a.id&&WA_BTN[a.id]?a:a.closest('[id]'), btn=(box&&WA_BTN[box.id])||('Lien WhatsApp'+(box?' · '+box.id:'')); withGeo(g=>track('wa',Object.assign({btn},g))); return; }
   const cp=e.target.closest('[data-copy]');
-  if(cp&&cp.dataset.copy===CONFIG.phoneDisplay) track('wa',{btn:'Numéro copié'});
+  if(cp&&cp.dataset.copy===CONFIG.phoneDisplay) withGeo(g=>track('wa',Object.assign({btn:'Numéro copié'},g)));
 },true);
+// commence à chercher la ville dès qu'on appuie sur un bouton WhatsApp (le clic arrive juste après)
+document.addEventListener('pointerdown',e=>{ if(e.target.closest&&e.target.closest('a[href*="wa.me/"],[data-copy]')) geo(); },true);
 
 function shortLabel(id){const l=LOC[id]; return l.kind==='airport'?`${L(l.city)} (${l.id})`:L(l.name).split(',')[0];}
 function renderFAQ(){ $('#faqlist').innerHTML=FAQ.map((f,i)=>`<details${i===0?' open':''}><summary>${esc(L(f.q))}</summary><p>${esc(L(f.a))}</p></details>`).join(''); }
@@ -1847,7 +1866,7 @@ function validate(step){
 function showErr(msg){const e=$('#bkerr'); e.textContent=msg||''; e.hidden=!msg;}
 const isApt=id=>LOC[id]&&LOC[id].kind==='airport';
 function openBooking(step){
-  lastFocus=document.activeElement;
+  lastFocus=document.activeElement; geo();
   let s=step||1; for(let i=1;i<s;i++){ if(validate(i)){ s=i; break; } }
   STEP=s; $('#bkov').hidden=false; document.documentElement.style.overflow='hidden';
   renderStep(); showErr(STEP<(step||1)?validate(STEP):'');
