@@ -225,8 +225,7 @@ button{font:inherit;color:inherit}
 .wa-float .ic{width:22px;height:22px}
 .wa-float:hover{filter:brightness(1.08)}
 @media (max-width:600px){.wa-float span{display:none}.wa-float{padding:14px}}
-.cities{--city-ink:#F3E0A6;align-self:flex-end;width:min(420px,100%);margin-block:auto;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;color:var(--city-ink);text-shadow:0 1px 2px rgba(0,0,0,.95),0 0 10px rgba(0,0,0,.8),0 0 26px rgba(0,0,0,.6)}
-@media (min-width:921px){.cities{background:rgba(8,18,15,.52);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);border-radius:18px;padding:20px 24px 12px}}
+.cities{--city-ink:#F3E0A6;align-self:flex-end;width:min(420px,100%);margin-block:auto;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;color:var(--city-ink);text-shadow:0 2px 14px rgba(0,0,0,.35)}
 .city-name{display:block;font:400 clamp(2.3rem,4.6vw,3.6rem)/1 var(--f-display);-webkit-text-stroke:.7px currentColor}
 .city-tag{display:block;font:600 15px/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;margin-top:10px}
 .city-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 18px}
@@ -1089,13 +1088,13 @@ const ROUTES = [
 const TABLE_CLASSES = ['eco','vito','prem','bus'];
 const TRIP_COLOR = {ourika:'teal',agafay:'terra',essaouira:'majorelle',aitbenhaddou:'brass-hi',merzouga:'terra',chefchaouen:'majorelle'};
 
-/* ====== Villes du hero (photos dans images/) ====== */
+/* ====== Villes du hero (fond zellige, sans photo : img vide) ====== */
 const HERO_CITIES = [
-  {name:'Marrakech', img:'hero-marrakech.jpg', from:'CMN', to:'marrakech-medina', tag:{fr:'La ville rouge · palaces et jardins',en:'The red city · palaces and gardens'}},
-  {name:'Agadir', img:'hero-agadir.jpg', from:'CMN', to:'agadir-baie', tag:{fr:'La baie · hôtels en bord de mer',en:'The bay · beachfront hotels'}},
-  {name:'Casablanca', img:'hero-casablanca.jpg', from:'CMN', to:'casa-centre', tag:{fr:'La métropole · hôtels d’affaires',en:'The metropolis · business hotels'}},
-  {name:'Rabat', img:'hero-rabat.jpg', from:'CMN', to:'rabat-agdal', tag:{fr:'La capitale · hôtels de caractère',en:'The capital · heritage hotels'}},
-  {name:'Chefchaouen', img:'hero-chefchaouen.jpg', from:'CMN', to:'chefchaouen', tag:{fr:'La perle bleue · maisons d’hôtes',en:'The blue pearl · guesthouses'}}
+  {name:'Marrakech', img:'', from:'CMN', to:'marrakech-medina', tag:{fr:'La ville rouge · palaces et jardins',en:'The red city · palaces and gardens'}},
+  {name:'Agadir', img:'', from:'CMN', to:'agadir-baie', tag:{fr:'La baie · hôtels en bord de mer',en:'The bay · beachfront hotels'}},
+  {name:'Casablanca', img:'', from:'CMN', to:'casa-centre', tag:{fr:'La métropole · hôtels d’affaires',en:'The metropolis · business hotels'}},
+  {name:'Rabat', img:'', from:'CMN', to:'rabat-agdal', tag:{fr:'La capitale · hôtels de caractère',en:'The capital · heritage hotels'}},
+  {name:'Chefchaouen', img:'', from:'CMN', to:'chefchaouen', tag:{fr:'La perle bleue · maisons d’hôtes',en:'The blue pearl · guesthouses'}}
 ];
 
 /* ====== Bande « Découvrez le Maroc » : vraies photos Wikimedia Commons (auteur et licence affichés sous la bande) ====== */
@@ -1522,7 +1521,7 @@ function flapIntro(){
 let CITY=0, cityTimer=null, cityAuto=true;
 function renderCities(){
   const bg=$('#herobg');
-  if(!bg.children.length) bg.innerHTML=HERO_CITIES.map(c=>`<div class="slide" style="background-image:url('${CONFIG.imgDir}${c.img}?v=${CONFIG.imgVer}')"></div>`).join('');
+  if(!bg.children.length) bg.innerHTML=HERO_CITIES.map(c=>c.img?`<div class="slide" style="background-image:url('${CONFIG.imgDir}${c.img}?v=${CONFIG.imgVer}')"></div>`:'<div class="slide"></div>').join('');
   $$('.slide',bg).forEach((s,i)=>s.classList.toggle('on',i===CITY));
   const c=HERO_CITIES[CITY];
   $('#cities').innerHTML=`<p><span class="city-name">${esc(c.name)}</span><span class="city-tag">${esc(L(c.tag))}</span></p><div class="city-tabs" role="group" aria-label="${esc(t('hero.cities'))}">${HERO_CITIES.map((x,i)=>`<button type="button" data-city="${i}" aria-pressed="${i===CITY}">${esc(x.name)}</button>`).join('')}</div>`;
