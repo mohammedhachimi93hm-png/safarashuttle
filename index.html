@@ -1881,7 +1881,10 @@ function openBooking(step){
   renderStep(); showErr(STEP<(step||1)?validate(STEP):'');
   setTimeout(()=>{const h=$('#bk-title'); if(h) h.focus();},30);
 }
-function closeBooking(){ $('#bkov').hidden=true; document.documentElement.style.overflow=''; renderQuick(); renderCalc(); if(lastFocus&&lastFocus.focus) lastFocus.focus(); }
+/* Une réservation déjà envoyée est terminée : la suivante (ou une version modifiée) reçoit une nouvelle référence,
+   donc elle s'enregistre aussi dans le tableau et déclenche sa propre alerte. */
+function newBookingIfSent(){ if(S.logged||S.confirmed||S.mailSent){ S.ref=''; S.logged=''; S.confirmed=false; S.mailSent=false; } }
+function closeBooking(){ newBookingIfSent(); $('#bkov').hidden=true; document.documentElement.style.overflow=''; renderQuick(); renderCalc(); if(lastFocus&&lastFocus.focus) lastFocus.focus(); }
 function renderStep(){
   $('#stepper').innerHTML=[1,2,3,4].map(n=>`<li class="${n<STEP?'done':n===STEP?'cur':''}"${n===STEP?' aria-current="step"':''}><span>${n}. ${esc(t('step.'+n))}</span></li>`).join('');
   const b=$('#bkbody');
@@ -2002,7 +2005,7 @@ $('#bkbody').addEventListener('click',e=>{
   if(e.target.closest('#b-copy')){const ta=$('#b-msg'); copyText(ta.value,()=>{ta.hidden=false; ta.focus(); ta.select();});}
 });
 $('#bknext').addEventListener('click',()=>{const err=validate(STEP); showErr(err); if(err) return; STEP=Math.min(4,STEP+1); renderStep(); $('#bk-title').focus();});
-$('#bkback').addEventListener('click',()=>{showErr(''); S.mailSent=false; STEP=Math.max(1,STEP-1); renderStep();});
+$('#bkback').addEventListener('click',()=>{showErr(''); newBookingIfSent(); S.mailSent=false; STEP=Math.max(1,STEP-1); renderStep();});
 $('#calc').addEventListener('change',e=>{ const k=readField(e.target); if(!k) return; renderCalcOut(); renderQuick(); });
 $('#revform').addEventListener('change',e=>{
   if(e.target.id!=='r-photo') return;
