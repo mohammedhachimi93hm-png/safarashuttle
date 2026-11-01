@@ -225,7 +225,8 @@ button{font:inherit;color:inherit}
 .wa-float .ic{width:22px;height:22px}
 .wa-float:hover{filter:brightness(1.08)}
 @media (max-width:600px){.wa-float span{display:none}.wa-float{padding:14px}}
-.cities{--city-ink:#F3E0A6;align-self:flex-end;width:min(420px,100%);margin-block:auto;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;color:var(--city-ink);text-shadow:0 2px 14px rgba(0,0,0,.35)}
+.cities{--city-ink:#F3E0A6;align-self:flex-end;width:min(420px,100%);margin-block:auto;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;color:var(--city-ink);text-shadow:0 1px 2px rgba(0,0,0,.95),0 0 10px rgba(0,0,0,.8),0 0 26px rgba(0,0,0,.6)}
+@media (min-width:921px){.cities{background:rgba(8,18,15,.52);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);border-radius:18px;padding:20px 24px 12px}}
 .city-name{display:block;font:400 clamp(2.3rem,4.6vw,3.6rem)/1 var(--f-display);-webkit-text-stroke:.7px currentColor}
 .city-tag{display:block;font:600 15px/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;margin-top:10px}
 .city-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 18px}
@@ -480,6 +481,17 @@ td.rt{white-space:normal;min-width:210px}
 @media (max-width:600px){.cp img{height:170px}}
 .cp-empty{border:1px dashed var(--line);border-radius:14px;padding:22px;display:flex;gap:12px;align-items:center;color:var(--muted);background:var(--surface)}
 .cp-empty .ic{width:28px;height:28px;color:var(--brass);flex:none}
+/* Moroccan cities: endless photo strip */
+.mstrip{--dur:75s}
+.mstrip .track{padding-block:4px}
+.mc{margin:0;flex:none;position:relative;width:340px;aspect-ratio:4/3;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);background:var(--surface-2)}
+.mc img{width:100%;height:100%;object-fit:cover;display:block}
+.mc figcaption{position:absolute;inset:auto 0 0 0;padding:48px 18px 16px;background:linear-gradient(0deg,rgba(10,22,18,.88),rgba(10,22,18,0));color:#fff;display:grid;gap:3px}
+.mc b{font:400 28px/1.1 var(--f-display);letter-spacing:.01em}
+.mc span{font-size:16px;font-weight:700}
+.mcredits{margin:18px 0 0;font-size:12.5px;line-height:1.6;color:var(--muted)}
+.mcredits a{color:inherit}
+@media (max-width:600px){.mc{width:260px}.mc b{font-size:23px}.mc span{font-size:14.5px}}
 
 /* faq */
 .faq{max-width:840px}
@@ -652,6 +664,13 @@ a.copy{text-decoration:none;display:inline-block}
   </section>
   <div class="frieze" aria-hidden="true"></div>
 
+  <section class="band alt" id="maroc">
+    <div class="wrap">
+      <div class="shead"><p class="eyebrow" data-i18n="mar.eyebrow">Le Maroc</p><h2 data-i18n="mar.title">Découvrez le Maroc avec votre chauffeur</h2><p data-i18n="mar.lede">Des villes impériales au désert et à l’océan : on vous y conduit.</p></div>
+    </div>
+    <div class="marquee mstrip" id="mstrip"><div class="track"><figure class="mc"><img src="images/city-casablanca.jpg" alt="Casablanca · Mosquée Hassan II" loading="lazy" width="720" height="540"><figcaption><b>Casablanca</b><span>Mosquée Hassan II</span></figcaption></figure><figure class="mc"><img src="images/city-rabat.jpg" alt="Rabat · Tour Hassan" loading="lazy" width="720" height="540"><figcaption><b>Rabat</b><span>Tour Hassan</span></figcaption></figure><figure class="mc"><img src="images/city-tanger.jpg" alt="Tanger · Grottes d’Hercule" loading="lazy" width="720" height="540"><figcaption><b>Tanger</b><span>Grottes d’Hercule</span></figcaption></figure><figure class="mc"><img src="images/city-asilah.jpg" alt="Asilah · Ruelles et fresques" loading="lazy" width="720" height="540"><figcaption><b>Asilah</b><span>Ruelles et fresques</span></figcaption></figure><figure class="mc"><img src="images/city-chefchaouen.jpg" alt="Chefchaouen · La ville bleue" loading="lazy" width="720" height="540"><figcaption><b>Chefchaouen</b><span>La ville bleue</span></figcaption></figure><figure class="mc"><img src="images/city-marrakech.jpg" alt="Marrakech · La Koutoubia" loading="lazy" width="720" height="540"><figcaption><b>Marrakech</b><span>La Koutoubia</span></figcaption></figure><figure class="mc"><img src="images/city-ouarzazate.jpg" alt="Ouarzazate · Kasbah Taourirt" loading="lazy" width="720" height="540"><figcaption><b>Ouarzazate</b><span>Kasbah Taourirt</span></figcaption></figure><figure class="mc"><img src="images/city-agadir.jpg" alt="Agadir · La baie" loading="lazy" width="720" height="540"><figcaption><b>Agadir</b><span>La baie</span></figcaption></figure><figure class="mc"><img src="images/city-dakhla.jpg" alt="Dakhla · Île du Dragon" loading="lazy" width="720" height="540"><figcaption><b>Dakhla</b><span>Île du Dragon</span></figcaption></figure></div></div>
+    <div class="wrap"><p class="mcredits" id="mcredits">Photos Wikimedia Commons (auteurs et licences CC).</p></div>
+  </section>
   <section class="band" id="flotte">
     <div class="wrap">
       <div class="shead"><p class="eyebrow" data-i18n="fleet.eyebrow">Nos voitures</p><h2 data-i18n="fleet.title"><!--pr-->Réservez votre voiture avec chauffeur<!--/pr--></h2><p data-i18n="fleet.lede"><!--pr-->Voitures récentes et climatisées, Wi-Fi et eau à bord. Photos d’illustration : ce modèle ou un modèle similaire.<!--/pr--></p></div>
@@ -861,7 +880,7 @@ const CONFIG = {
   phoneDisplay: '+212 6 61 52 15 19',
   email: 'support@safarashuttle.com',
   imgDir: 'images/',
-  imgVer: '6',     // change ce numéro quand une photo change : les navigateurs prennent la nouvelle tout de suite
+  imgVer: '7',     // change ce numéro quand une photo change : les navigateurs prennent la nouvelle tout de suite
   // Réservations et avis envoyés par e-mail (service gratuit FormSubmit). Le 1er envoi demande une activation dans la boîte support@.
   formEndpoint: 'https://formsubmit.co/ajax/support@safarashuttle.com',
   // Suivi : visites, réservations et clics WhatsApp vont dans le Google Sheet du propriétaire (adresse /exec du script Google). Vide = rien n'est envoyé.
@@ -1072,11 +1091,24 @@ const TRIP_COLOR = {ourika:'teal',agafay:'terra',essaouira:'majorelle',aitbenhad
 
 /* ====== Villes du hero (photos dans images/) ====== */
 const HERO_CITIES = [
-  {name:'Marrakech', img:'hero-marrakech.png', from:'CMN', to:'marrakech-medina', tag:{fr:'La ville rouge · palaces et jardins',en:'The red city · palaces and gardens'}},
-  {name:'Agadir', img:'hero-agadir.png', from:'CMN', to:'agadir-baie', tag:{fr:'La baie · hôtels en bord de mer',en:'The bay · beachfront hotels'}},
-  {name:'Casablanca', img:'hero-casablanca.png', from:'CMN', to:'casa-centre', tag:{fr:'La métropole · hôtels d’affaires',en:'The metropolis · business hotels'}},
-  {name:'Rabat', img:'hero-rabat.png', from:'CMN', to:'rabat-agdal', tag:{fr:'La capitale · hôtels de caractère',en:'The capital · heritage hotels'}},
-  {name:'Chefchaouen', img:'hero-chefchaouen.png', from:'CMN', to:'chefchaouen', tag:{fr:'La perle bleue · maisons d’hôtes',en:'The blue pearl · guesthouses'}}
+  {name:'Marrakech', img:'hero-marrakech.jpg', from:'CMN', to:'marrakech-medina', tag:{fr:'La ville rouge · palaces et jardins',en:'The red city · palaces and gardens'}},
+  {name:'Agadir', img:'hero-agadir.jpg', from:'CMN', to:'agadir-baie', tag:{fr:'La baie · hôtels en bord de mer',en:'The bay · beachfront hotels'}},
+  {name:'Casablanca', img:'hero-casablanca.jpg', from:'CMN', to:'casa-centre', tag:{fr:'La métropole · hôtels d’affaires',en:'The metropolis · business hotels'}},
+  {name:'Rabat', img:'hero-rabat.jpg', from:'CMN', to:'rabat-agdal', tag:{fr:'La capitale · hôtels de caractère',en:'The capital · heritage hotels'}},
+  {name:'Chefchaouen', img:'hero-chefchaouen.jpg', from:'CMN', to:'chefchaouen', tag:{fr:'La perle bleue · maisons d’hôtes',en:'The blue pearl · guesthouses'}}
+];
+
+/* ====== Bande « Découvrez le Maroc » : vraies photos Wikimedia Commons (auteur et licence affichés sous la bande) ====== */
+const MA_CITIES = [
+  {name:'Casablanca', img:'city-casablanca.jpg', tag:{fr:'Mosquée Hassan II',en:'Hassan II Mosque'}, by:'OussamaHamama', lic:'CC BY-SA 4.0', licUrl:'https://creativecommons.org/licenses/by-sa/4.0', src:'https://commons.wikimedia.org/wiki/File:Whispers_of_Gold_-_Hassan_II_Mosque_at_Dusk.jpg'},
+  {name:'Rabat', img:'city-rabat.jpg', tag:{fr:'Tour Hassan',en:'Hassan Tower'}, by:'Grace Tankard', lic:'CC BY 2.0', licUrl:'https://creativecommons.org/licenses/by/2.0', src:'https://commons.wikimedia.org/wiki/File:Hassan_Tower_-_rabat_1_(28206332129).jpg'},
+  {name:'Tanger', img:'city-tanger.jpg', tag:{fr:'Grottes d’Hercule',en:'Caves of Hercules'}, by:'Diego Delso', lic:'CC BY-SA 4.0', licUrl:'https://creativecommons.org/licenses/by-sa/4.0', src:'https://commons.wikimedia.org/wiki/File:Cuevas_de_H%C3%A9rcules,_Cabo_Espartel,_Marruecos,_2015-12-11,_DD_22-24_HDR.JPG'},
+  {name:'Asilah', img:'city-asilah.jpg', tag:{fr:'Ruelles et fresques',en:'Lanes and murals'}, by:'Rodrigo Silva', lic:'CC BY 2.0', licUrl:'https://creativecommons.org/licenses/by/2.0', src:'https://commons.wikimedia.org/wiki/File:Asilah_(36493701410).jpg'},
+  {name:'Chefchaouen', img:'city-chefchaouen.jpg', tag:{fr:'La ville bleue',en:'The blue city'}, by:'Fbrandao.1963', lic:'CC BY-SA 4.0', licUrl:'https://creativecommons.org/licenses/by-sa/4.0', src:'https://commons.wikimedia.org/wiki/File:2018_01_(Blue)_-_Chaouen.jpg'},
+  {name:'Marrakech', img:'city-marrakech.jpg', tag:{fr:'La Koutoubia',en:'The Koutoubia'}, by:'Jorge Franganillo', lic:'CC BY 2.0', licUrl:'https://creativecommons.org/licenses/by/2.0', src:'https://commons.wikimedia.org/wiki/File:Marrakech_Koutoubia_Mosque_(54273634927).jpg'},
+  {name:'Ouarzazate', img:'city-ouarzazate.jpg', tag:{fr:'Kasbah Taourirt',en:'Taourirt Kasbah'}, by:'bobistraveling', lic:'CC BY 2.0', licUrl:'https://creativecommons.org/licenses/by/2.0', src:'https://commons.wikimedia.org/wiki/File:Taourirt_Kasbah_Ouarzazate_Morocco_092015_(49699681582).jpg'},
+  {name:'Agadir', img:'city-agadir.jpg', tag:{fr:'La baie',en:'The bay'}, by:'AJSPARK4444', lic:'CC BY-SA 4.0', licUrl:'https://creativecommons.org/licenses/by-sa/4.0', src:'https://commons.wikimedia.org/wiki/File:Agadir_bay.jpg'},
+  {name:'Dakhla', img:'city-dakhla.jpg', tag:{fr:'Île du Dragon',en:'Dragon Island'}, by:'Nomadz', lic:'CC BY-SA 3.0', licUrl:'https://creativecommons.org/licenses/by-sa/3.0', src:'https://commons.wikimedia.org/wiki/File:Windsurfer_in_front_of_Dragon_Island_at_Dakhla,_March_2009.jpg'}
 ];
 
 /* ====== Textes FR / EN ====== */
@@ -1088,6 +1120,7 @@ fr:{
  'hero.title':'De l’aéroport à votre destination, sans attendre.',
  'hero.lede':'Transfert aéroport Mohammed V et chauffeur privé de Casablanca vers tout le Maroc. Prix fixe affiché avant de réserver, le chauffeur suit votre vol et vous attend avec un panneau à votre nom.',
  'hero.cities':'Choisir une ville',
+ 'mar.eyebrow':'Le Maroc','mar.title':'Découvrez le Maroc avec votre chauffeur','mar.lede':'Des villes impériales au désert et à l’océan : on vous y conduit.','mar.credits':'Photos Wikimedia Commons, recadrées :',
  'trust.pay':'Carte, virement ou espèces','trust.pay.s':'MAD ou euros',
  'pay.title':'Modes de paiement','pay.sub':'Aucun paiement en ligne. Vous choisissez en réservant.',
  'pay.card':'Carte bancaire','pay.card.p':'Au chauffeur, avec le TPE dans la voiture. Visa et Mastercard.',
@@ -1182,6 +1215,7 @@ en:{
  'hero.title':'From the airport to your destination, no waiting.',
  'hero.lede':'Mohammed V airport transfers and private drivers from Casablanca to anywhere in Morocco. Fixed price shown before you book, your chauffeur tracks your flight and waits for you with a name sign.',
  'hero.cities':'Choose a city',
+ 'mar.eyebrow':'Morocco','mar.title':'Discover Morocco with your chauffeur','mar.lede':'From imperial cities to the desert and the ocean, we drive you there.','mar.credits':'Photos from Wikimedia Commons, cropped:',
  'trust.pay':'Card, transfer or cash','trust.pay.s':'MAD or euros',
  'pay.title':'Payment methods','pay.sub':'No online payment. You choose when you book.',
  'pay.card':'Bank card','pay.card.p':'To the chauffeur, with the card terminal in the car. Visa and Mastercard.',
@@ -1496,6 +1530,14 @@ function renderCities(){
 function setCity(i){ CITY=(i+HERO_CITIES.length)%HERO_CITIES.length; renderCities(); }
 function startAuto(){ if(!cityAuto||!window.matchMedia||!matchMedia('(prefers-reduced-motion: no-preference)').matches) return; $('#hero').classList.add('auto'); clearInterval(cityTimer); cityTimer=setInterval(()=>setCity(CITY+1),7000); }
 function stopAuto(){ cityAuto=false; clearInterval(cityTimer); $('#hero').classList.remove('auto'); }
+
+/* ====== Bande « Découvrez le Maroc » (défile toute seule, s'arrête au survol) ====== */
+function renderMorocco(){
+  const box=$('#mstrip'); if(!box) return;
+  const card=(c,copy)=>`<figure class="mc"${copy?' aria-hidden="true"':''}><img src="${CONFIG.imgDir}${c.img}?v=${CONFIG.imgVer}" alt="${copy?'':esc(c.name+' · '+L(c.tag))}" loading="lazy" decoding="async" width="720" height="540"><figcaption><b>${esc(c.name)}</b><span>${esc(L(c.tag))}</span></figcaption></figure>`;
+  box.innerHTML=`<div class="track">${MA_CITIES.map(c=>card(c,false)).join('')}${MA_CITIES.map(c=>card(c,true)).join('')}</div>`;
+  const cr=$('#mcredits'); if(cr) cr.innerHTML=esc(t('mar.credits'))+' '+MA_CITIES.map(c=>`${esc(c.name)} : <a href="${esc(c.src)}" target="_blank" rel="noopener">${esc(c.by)}</a> (<a href="${esc(c.licUrl)}" target="_blank" rel="noopener">${esc(c.lic)}</a>)`).join(' · ');
+}
 
 /* ====== Photos des voitures (dessin si la photo manque) ====== */
 // Photo priority: images/<name>.png (your ChatGPT or own photos), then images/<name>.jpg, then the drawing.
@@ -2000,7 +2042,7 @@ function applyStatic(){
   $$('[data-brand-sub]').forEach(el=>{el.textContent=CONFIG.brandSub;});
   $$('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===LANG));
 }
-function renderAll(){ applyStatic(); renderCities(); renderWaCard(); renderAgency(); renderPay(); renderQuick(); renderBoard(); renderTrust(); renderServices(); renderFleet(); renderSteps(); renderMap(); renderTrips(); renderPrices(); renderCalc(); renderReviews(); renderClientPhotos(); renderFAQ(); renderContact(); if(!$('#bkov').hidden) renderStep(); }
+function renderAll(){ applyStatic(); renderCities(); renderMorocco(); renderWaCard(); renderAgency(); renderPay(); renderQuick(); renderBoard(); renderTrust(); renderServices(); renderFleet(); renderSteps(); renderMap(); renderTrips(); renderPrices(); renderCalc(); renderReviews(); renderClientPhotos(); renderFAQ(); renderContact(); if(!$('#bkov').hidden) renderStep(); }
 function setLang(l){ LANG=l; try{localStorage.setItem('siyaha-lang',l);}catch(e){} renderAll(); }
 
 renderAll(); flapIntro(); setInterval(tick,15000);
