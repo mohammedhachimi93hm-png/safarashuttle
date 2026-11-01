@@ -481,14 +481,14 @@ td.rt{white-space:normal;min-width:210px}
 .cp-empty{border:1px dashed var(--line);border-radius:14px;padding:22px;display:flex;gap:12px;align-items:center;color:var(--muted);background:var(--surface)}
 .cp-empty .ic{width:28px;height:28px;color:var(--brass);flex:none}
 /* Moroccan cities: endless photo strip */
-.mstrip{--dur:75s}
+.mstrip{--dur:70s}
 .mstrip .track{padding-block:4px}
-.mc{margin:0;flex:none;position:relative;width:340px;aspect-ratio:4/3;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);background:var(--surface-2)}
-.mc img{width:100%;height:100%;object-fit:cover;display:block}
+.mc{margin:0;flex:none;position:relative;height:280px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);background:var(--surface-2)}
+.mc img{height:100%;width:auto;max-width:none;display:block}
 .mc figcaption{position:absolute;inset:auto 0 0 0;padding:48px 18px 16px;background:linear-gradient(0deg,rgba(10,22,18,.88),rgba(10,22,18,0));color:#fff;display:grid;gap:3px}
 .mc b{font:400 28px/1.1 var(--f-display);letter-spacing:.01em}
 .mc span{font-size:16px;font-weight:700}
-@media (max-width:600px){.mc{width:260px}.mc b{font-size:23px}.mc span{font-size:14.5px}}
+@media (max-width:600px){.mc{height:210px}.mc b{font-size:22px}.mc span{font-size:14px}.mc figcaption{padding:40px 14px 12px}}
 
 /* faq */
 .faq{max-width:840px}
@@ -876,7 +876,7 @@ const CONFIG = {
   phoneDisplay: '+212 6 61 52 15 19',
   email: 'support@safarashuttle.com',
   imgDir: 'images/',
-  imgVer: '7',     // change ce numéro quand une photo change : les navigateurs prennent la nouvelle tout de suite
+  imgVer: '9',     // change ce numéro quand une photo change : les navigateurs prennent la nouvelle tout de suite
   // Réservations et avis envoyés par e-mail (service gratuit FormSubmit). Le 1er envoi demande une activation dans la boîte support@.
   formEndpoint: 'https://formsubmit.co/ajax/support@safarashuttle.com',
   // Suivi : visites, réservations et clics WhatsApp vont dans le Google Sheet du propriétaire (adresse /exec du script Google). Vide = rien n'est envoyé.
@@ -1094,17 +1094,21 @@ const HERO_CITIES = [
   {name:'Chefchaouen', img:'', from:'CMN', to:'chefchaouen', tag:{fr:'La perle bleue · maisons d’hôtes',en:'The blue pearl · guesthouses'}}
 ];
 
-/* ====== Bande « Découvrez le Maroc » : photos du propriétaire, ex. img:'city-casablanca.jpg' dans images/ (bande cachée tant qu’il n’y a aucune photo) ====== */
+/* ====== Bande « Découvrez le Maroc » : photos du propriétaire dans images/ (w et h = taille de la photo ; jamais de photo avec un logo ou une signature) ====== */
 const MA_CITIES = [
-  {name:'Casablanca', img:'', tag:{fr:'Mosquée Hassan II',en:'Hassan II Mosque'}},
-  {name:'Rabat', img:'', tag:{fr:'Tour Hassan',en:'Hassan Tower'}},
-  {name:'Tanger', img:'', tag:{fr:'Grottes d’Hercule',en:'Caves of Hercules'}},
-  {name:'Asilah', img:'', tag:{fr:'Ruelles et fresques',en:'Lanes and murals'}},
-  {name:'Chefchaouen', img:'', tag:{fr:'La ville bleue',en:'The blue city'}},
-  {name:'Marrakech', img:'', tag:{fr:'La Koutoubia',en:'The Koutoubia'}},
-  {name:'Ouarzazate', img:'', tag:{fr:'Kasbah Taourirt',en:'Taourirt Kasbah'}},
-  {name:'Agadir', img:'', tag:{fr:'La baie',en:'The bay'}},
-  {name:'Dakhla', img:'', tag:{fr:'Île du Dragon',en:'Dragon Island'}}
+  {name:'Casablanca', img:'city-casablanca.jpg', w:842, h:560, tag:{fr:'Mosquée Hassan II',en:'Hassan II Mosque'}},
+  {name:'Marrakech', img:'city-marrakech.jpg', w:560, h:560, tag:{fr:'Koutoubia et calèches',en:'Koutoubia and carriages'}},
+  {name:'Chefchaouen', img:'city-chefchaouen.jpg', w:420, h:560, tag:{fr:'La ville bleue',en:'The blue city'}},
+  {name:'Tanger', img:'city-tanger.jpg', w:486, h:560, tag:{fr:'Grottes d’Hercule',en:'Caves of Hercules'}},
+  {name:{fr:'Fès',en:'Fez'}, img:'city-fes.jpg', w:842, h:560, tag:{fr:'Les tanneries',en:'The tanneries'}},
+  {name:'Marrakech', img:'city-marrakech-2.jpg', w:842, h:560, tag:{fr:'La Koutoubia',en:'The Koutoubia'}},
+  {name:'Ouarzazate', img:'city-ouarzazate.jpg', w:376, h:560, tag:{fr:'Kasbah d’Aït Benhaddou',en:'Ait Benhaddou kasbah'}},
+  {name:'Agadir', img:'city-agadir.jpg', w:449, h:560, tag:{fr:'La baie',en:'The bay'}},
+  {name:'Chefchaouen', img:'city-chefchaouen-2.jpg', w:842, h:560, tag:{fr:'Ruelles bleues',en:'Blue lanes'}},
+  // pas encore de photo : la ville s’affiche dès qu’on met img, w et h
+  {name:'Rabat', img:'', tag:{fr:'La capitale',en:'The capital'}},
+  {name:'Asilah', img:'', tag:{fr:'Remparts et fresques',en:'Ramparts and murals'}},
+  {name:'Dakhla', img:'', tag:{fr:'La lagune',en:'The lagoon'}}
 ];
 
 /* ====== Textes FR / EN ====== */
@@ -1531,7 +1535,7 @@ function stopAuto(){ cityAuto=false; clearInterval(cityTimer); $('#hero').classL
 function renderMorocco(){
   const sec=$('#maroc'), box=$('#mstrip'); if(!sec||!box) return;
   const list=MA_CITIES.filter(c=>c.img); sec.hidden=!list.length; if(!list.length){ box.innerHTML=''; return; }
-  const card=(c,copy)=>`<figure class="mc"${copy?' aria-hidden="true"':''}><img src="${CONFIG.imgDir}${c.img}?v=${CONFIG.imgVer}" alt="${copy?'':esc(c.name+' · '+L(c.tag))}" loading="lazy" decoding="async" width="720" height="540"><figcaption><b>${esc(c.name)}</b><span>${esc(L(c.tag))}</span></figcaption></figure>`;
+  const card=(c,copy)=>`<figure class="mc"${copy?' aria-hidden="true"':''}><img src="${CONFIG.imgDir}${c.img}?v=${CONFIG.imgVer}" alt="${copy?'':esc(L(c.name)+' · '+L(c.tag))}" loading="lazy" decoding="async" width="${c.w}" height="${c.h}"><figcaption><b>${esc(L(c.name))}</b><span>${esc(L(c.tag))}</span></figcaption></figure>`;
   box.innerHTML=`<div class="track">${list.map(c=>card(c,false)).join('')}${list.map(c=>card(c,true)).join('')}</div>`;
 }
 
