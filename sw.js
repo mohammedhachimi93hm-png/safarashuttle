@@ -1,7 +1,7 @@
 /* Safara Shuttle app: keeps the site working offline.
    Pages: network first (always the newest version when online).
    Images and icons: shown from cache at once, then refreshed in the background. */
-const CACHE = 'safara-v8';
+const CACHE = 'safara-v9';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png'];
 
 self.addEventListener('install', e => {
@@ -23,15 +23,17 @@ self.addEventListener('fetch', e => {
   if (url.origin !== location.origin) return;
 
   if (req.mode === 'navigate') {
+    // the home page is kept as index.html, other pages (privacy, 3D) under their own path
+    const key = /\/(index\.html)?$/.test(url.pathname) ? './index.html' : url.pathname;
     e.respondWith(
       // no-cache: always ask the server for the newest page (cheap when unchanged)
       fetch(new Request(req.url, { cache: 'no-cache', credentials: 'same-origin' }))
         .then(res => (res.redirected ? fetch(req) : res))
         .then(res => {
-          if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put('./index.html', copy)); }
+          if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(key, copy)); }
           return res;
         })
-        .catch(() => caches.match('./index.html'))
+        .catch(() => caches.match(key).then(hit => hit || caches.match('./index.html')))
     );
     return;
   }
