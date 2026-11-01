@@ -488,8 +488,6 @@ td.rt{white-space:normal;min-width:210px}
 .mc figcaption{position:absolute;inset:auto 0 0 0;padding:48px 18px 16px;background:linear-gradient(0deg,rgba(10,22,18,.88),rgba(10,22,18,0));color:#fff;display:grid;gap:3px}
 .mc b{font:400 28px/1.1 var(--f-display);letter-spacing:.01em}
 .mc span{font-size:16px;font-weight:700}
-.mcredits{margin:18px 0 0;font-size:12.5px;line-height:1.6;color:var(--muted)}
-.mcredits a{color:inherit}
 @media (max-width:600px){.mc{width:260px}.mc b{font-size:23px}.mc span{font-size:14.5px}}
 
 /* faq */
@@ -663,12 +661,11 @@ a.copy{text-decoration:none;display:inline-block}
   </section>
   <div class="frieze" aria-hidden="true"></div>
 
-  <section class="band alt" id="maroc">
+  <section class="band alt" id="maroc" hidden>
     <div class="wrap">
       <div class="shead"><p class="eyebrow" data-i18n="mar.eyebrow">Le Maroc</p><h2 data-i18n="mar.title">Découvrez le Maroc avec votre chauffeur</h2><p data-i18n="mar.lede">Des villes impériales au désert et à l’océan : on vous y conduit.</p></div>
     </div>
-    <div class="marquee mstrip" id="mstrip"><div class="track"><figure class="mc"><img src="images/city-casablanca.jpg" alt="Casablanca · Mosquée Hassan II" loading="lazy" width="720" height="540"><figcaption><b>Casablanca</b><span>Mosquée Hassan II</span></figcaption></figure><figure class="mc"><img src="images/city-rabat.jpg" alt="Rabat · Tour Hassan" loading="lazy" width="720" height="540"><figcaption><b>Rabat</b><span>Tour Hassan</span></figcaption></figure><figure class="mc"><img src="images/city-tanger.jpg" alt="Tanger · Grottes d’Hercule" loading="lazy" width="720" height="540"><figcaption><b>Tanger</b><span>Grottes d’Hercule</span></figcaption></figure><figure class="mc"><img src="images/city-asilah.jpg" alt="Asilah · Ruelles et fresques" loading="lazy" width="720" height="540"><figcaption><b>Asilah</b><span>Ruelles et fresques</span></figcaption></figure><figure class="mc"><img src="images/city-chefchaouen.jpg" alt="Chefchaouen · La ville bleue" loading="lazy" width="720" height="540"><figcaption><b>Chefchaouen</b><span>La ville bleue</span></figcaption></figure><figure class="mc"><img src="images/city-marrakech.jpg" alt="Marrakech · La Koutoubia" loading="lazy" width="720" height="540"><figcaption><b>Marrakech</b><span>La Koutoubia</span></figcaption></figure><figure class="mc"><img src="images/city-ouarzazate.jpg" alt="Ouarzazate · Kasbah Taourirt" loading="lazy" width="720" height="540"><figcaption><b>Ouarzazate</b><span>Kasbah Taourirt</span></figcaption></figure><figure class="mc"><img src="images/city-agadir.jpg" alt="Agadir · La baie" loading="lazy" width="720" height="540"><figcaption><b>Agadir</b><span>La baie</span></figcaption></figure><figure class="mc"><img src="images/city-dakhla.jpg" alt="Dakhla · Île du Dragon" loading="lazy" width="720" height="540"><figcaption><b>Dakhla</b><span>Île du Dragon</span></figcaption></figure></div></div>
-    <div class="wrap"><p class="mcredits" id="mcredits">Photos Wikimedia Commons (auteurs et licences CC).</p></div>
+    <div class="marquee mstrip" id="mstrip"></div>
   </section>
   <section class="band" id="flotte">
     <div class="wrap">
@@ -1097,17 +1094,17 @@ const HERO_CITIES = [
   {name:'Chefchaouen', img:'', from:'CMN', to:'chefchaouen', tag:{fr:'La perle bleue · maisons d’hôtes',en:'The blue pearl · guesthouses'}}
 ];
 
-/* ====== Bande « Découvrez le Maroc » : vraies photos Wikimedia Commons (auteur et licence affichés sous la bande) ====== */
+/* ====== Bande « Découvrez le Maroc » : photos du propriétaire, ex. img:'city-casablanca.jpg' dans images/ (bande cachée tant qu’il n’y a aucune photo) ====== */
 const MA_CITIES = [
-  {name:'Casablanca', img:'city-casablanca.jpg', tag:{fr:'Mosquée Hassan II',en:'Hassan II Mosque'}, by:'OussamaHamama', lic:'CC BY-SA 4.0', licUrl:'https://creativecommons.org/licenses/by-sa/4.0', src:'https://commons.wikimedia.org/wiki/File:Whispers_of_Gold_-_Hassan_II_Mosque_at_Dusk.jpg'},
-  {name:'Rabat', img:'city-rabat.jpg', tag:{fr:'Tour Hassan',en:'Hassan Tower'}, by:'Grace Tankard', lic:'CC BY 2.0', licUrl:'https://creativecommons.org/licenses/by/2.0', src:'https://commons.wikimedia.org/wiki/File:Hassan_Tower_-_rabat_1_(28206332129).jpg'},
-  {name:'Tanger', img:'city-tanger.jpg', tag:{fr:'Grottes d’Hercule',en:'Caves of Hercules'}, by:'Diego Delso', lic:'CC BY-SA 4.0', licUrl:'https://creativecommons.org/licenses/by-sa/4.0', src:'https://commons.wikimedia.org/wiki/File:Cuevas_de_H%C3%A9rcules,_Cabo_Espartel,_Marruecos,_2015-12-11,_DD_22-24_HDR.JPG'},
-  {name:'Asilah', img:'city-asilah.jpg', tag:{fr:'Ruelles et fresques',en:'Lanes and murals'}, by:'Rodrigo Silva', lic:'CC BY 2.0', licUrl:'https://creativecommons.org/licenses/by/2.0', src:'https://commons.wikimedia.org/wiki/File:Asilah_(36493701410).jpg'},
-  {name:'Chefchaouen', img:'city-chefchaouen.jpg', tag:{fr:'La ville bleue',en:'The blue city'}, by:'Fbrandao.1963', lic:'CC BY-SA 4.0', licUrl:'https://creativecommons.org/licenses/by-sa/4.0', src:'https://commons.wikimedia.org/wiki/File:2018_01_(Blue)_-_Chaouen.jpg'},
-  {name:'Marrakech', img:'city-marrakech.jpg', tag:{fr:'La Koutoubia',en:'The Koutoubia'}, by:'Jorge Franganillo', lic:'CC BY 2.0', licUrl:'https://creativecommons.org/licenses/by/2.0', src:'https://commons.wikimedia.org/wiki/File:Marrakech_Koutoubia_Mosque_(54273634927).jpg'},
-  {name:'Ouarzazate', img:'city-ouarzazate.jpg', tag:{fr:'Kasbah Taourirt',en:'Taourirt Kasbah'}, by:'bobistraveling', lic:'CC BY 2.0', licUrl:'https://creativecommons.org/licenses/by/2.0', src:'https://commons.wikimedia.org/wiki/File:Taourirt_Kasbah_Ouarzazate_Morocco_092015_(49699681582).jpg'},
-  {name:'Agadir', img:'city-agadir.jpg', tag:{fr:'La baie',en:'The bay'}, by:'AJSPARK4444', lic:'CC BY-SA 4.0', licUrl:'https://creativecommons.org/licenses/by-sa/4.0', src:'https://commons.wikimedia.org/wiki/File:Agadir_bay.jpg'},
-  {name:'Dakhla', img:'city-dakhla.jpg', tag:{fr:'Île du Dragon',en:'Dragon Island'}, by:'Nomadz', lic:'CC BY-SA 3.0', licUrl:'https://creativecommons.org/licenses/by-sa/3.0', src:'https://commons.wikimedia.org/wiki/File:Windsurfer_in_front_of_Dragon_Island_at_Dakhla,_March_2009.jpg'}
+  {name:'Casablanca', img:'', tag:{fr:'Mosquée Hassan II',en:'Hassan II Mosque'}},
+  {name:'Rabat', img:'', tag:{fr:'Tour Hassan',en:'Hassan Tower'}},
+  {name:'Tanger', img:'', tag:{fr:'Grottes d’Hercule',en:'Caves of Hercules'}},
+  {name:'Asilah', img:'', tag:{fr:'Ruelles et fresques',en:'Lanes and murals'}},
+  {name:'Chefchaouen', img:'', tag:{fr:'La ville bleue',en:'The blue city'}},
+  {name:'Marrakech', img:'', tag:{fr:'La Koutoubia',en:'The Koutoubia'}},
+  {name:'Ouarzazate', img:'', tag:{fr:'Kasbah Taourirt',en:'Taourirt Kasbah'}},
+  {name:'Agadir', img:'', tag:{fr:'La baie',en:'The bay'}},
+  {name:'Dakhla', img:'', tag:{fr:'Île du Dragon',en:'Dragon Island'}}
 ];
 
 /* ====== Textes FR / EN ====== */
@@ -1119,7 +1116,7 @@ fr:{
  'hero.title':'De l’aéroport à votre destination, sans attendre.',
  'hero.lede':'Transfert aéroport Mohammed V et chauffeur privé de Casablanca vers tout le Maroc. Prix fixe affiché avant de réserver, le chauffeur suit votre vol et vous attend avec un panneau à votre nom.',
  'hero.cities':'Choisir une ville',
- 'mar.eyebrow':'Le Maroc','mar.title':'Découvrez le Maroc avec votre chauffeur','mar.lede':'Des villes impériales au désert et à l’océan : on vous y conduit.','mar.credits':'Photos Wikimedia Commons, recadrées :',
+ 'mar.eyebrow':'Le Maroc','mar.title':'Découvrez le Maroc avec votre chauffeur','mar.lede':'Des villes impériales au désert et à l’océan : on vous y conduit.',
  'trust.pay':'Carte, virement ou espèces','trust.pay.s':'MAD ou euros',
  'pay.title':'Modes de paiement','pay.sub':'Aucun paiement en ligne. Vous choisissez en réservant.',
  'pay.card':'Carte bancaire','pay.card.p':'Au chauffeur, avec le TPE dans la voiture. Visa et Mastercard.',
@@ -1214,7 +1211,7 @@ en:{
  'hero.title':'From the airport to your destination, no waiting.',
  'hero.lede':'Mohammed V airport transfers and private drivers from Casablanca to anywhere in Morocco. Fixed price shown before you book, your chauffeur tracks your flight and waits for you with a name sign.',
  'hero.cities':'Choose a city',
- 'mar.eyebrow':'Morocco','mar.title':'Discover Morocco with your chauffeur','mar.lede':'From imperial cities to the desert and the ocean, we drive you there.','mar.credits':'Photos from Wikimedia Commons, cropped:',
+ 'mar.eyebrow':'Morocco','mar.title':'Discover Morocco with your chauffeur','mar.lede':'From imperial cities to the desert and the ocean, we drive you there.',
  'trust.pay':'Card, transfer or cash','trust.pay.s':'MAD or euros',
  'pay.title':'Payment methods','pay.sub':'No online payment. You choose when you book.',
  'pay.card':'Bank card','pay.card.p':'To the chauffeur, with the card terminal in the car. Visa and Mastercard.',
@@ -1532,10 +1529,10 @@ function stopAuto(){ cityAuto=false; clearInterval(cityTimer); $('#hero').classL
 
 /* ====== Bande « Découvrez le Maroc » (défile toute seule, s'arrête au survol) ====== */
 function renderMorocco(){
-  const box=$('#mstrip'); if(!box) return;
+  const sec=$('#maroc'), box=$('#mstrip'); if(!sec||!box) return;
+  const list=MA_CITIES.filter(c=>c.img); sec.hidden=!list.length; if(!list.length){ box.innerHTML=''; return; }
   const card=(c,copy)=>`<figure class="mc"${copy?' aria-hidden="true"':''}><img src="${CONFIG.imgDir}${c.img}?v=${CONFIG.imgVer}" alt="${copy?'':esc(c.name+' · '+L(c.tag))}" loading="lazy" decoding="async" width="720" height="540"><figcaption><b>${esc(c.name)}</b><span>${esc(L(c.tag))}</span></figcaption></figure>`;
-  box.innerHTML=`<div class="track">${MA_CITIES.map(c=>card(c,false)).join('')}${MA_CITIES.map(c=>card(c,true)).join('')}</div>`;
-  const cr=$('#mcredits'); if(cr) cr.innerHTML=esc(t('mar.credits'))+' '+MA_CITIES.map(c=>`${esc(c.name)} : <a href="${esc(c.src)}" target="_blank" rel="noopener">${esc(c.by)}</a> (<a href="${esc(c.licUrl)}" target="_blank" rel="noopener">${esc(c.lic)}</a>)`).join(' · ');
+  box.innerHTML=`<div class="track">${list.map(c=>card(c,false)).join('')}${list.map(c=>card(c,true)).join('')}</div>`;
 }
 
 /* ====== Photos des voitures (dessin si la photo manque) ====== */
