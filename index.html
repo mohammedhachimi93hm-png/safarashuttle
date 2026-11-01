@@ -1137,7 +1137,7 @@ fr:{
  'f.hotelFrom':'Adresse de départ','f.hotelTo':'Adresse d’arrivée',
  'ph.hotelFrom':'ex. Hôtel …, boulevard d’Anfa, Casablanca','ph.hotelTo':'ex. Hôtel …, avenue …, Marrakech',
  'err.email':'Adresse e-mail invalide.','sum.from':'Prise en charge','sum.to':'Arrivée',
- 'bk.mail':'Confirmer par e-mail','sending':'Envoi en cours…',
+ 'bk.confirm':'Confirmer ma réservation','bk.confirmOk':'Réservation reçue ! Nous vous appelons ou vous écrivons sur WhatsApp très vite.','bk.mail':'Confirmer par e-mail','sending':'Envoi en cours…',
  'bk.mailOk':'E-mail envoyé à {mail}. Nous vous répondons sur WhatsApp et par e-mail.',
  'bk.mailFail':'L’e-mail n’est pas parti. Votre demande WhatsApp suffit, ou écrivez à',
  'mail.subject':'Nouvelle réservation {ref} · {brand}','mail.auto':'Merci ! Nous avons bien reçu votre demande {ref}. Nous vous confirmons très vite sur WhatsApp et par e-mail. {brand}',
@@ -1232,7 +1232,7 @@ en:{
  'f.hotelFrom':'Pickup address','f.hotelTo':'Drop-off address',
  'ph.hotelFrom':'e.g. Hotel …, boulevard d’Anfa, Casablanca','ph.hotelTo':'e.g. Hotel …, avenue …, Marrakech',
  'err.email':'Invalid email address.','sum.from':'Pickup','sum.to':'Drop-off',
- 'bk.mail':'Confirm by email','sending':'Sending…',
+ 'bk.confirm':'Confirm my booking','bk.confirmOk':'Booking received! We will call you or message you on WhatsApp very soon.','bk.mail':'Confirm by email','sending':'Sending…',
  'bk.mailOk':'Email sent to {mail}. We will reply on WhatsApp and by email.',
  'bk.mailFail':'The email could not be sent. Your WhatsApp request is enough, or write to',
  'mail.subject':'New booking {ref} · {brand}','mail.auto':'Thank you! We received your request {ref}. We will confirm shortly on WhatsApp and by email. {brand}',
@@ -1347,6 +1347,7 @@ function addDays(n){const d=new Date(); d.setDate(d.getDate()+n); return ymd(d);
 function fmtDate(s){try{return new Date(s+'T12:00:00').toLocaleDateString(locale(),{weekday:'short',day:'numeric',month:'short',year:'numeric'});}catch(e){return s;}}
 
 const ICONS={
+ check:'<path d="M5 12.5l4.5 4.5L19 7"/>',
  plane:'<path d="M10.5 3.6 12 3l1.5.6v6l7.5 4.3v2l-7.5-2.1v4l2 1.6V21L12 20.2 8.5 21v-1.6l2-1.6v-4L3 15.9v-2l7.5-4.3z"/>',
  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/>',
  tag:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="7.5" r="1.4"/>',
@@ -1753,6 +1754,14 @@ async function sendForm(data){
     const j=await r.json().catch(()=>({})); return r.ok&&String(j.success)!=='false';
   }catch(e){ return false; }
 }
+/* « Confirmer ma réservation » : enregistrée dans le tableau du propriétaire (qui reçoit une alerte) + e-mail, sans passer par WhatsApp */
+async function confirmBooking(){
+  if(S.confirmed) return; S.confirmed=true;
+  const b=$('#b-confirm'); if(b) b.disabled=true;
+  trackBooking('Site (bouton Confirmer)');
+  await sendBookingEmail();
+  const st=$('#b-status'); if(st){ st.hidden=false; st.textContent=t('bk.confirmOk'); }
+}
 async function sendBookingEmail(){
   if(S.mailSent||S.mailBusy) return; S.mailBusy=true;
   let st=$('#b-status'); if(st){ st.hidden=false; st.textContent=t('sending'); }
@@ -1820,7 +1829,7 @@ function geo(){
 }
 function withGeo(fn){ Promise.race([geo(), new Promise(r=>setTimeout(()=>r(null),1500))]).then(g=>fn({country:(g&&g.country)||TRK.country, city:(g&&g.city)||''})); }
 function trackBooking(via){ try{
-  const key=S.ref+'|'+via; if(S.logged===key) return; S.logged=key;
+  if(S.logged===S.ref) return; S.logged=S.ref;   // une seule ligne (et une seule alerte) par réservation
   const q=quote(S), c=CLASS[S.vehicle];
   const route=S.type==='transfer'?locLabel(S.from)+' → '+locLabel(S.to)+(S.roundtrip?' · '+t('f.return'):'')
     :S.type==='hourly'?locLabel(S.place)+' · '+t('hours',{n:S.hours}):L(TRIP[S.trip].name);
@@ -1912,8 +1921,9 @@ function renderStep(){
         <div class="ln tot"><span>${esc(t('bk.total'))}</span><span>${fmtMAD(q.total)}</span></div>
         <div class="ln" style="justify-content:flex-end;color:var(--muted)">${fmtFX(q.total)}</div>
         <p class="inc">${esc(t('sum.included'))}</p>
-        <a class="btn btn-primary" id="b-wa" href="${wa}" target="_blank" rel="noopener">${ic('chat')}${esc(t('bk.send'))}</a>
-        <button type="button" class="btn btn-brass" id="b-mail">${ic('mail')}${esc(t('bk.mail'))}</button>
+        <button type="button" class="btn btn-primary" id="b-confirm"${S.confirmed?' disabled':''}>${ic('check')}${esc(t('bk.confirm'))}</button>
+        <a class="btn btn-brass" id="b-wa" href="${wa}" target="_blank" rel="noopener">${ic('chat')}${esc(t('bk.send'))}</a>
+        <button type="button" class="btn btn-ghost" id="b-mail">${ic('mail')}${esc(t('bk.mail'))}</button>
         <p class="after" id="b-status" role="status" hidden></p>
         <button type="button" class="btn btn-ghost" id="b-copy">${esc(t('bk.copy'))}</button>
         <p class="after">${esc(t('bk.after'))}</p>
@@ -1986,6 +1996,7 @@ $('#bkbody').addEventListener('input',e=>{
 $('#bkbody').addEventListener('click',e=>{
   const tb=e.target.closest('[data-type]'); if(tb){S.type=tb.dataset.type; showErr(''); renderStep(); return;}
   if(e.target.closest('[data-swap]')){const f=S.from; S.from=S.to; S.to=f; renderStep(); return;}
+  if(e.target.closest('#b-confirm')){ confirmBooking(); return; }
   if(e.target.closest('#b-mail')){ trackBooking('E-mail'); sendBookingEmail(); return; }
   if(e.target.closest('#b-wa')){ trackBooking('WhatsApp'); sendBookingEmail(); return; }
   if(e.target.closest('#b-copy')){const ta=$('#b-msg'); copyText(ta.value,()=>{ta.hidden=false; ta.focus(); ta.select();});}
