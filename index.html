@@ -225,6 +225,26 @@ button{font:inherit;color:inherit}
 .wa-float .ic{width:22px;height:22px}
 .wa-float:hover{filter:brightness(1.08)}
 @media (max-width:600px){.wa-float span{display:none}.wa-float{padding:14px}}
+/* haut de page : motif zellige adouci derrière le texte */
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,color-mix(in srgb,var(--teal) 82%,transparent) 0%,color-mix(in srgb,var(--teal) 60%,transparent) 55%,transparent 90%)}
+/* bouton fixe « Réserver mon transfert » : seulement sur téléphone, quand le formulaire du haut n'est plus visible */
+.sticky-book{display:none}
+@media (max-width:600px){
+  .hero::before{background:linear-gradient(180deg,color-mix(in srgb,var(--teal) 84%,transparent) 0%,color-mix(in srgb,var(--teal) 70%,transparent) 70%,color-mix(in srgb,var(--teal) 30%,transparent) 100%)}
+  .hero-grid{padding-block:16px 28px}
+  .hero .eyebrow{font-size:12.5px;letter-spacing:.1em}
+  .hero .eyebrow .ar{display:none}
+  .hero h1{font-size:31px;line-height:1.1;margin-top:8px}
+  .hero .lede{margin-top:10px;font-size:17px;line-height:1.5}
+  .hero .qb{margin-top:16px;padding:0 14px 14px}
+  .hero .tabs{margin:0 -14px 12px}
+  .hero #qfields .c2{display:none}
+  .hero .qb-foot{margin-top:12px}
+  .hero .qb-foot .btn{flex:1 1 100%}
+  .sticky-book{position:fixed;left:16px;right:16px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:49;display:flex;min-height:56px;font-size:18px;box-shadow:0 12px 28px -10px rgba(0,0,0,.5)}
+  .sticky-book[hidden]{display:none}
+  body.sb-on .wa-float{bottom:calc(80px + env(safe-area-inset-bottom,0px))}
+}
 .cities{--city-ink:#F3E0A6;align-self:flex-end;width:min(420px,100%);margin-block:auto;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;color:var(--city-ink);text-shadow:0 2px 14px rgba(0,0,0,.35)}
 .city-name{display:block;font:400 clamp(2.3rem,4.6vw,3.6rem)/1 var(--f-display);-webkit-text-stroke:.7px currentColor}
 .city-tag{display:block;font:600 15px/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;margin-top:10px}
@@ -641,15 +661,15 @@ a.copy{text-decoration:none;display:inline-block}
     <div class="hero-bg" id="herobg" aria-hidden="true"></div>
     <div class="wrap hero-grid">
       <div>
-        <p class="eyebrow"><span class="ar" lang="ar" dir="rtl">مرحبا</span><span data-i18n="hero.eyebrow">Au départ de Casablanca · Partout au Maroc</span></p>
-        <h1 data-i18n="hero.title">De l’aéroport à votre destination, sans attendre.</h1>
-        <p class="lede" data-i18n="hero.lede"><!--pr-->Transfert aéroport Mohammed V et chauffeur privé de Casablanca vers tout le Maroc. Prix fixe affiché avant de réserver, le chauffeur suit votre vol et vous attend avec un panneau à votre nom.<!--/pr--></p>
+        <p class="eyebrow"><span class="ar" lang="ar" dir="rtl">مرحبا</span><span data-i18n="hero.eyebrow">Chauffeur privé · Prix fixe · 24h/24</span></p>
+        <h1 data-i18n="hero.title">Transfert aéroport Casablanca, partout au Maroc</h1>
+        <p class="lede" data-i18n="hero.lede"><!--pr-->Votre transfert en toute sérénité. Prix fixe, suivi du vol, accueil avec un panneau à votre nom.<!--/pr--></p>
         <form class="qb" id="quick" novalidate>
           <div class="tabs" role="tablist" id="qtabs"><!--pr--><button type="button" class="tab" role="tab" data-type="transfer" aria-selected="true"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 3.6 12 3l1.5.6v6l7.5 4.3v2l-7.5-2.1v4l2 1.6V21L12 20.2 8.5 21v-1.6l2-1.6v-4L3 15.9v-2l7.5-4.3z"></path></svg>Transfert</button><button type="button" class="tab" role="tab" data-type="hourly" aria-selected="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="2.2"></circle><path d="M12 14.2V21M9.8 12H3.2M14.2 12h6.6"></path></svg>À l’heure</button><button type="button" class="tab" role="tab" data-type="trip" aria-selected="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 20l7-12 4 6.5 2.5-4 5.5 9.5z"></path><path d="M8 10.5l1.5 1.5 1.5-1.5"></path></svg>Excursion</button><!--/pr--></div>
           <div class="fgrid" id="qfields"><!--pr--><div class="field c3"><div class="fhead"><label for="q-from">Départ</label></div><select id="q-from" data-k="from"><optgroup label="Casablanca : aéroport, hôtels, gares"><option value="CMN" selected="">CMN · Aéroport Casablanca Mohammed V</option><option value="casa-centre">Casablanca · Centre-ville, Casa-Port</option><option value="casa-autre">Casablanca · Autre hôtel ou adresse</option><option value="casa-anfa">Casablanca · Anfa, Corniche Aïn Diab</option><option value="casa-maarif">Casablanca · Maârif, Twin Center</option><option value="casa-voyageurs">Casablanca · Gare Casa-Voyageurs</option><option value="casa-sidimaarouf">Casablanca · Sidi Maârouf, Casanearshore</option><option value="casa-mohammedia">Mohammedia</option></optgroup><optgroup label="Aéroports"><option value="RAK">RAK · Aéroport Marrakech Ménara</option><option value="AGA">AGA · Aéroport Agadir Al Massira</option><option value="FEZ">FEZ · Aéroport Fès Saïss</option><option value="TNG">TNG · Aéroport Tanger Ibn Battouta</option><option value="RBA">RBA · Aéroport Rabat Salé</option><option value="ESU">ESU · Aéroport Essaouira Mogador</option><option value="OZZ">OZZ · Aéroport Ouarzazate</option><option value="EUN">EUN · Aéroport Laâyoune Hassan Ier</option><option value="VIL">VIL · Aéroport Dakhla</option></optgroup><optgroup label="Rabat, El Jadida et environs"><option value="rabat-agdal">Rabat · Agdal, Hassan</option><option value="eljadida">El Jadida</option><option value="bouznika">Bouznika</option><option value="benslimane">Benslimane</option><option value="berrechid">Berrechid</option><option value="settat">Settat</option><option value="temara">Témara</option><option value="kenitra">Kénitra</option><option value="khouribga">Khouribga</option><option value="oualidia">Oualidia</option><option value="safi">Safi</option></optgroup><optgroup label="Marrakech et l’Atlas"><option value="marrakech-medina">Marrakech · Médina, Jemaa el-Fna</option><option value="marrakech-hivernage">Marrakech · Hivernage, Guéliz</option><option value="marrakech-palmeraie">Marrakech · Palmeraie</option><option value="agafay">Désert d’Agafay · camps</option><option value="ourika">Vallée de l’Ourika</option><option value="imlil">Imlil · Toubkal</option></optgroup><optgroup label="Agadir, Essaouira et le Souss"><option value="agadir-baie">Agadir · Baie et Marina</option><option value="taghazout">Taghazout Bay</option><option value="essaouira">Essaouira · Médina</option><option value="tiznit">Tiznit</option><option value="guelmim">Guelmim</option></optgroup><optgroup label="Fès, Meknès et Moyen Atlas"><option value="fes-medina">Fès el-Bali · Médina</option><option value="fes-ville">Fès · Ville nouvelle</option><option value="meknes">Meknès</option><option value="benimellal">Béni Mellal</option><option value="khenifra">Khénifra</option><option value="ifrane">Ifrane</option><option value="azrou">Azrou</option></optgroup><optgroup label="Tanger et le Nord"><option value="chefchaouen">Chefchaouen</option><option value="tanger-centre">Tanger · Centre, Malabata</option><option value="asilah">Asilah</option><option value="tetouan">Tétouan · Tamuda Bay</option><option value="larache">Larache</option><option value="alhoceima">Al Hoceima</option></optgroup><optgroup label="L’Oriental"><option value="nador">Nador</option><option value="oujda">Oujda</option><option value="saidia">Saïdia</option></optgroup><optgroup label="Ouarzazate et le désert"><option value="ouarzazate">Ouarzazate</option><option value="ait-benhaddou">Aït Benhaddou</option><option value="merzouga">Merzouga · Erg Chebbi</option><option value="zagora">Zagora</option><option value="errachidia">Errachidia</option><option value="tinghir">Tinghir · Gorges du Todra</option></optgroup><optgroup label="Laâyoune et Dakhla"><option value="laayoune-centre">Laâyoune · Centre-ville</option><option value="laayoune-plage">Laâyoune Plage · Foum El Oued</option><option value="dakhla-centre">Dakhla · Centre-ville</option><option value="dakhla-lagune">Dakhla · Lagune, spots de kitesurf</option></optgroup></select></div><div class="field c3"><div class="fhead"><label for="q-to">Arrivée</label><button type="button" class="swap" data-swap="" aria-label="Inverser départ et arrivée" title="Inverser départ et arrivée"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"></path></svg></button></div><select id="q-to" data-k="to"><optgroup label="Casablanca : aéroport, hôtels, gares"><option value="CMN">CMN · Aéroport Casablanca Mohammed V</option><option value="casa-centre" selected="">Casablanca · Centre-ville, Casa-Port</option><option value="casa-autre">Casablanca · Autre hôtel ou adresse</option><option value="casa-anfa">Casablanca · Anfa, Corniche Aïn Diab</option><option value="casa-maarif">Casablanca · Maârif, Twin Center</option><option value="casa-voyageurs">Casablanca · Gare Casa-Voyageurs</option><option value="casa-sidimaarouf">Casablanca · Sidi Maârouf, Casanearshore</option><option value="casa-mohammedia">Mohammedia</option></optgroup><optgroup label="Aéroports"><option value="RAK">RAK · Aéroport Marrakech Ménara</option><option value="AGA">AGA · Aéroport Agadir Al Massira</option><option value="FEZ">FEZ · Aéroport Fès Saïss</option><option value="TNG">TNG · Aéroport Tanger Ibn Battouta</option><option value="RBA">RBA · Aéroport Rabat Salé</option><option value="ESU">ESU · Aéroport Essaouira Mogador</option><option value="OZZ">OZZ · Aéroport Ouarzazate</option><option value="EUN">EUN · Aéroport Laâyoune Hassan Ier</option><option value="VIL">VIL · Aéroport Dakhla</option></optgroup><optgroup label="Rabat, El Jadida et environs"><option value="rabat-agdal">Rabat · Agdal, Hassan</option><option value="eljadida">El Jadida</option><option value="bouznika">Bouznika</option><option value="benslimane">Benslimane</option><option value="berrechid">Berrechid</option><option value="settat">Settat</option><option value="temara">Témara</option><option value="kenitra">Kénitra</option><option value="khouribga">Khouribga</option><option value="oualidia">Oualidia</option><option value="safi">Safi</option></optgroup><optgroup label="Marrakech et l’Atlas"><option value="marrakech-medina">Marrakech · Médina, Jemaa el-Fna</option><option value="marrakech-hivernage">Marrakech · Hivernage, Guéliz</option><option value="marrakech-palmeraie">Marrakech · Palmeraie</option><option value="agafay">Désert d’Agafay · camps</option><option value="ourika">Vallée de l’Ourika</option><option value="imlil">Imlil · Toubkal</option></optgroup><optgroup label="Agadir, Essaouira et le Souss"><option value="agadir-baie">Agadir · Baie et Marina</option><option value="taghazout">Taghazout Bay</option><option value="essaouira">Essaouira · Médina</option><option value="tiznit">Tiznit</option><option value="guelmim">Guelmim</option></optgroup><optgroup label="Fès, Meknès et Moyen Atlas"><option value="fes-medina">Fès el-Bali · Médina</option><option value="fes-ville">Fès · Ville nouvelle</option><option value="meknes">Meknès</option><option value="benimellal">Béni Mellal</option><option value="khenifra">Khénifra</option><option value="ifrane">Ifrane</option><option value="azrou">Azrou</option></optgroup><optgroup label="Tanger et le Nord"><option value="chefchaouen">Chefchaouen</option><option value="tanger-centre">Tanger · Centre, Malabata</option><option value="asilah">Asilah</option><option value="tetouan">Tétouan · Tamuda Bay</option><option value="larache">Larache</option><option value="alhoceima">Al Hoceima</option></optgroup><optgroup label="L’Oriental"><option value="nador">Nador</option><option value="oujda">Oujda</option><option value="saidia">Saïdia</option></optgroup><optgroup label="Ouarzazate et le désert"><option value="ouarzazate">Ouarzazate</option><option value="ait-benhaddou">Aït Benhaddou</option><option value="merzouga">Merzouga · Erg Chebbi</option><option value="zagora">Zagora</option><option value="errachidia">Errachidia</option><option value="tinghir">Tinghir · Gorges du Todra</option></optgroup><optgroup label="Laâyoune et Dakhla"><option value="laayoune-centre">Laâyoune · Centre-ville</option><option value="laayoune-plage">Laâyoune Plage · Foum El Oued</option><option value="dakhla-centre">Dakhla · Centre-ville</option><option value="dakhla-lagune">Dakhla · Lagune, spots de kitesurf</option></optgroup></select></div><div class="field c2"><div class="fhead"><label for="q-date">Date</label></div><input id="q-date" data-k="date" type="date" value="2026-11-02" min="2026-11-01"></div><div class="field c2"><div class="fhead"><label for="q-time">Heure</label></div><input id="q-time" data-k="time" type="time" value="14:30" step="300"></div><div class="field c2"><div class="fhead"><label for="q-pax">Passagers</label></div><select id="q-pax" data-k="pax"><option value="1">1</option><option value="2" selected="">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option></select></div><!--/pr--></div>
           <div class="qb-foot">
             <div class="hint" aria-live="polite" id="qhint"><!--pr--><div class="k">Berline Skoda, à partir de</div><div class="v">350 MAD<span class="eur"></span></div><div class="routeinfo">≈ 35 km · 35 min</div><!--/pr--></div>
-            <button type="submit" class="btn btn-primary" data-i18n="hero.cta">Voir les véhicules et prix</button>
+            <button type="submit" class="btn btn-primary" data-i18n="hero.cta">Voir mon tarif</button>
           </div>
         </form>
       </div>
@@ -844,6 +864,7 @@ a.copy{text-decoration:none;display:inline-block}
 </footer>
 
 <a class="wa-float" id="wafloat" href="https://wa.me/212661521519" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10.5h6M9 13.5h4"/></svg><span>WhatsApp</span></a>
+<a class="sticky-book btn btn-brass" id="stickyBook" href="#quick" hidden><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span data-i18n="cta.sticky">Réserver mon transfert</span></a>
 <div class="bk-ov" id="bkov" hidden>
   <div class="bk" role="dialog" aria-modal="true" aria-labelledby="bk-title">
     <div class="bk-head">
@@ -1118,9 +1139,9 @@ const I18N = {
 fr:{
  'nav.install':'Installer l’app','nav.services':'Services','nav.fleet':'Nos voitures','nav.map':'Aéroports & hôtels','nav.trips':'Excursions','nav.prices':'Tarifs','nav.faq':'FAQ','nav.contact':'Contact',
  'cta.book':'Réserver','menu':'Menu',
- 'hero.eyebrow':'Au départ de Casablanca · Partout au Maroc',
- 'hero.title':'De l’aéroport à votre destination, sans attendre.',
- 'hero.lede':'Transfert aéroport Mohammed V et chauffeur privé de Casablanca vers tout le Maroc. Prix fixe affiché avant de réserver, le chauffeur suit votre vol et vous attend avec un panneau à votre nom.',
+ 'hero.eyebrow':'Chauffeur privé · Prix fixe · 24h/24',
+ 'hero.title':'Transfert aéroport Casablanca, partout au Maroc',
+ 'hero.lede':'Votre transfert en toute sérénité. Prix fixe, suivi du vol, accueil avec un panneau à votre nom.',
  'hero.cities':'Choisir une ville',
  'mar.eyebrow':'Le Maroc','mar.title':'Découvrez le Maroc avec votre chauffeur','mar.lede':'Des villes impériales au désert et à l’océan : on vous y conduit.',
  'trust.pay':'Carte, virement ou espèces','trust.pay.s':'MAD ou euros',
@@ -1160,7 +1181,7 @@ fr:{
  'f.wheel':'Fauteuil roulant','sum.wheel':'Fauteuil roulant','wheel.none':'Non','wheel.need':'J’ai besoin d’un fauteuil roulant','wheel.own':'J’apporte mon fauteuil roulant',
  'child.none':'Aucun','child.infant':'Siège bébé (0–1 an)','child.child':'Siège enfant (1–4 ans)','child.booster':'Rehausseur (4–10 ans)',
  'hours':'{n} heures','opt.airports':'Aéroports',
- 'hero.from':'Berline Skoda, à partir de','hero.cta':'Voir les véhicules et prix',
+ 'hero.from':'Berline Skoda, à partir de','hero.cta':'Voir mon tarif','cta.sticky':'Réserver mon transfert',
  'board.title':'Arrivées','board.sub':'aéroports desservis','board.local':'Heure locale','board.status':'24/7',
  'apt.label':'{code} · Aéroport {city} {name}',
  'trust.fixed':'Prix fixe, tout compris','trust.fixed.s':'Carburant et péages inclus',
@@ -1213,9 +1234,9 @@ fr:{
 en:{
  'nav.install':'Install the app','nav.services':'Services','nav.fleet':'Our cars','nav.map':'Airports & hotels','nav.trips':'Day trips','nav.prices':'Prices','nav.faq':'FAQ','nav.contact':'Contact',
  'cta.book':'Book','menu':'Menu',
- 'hero.eyebrow':'From Casablanca · Anywhere in Morocco',
- 'hero.title':'From the airport to your destination, no waiting.',
- 'hero.lede':'Mohammed V airport transfers and private drivers from Casablanca to anywhere in Morocco. Fixed price shown before you book, your chauffeur tracks your flight and waits for you with a name sign.',
+ 'hero.eyebrow':'Private driver · Fixed price · 24/7',
+ 'hero.title':'Casablanca airport transfers, anywhere in Morocco',
+ 'hero.lede':'Your transfer, with peace of mind. Fixed price, flight tracking, met with a sign showing your name.',
  'hero.cities':'Choose a city',
  'mar.eyebrow':'Morocco','mar.title':'Discover Morocco with your chauffeur','mar.lede':'From imperial cities to the desert and the ocean, we drive you there.',
  'trust.pay':'Card, transfer or cash','trust.pay.s':'MAD or euros',
@@ -1255,7 +1276,7 @@ en:{
  'f.wheel':'Wheelchair','sum.wheel':'Wheelchair','wheel.none':'No','wheel.need':'I need a wheelchair','wheel.own':'I bring my own wheelchair',
  'child.none':'None','child.infant':'Infant seat (0–1)','child.child':'Child seat (1–4)','child.booster':'Booster (4–10)',
  'hours':'{n} hours','opt.airports':'Airports',
- 'hero.from':'Skoda sedan, from','hero.cta':'See cars and prices',
+ 'hero.from':'Skoda sedan, from','hero.cta':'See my price','cta.sticky':'Book my transfer',
  'board.title':'Arrivals','board.sub':'airports we serve','board.local':'Local time','board.status':'24/7',
  'apt.label':'{code} · {city} {name} Airport',
  'trust.fixed':'Fixed, all-in price','trust.fixed.s':'Fuel and tolls included',
@@ -2003,7 +2024,7 @@ $('#quick').addEventListener('click',e=>{
   const tb=e.target.closest('[data-type]'); if(tb){S.type=tb.dataset.type; renderQuick(); const n=$('#qtabs [aria-selected="true"]'); if(n) n.focus(); return;}
   if(e.target.closest('[data-swap]')){const f=S.from; S.from=S.to; S.to=f; renderQuick();}
 });
-$('#quick').addEventListener('submit',e=>{e.preventDefault(); openBooking(2);});
+$('#quick').addEventListener('submit',e=>{e.preventDefault(); const d=$('#q-date'); openBooking(d&&!d.offsetParent?1:2);});
 
 $('#bkbody').addEventListener('change',e=>{
   const k=readField(e.target); if(!k) return; showErr('');
@@ -2104,6 +2125,18 @@ function setLang(l){ LANG=l; try{localStorage.setItem('siyaha-lang',l);}catch(e)
 
 renderAll(); flapIntro(); setInterval(tick,15000);
 if(TRK.newVisit) track('visit');
+/* Bouton fixe « Réserver mon transfert » (téléphone) : visible quand le formulaire du haut est hors écran ; il y ramène */
+(function(){
+  const sb=$('#stickyBook'), q=$('#quick'), ov=$('#bkov'); if(!sb||!q||!('IntersectionObserver' in window)) return;
+  let qVis=true;
+  const upd=()=>{ const on=!qVis&&ov.hidden; sb.hidden=!on; document.body.classList.toggle('sb-on',on); };
+  new IntersectionObserver(es=>{ qVis=es[0].isIntersecting; upd(); }).observe(q);
+  new MutationObserver(upd).observe(ov,{attributes:true,attributeFilter:['hidden']});
+  sb.addEventListener('click',e=>{ e.preventDefault();
+    q.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});
+    setTimeout(()=>{ const r=q.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight) q.scrollIntoView({behavior:'instant',block:'center'});
+      const f=$('#q-to')||q.querySelector('select'); if(f) f.focus({preventScroll:true}); },650); });
+})();
 /* Lien depuis une page trajet : ?de=CMN&a=marrakech-medina[&v=vito][&reserver=1], ?service=heure, ou ?reserver=1 seul ; &lang=en ouvre le site en anglais */
 (function(){
   const q=new URLSearchParams(location.search), de=q.get('de'), a=q.get('a'), v=q.get('v'), lg=q.get('lang');
