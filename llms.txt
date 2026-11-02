@@ -49,3 +49,21 @@ The exact price is shown on the website before booking and confirmed by WhatsApp
 - Book online at https://safarashuttle.com (choose route, date, time and passengers) or send a WhatsApp message to +212 6 61 52 15 19.
 - Payment by card (TPE), bank transfer or cash.
 - Confirmation by WhatsApp and by email.
+
+## Route pages (French, prices and details per route)
+
+- https://safarashuttle.com/transfert/
+- https://safarashuttle.com/chauffeur-prive-casablanca.html
+- https://safarashuttle.com/transfert/aeroport-mohammed-v-casablanca.html
+- https://safarashuttle.com/transfert/aeroport-casablanca-mohammedia.html
+- https://safarashuttle.com/transfert/aeroport-casablanca-rabat.html
+- https://safarashuttle.com/transfert/aeroport-casablanca-marrakech.html
+- https://safarashuttle.com/transfert/aeroport-casablanca-el-jadida.html
+- https://safarashuttle.com/transfert/casablanca-marrakech.html
+- https://safarashuttle.com/transfert/casablanca-rabat.html
+- https://safarashuttle.com/transfert/casablanca-fes.html
+- https://safarashuttle.com/transfert/casablanca-tanger.html
+- https://safarashuttle.com/transfert/casablanca-agadir.html
+- https://safarashuttle.com/transfert/casablanca-chefchaouen.html
+- https://safarashuttle.com/transfert/casablanca-essaouira.html
+- https://safarashuttle.com/transfert/casablanca-meknes.html
