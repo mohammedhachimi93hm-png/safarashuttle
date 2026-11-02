@@ -55,6 +55,8 @@ b,strong{font-weight:700}
 .btn-line{background:transparent;border-color:var(--line);color:var(--ink)!important}
 .btn-sm{min-height:44px;padding:0 18px;font-size:16px}
 .hdr .btn{min-height:46px;padding:0 18px;font-size:16px}
+.lang-sw{display:inline-grid;place-items:center;min-width:46px;min-height:46px;padding:0 10px;border-radius:999px;border:2px solid var(--line);color:var(--ink)!important;font:700 15px/1 var(--f-body);text-decoration:none}
+.lang-sw:hover{border-color:var(--brass-hi)}
 
 /* Fil d'Ariane */
 .crumbs{font-size:15px;color:var(--muted);padding-top:14px;padding-bottom:14px}
@@ -130,6 +132,7 @@ main.wrap{padding-top:34px;padding-bottom:40px}
 .tbl td.n,.tbl th.n{text-align:right;white-space:nowrap}
 .tbl-wrap{overflow-x:auto;margin:0 -6px}
 .tbl .model{color:var(--muted);font-size:15px;font-weight:500}
+.tbl td:first-child{min-width:170px}
 
 /* Questions */
 .faq details{border-top:1px solid var(--line);padding:4px 0}
@@ -171,6 +174,7 @@ main.wrap{padding-top:34px;padding-bottom:40px}
   .hdr .wrap{min-height:66px;gap:8px}
   .hdr .btn{min-height:44px;padding:0 14px;font-size:15px}
   .hdr .btn-wa span{display:none}
+  .lang-sw{min-width:40px;min-height:44px;padding:0 8px;font-size:14px}
   .hero{padding:30px 0 36px}
   .trip{grid-template-columns:1fr;gap:8px;text-align:left}
   .trip .pt.end{text-align:left}

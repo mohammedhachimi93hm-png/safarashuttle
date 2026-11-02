@@ -67,3 +67,21 @@ The exact price is shown on the website before booking and confirmed by WhatsApp
 - https://safarashuttle.com/transfert/casablanca-chefchaouen.html
 - https://safarashuttle.com/transfert/casablanca-essaouira.html
 - https://safarashuttle.com/transfert/casablanca-meknes.html
+
+## Route pages in English
+
+- https://safarashuttle.com/en/transfers/
+- https://safarashuttle.com/en/private-driver-casablanca.html
+- https://safarashuttle.com/en/transfers/casablanca-airport-to-casablanca-city.html
+- https://safarashuttle.com/en/transfers/casablanca-airport-to-mohammedia.html
+- https://safarashuttle.com/en/transfers/casablanca-airport-to-rabat.html
+- https://safarashuttle.com/en/transfers/casablanca-airport-to-marrakech.html
+- https://safarashuttle.com/en/transfers/casablanca-airport-to-el-jadida.html
+- https://safarashuttle.com/en/transfers/casablanca-to-marrakech.html
+- https://safarashuttle.com/en/transfers/casablanca-to-rabat.html
+- https://safarashuttle.com/en/transfers/casablanca-to-fes.html
+- https://safarashuttle.com/en/transfers/casablanca-to-tangier.html
+- https://safarashuttle.com/en/transfers/casablanca-to-agadir.html
+- https://safarashuttle.com/en/transfers/casablanca-to-chefchaouen.html
+- https://safarashuttle.com/en/transfers/casablanca-to-essaouira.html
+- https://safarashuttle.com/en/transfers/casablanca-to-meknes.html

@@ -788,8 +788,8 @@ a.copy{text-decoration:none;display:inline-block}
           <li><a href="chauffeur-prive-casablanca.html">Chauffeur privé Casablanca</a></li><li><a href="#flotte">Chauffeur privé Maroc</a></li><li><a href="#flotte">Location voiture avec chauffeur</a></li><li><a href="#flotte">Location minibus avec chauffeur</a></li><li><a href="#flotte">Mercedes Vito avec chauffeur</a></li><li><a href="#flotte">VTC Casablanca</a></li><li><a href="#flotte">Van avec chauffeur Maroc</a></li><li><a href="#flotte">Transport de groupe Maroc</a></li><li><a href="#services">Transport mariage Casablanca</a></li><li><a href="#services">Transport séminaire et entreprise</a></li></ul></div>
         <div><h3>Tourisme et excursions</h3><ul class="seo-tags">
           <li><a href="#excursions">Transport touristique Maroc</a></li><li><a href="#excursions">Transport touristique Casablanca</a></li><li><a href="#excursions">Agence de transport touristique</a></li><li><a href="#excursions">Excursion depuis Casablanca</a></li><li><a href="#excursions">Circuit Maroc avec chauffeur</a></li><li><a href="#excursions">Désert de Merzouga en voiture</a></li><li><a href="#excursions">Chauffeur pour touristes</a></li></ul></div>
-        <div lang="en"><h3>In English</h3><ul class="seo-tags">
-          <li><a href="transfert/aeroport-mohammed-v-casablanca.html">Casablanca airport transfer</a></li><li><a href="#tarifs">Mohammed V airport taxi</a></li><li><a href="chauffeur-prive-casablanca.html">Private driver Casablanca</a></li><li><a href="#flotte">Private driver Morocco</a></li><li><a href="transfert/casablanca-marrakech.html">Casablanca to Marrakech transfer</a></li><li><a href="#tarifs">Airport shuttle Casablanca</a></li><li><a href="#excursions">Morocco tour with driver</a></li></ul></div>
+        <div lang="en"><h3>In English</h3><ul class="seo-tags"><li><a href="en/transfers/">Routes and prices</a></li>
+          <li><a href="en/transfers/casablanca-airport-to-casablanca-city.html">Casablanca airport transfer</a></li><li><a href="en/transfers/casablanca-airport-to-casablanca-city.html">Mohammed V airport taxi</a></li><li><a href="en/private-driver-casablanca.html">Private driver Casablanca</a></li><li><a href="#flotte">Private driver Morocco</a></li><li><a href="en/transfers/casablanca-to-marrakech.html">Casablanca to Marrakech transfer</a></li><li><a href="en/transfers/casablanca-airport-to-rabat.html">Airport shuttle Casablanca</a></li><li><a href="#excursions">Morocco tour with driver</a></li></ul></div>
         <div lang="es"><h3>En español</h3><ul class="seo-tags">
           <li><a href="#tarifs">Traslado aeropuerto Casablanca</a></li><li><a href="#flotte">Chófer privado Marruecos</a></li><li><a href="transfert/casablanca-marrakech.html">Taxi Casablanca Marrakech</a></li><li><a href="#excursions">Excursiones desde Casablanca</a></li></ul></div>
         <div lang="ar" dir="rtl"><h3>بالعربية</h3><ul class="seo-tags">
@@ -835,8 +835,8 @@ a.copy{text-decoration:none;display:inline-block}
       <a href="#faq" data-i18n="nav.faq">FAQ</a>
       <a href="#top" data-i18n="footer.legal">Mentions légales</a>
       <a href="#top" data-i18n="footer.cgv">Conditions de vente</a>
-      <a href="transfert/" data-i18n="footer.routes">Trajets et prix</a>
-      <a href="chauffeur-prive-casablanca.html" data-i18n="footer.driver">Chauffeur privé</a>
+      <a href="transfert/" data-href-en="en/transfers/" data-i18n="footer.routes">Trajets et prix</a>
+      <a href="chauffeur-prive-casablanca.html" data-href-en="en/private-driver-casablanca.html" data-i18n="footer.driver">Chauffeur privé</a>
       <a href="confidentialite.html" data-i18n="footer.privacy">Confidentialité</a>
       <a href="https://www.instagram.com/safra_shuttle/" target="_blank" rel="noopener">Instagram</a>
     </nav>
@@ -2097,15 +2097,17 @@ function applyStatic(){
   $$('[data-brand]').forEach(el=>{el.textContent=CONFIG.brand;});
   $$('[data-brand-sub]').forEach(el=>{el.textContent=CONFIG.brandSub;});
   $$('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===LANG));
+  $$('[data-href-en]').forEach(a=>{ if(!a.dataset.hrefFr) a.dataset.hrefFr=a.getAttribute('href'); a.setAttribute('href',LANG==='en'?a.dataset.hrefEn:a.dataset.hrefFr); });
 }
 function renderAll(){ applyStatic(); renderCities(); renderMorocco(); renderWaCard(); renderAgency(); renderPay(); renderQuick(); renderBoard(); renderTrust(); renderServices(); renderFleet(); renderSteps(); renderMap(); renderTrips(); renderPrices(); renderCalc(); renderReviews(); renderClientPhotos(); renderFAQ(); renderContact(); if(!$('#bkov').hidden) renderStep(); }
 function setLang(l){ LANG=l; try{localStorage.setItem('siyaha-lang',l);}catch(e){} renderAll(); }
 
 renderAll(); flapIntro(); setInterval(tick,15000);
 if(TRK.newVisit) track('visit');
-/* Lien depuis une page trajet : ?de=CMN&a=marrakech-medina[&v=vito][&reserver=1], ?service=heure, ou ?reserver=1 seul */
+/* Lien depuis une page trajet : ?de=CMN&a=marrakech-medina[&v=vito][&reserver=1], ?service=heure, ou ?reserver=1 seul ; &lang=en ouvre le site en anglais */
 (function(){
-  const q=new URLSearchParams(location.search), de=q.get('de'), a=q.get('a'), v=q.get('v');
+  const q=new URLSearchParams(location.search), de=q.get('de'), a=q.get('a'), v=q.get('v'), lg=q.get('lang');
+  if((lg==='en'||lg==='fr')&&lg!==LANG) setLang(lg);
   if(de&&a&&LOC[de]&&LOC[a]&&de!==a) Object.assign(S,{type:'transfer',from:de,to:a,roundtrip:false});
   else if(q.get('service')==='heure') S.type='hourly';
   else if(q.get('reserver')!=='1') return;
