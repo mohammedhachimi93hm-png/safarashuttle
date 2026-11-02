@@ -56,6 +56,7 @@ b,strong{font-weight:700}
 /* bouton « Réserver » de l'en-tête : jaune vif, texte noir */
 .btn-book{background:#FFC72C;color:#111!important;border-color:#E0A400;font-weight:800;box-shadow:0 6px 16px -6px rgba(140,95,0,.55)}
 .btn-book:hover{background:#FFD54F;filter:none}
+.hdr .btn-book{min-height:58px;min-width:190px;padding:0 40px;font-size:19px}
 .btn-sm{min-height:44px;padding:0 18px;font-size:16px}
 .hdr .btn{min-height:46px;padding:0 18px;font-size:16px}
 .lang-sw{display:inline-grid;place-items:center;min-width:46px;min-height:46px;padding:0 10px;border-radius:999px;border:2px solid var(--line);color:var(--ink)!important;font:700 15px/1 var(--f-body);text-decoration:none}
@@ -176,6 +177,7 @@ main.wrap{padding-top:34px;padding-bottom:40px}
   .logo{height:40px}
   .hdr .wrap{min-height:66px;gap:8px}
   .hdr .btn{min-height:44px;padding:0 14px;font-size:15px}
+  .hdr .btn-book{min-height:48px;min-width:0;padding:0 18px;font-size:16px}
   .hdr .btn-wa span{display:none}
   .lang-sw{min-width:40px;min-height:44px;padding:0 8px;font-size:14px}
   .hero{padding:30px 0 36px}
