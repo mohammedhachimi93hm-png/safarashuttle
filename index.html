@@ -232,6 +232,8 @@ button{font:inherit;color:inherit}
 .hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,color-mix(in srgb,var(--teal) 82%,transparent) 0%,color-mix(in srgb,var(--teal) 60%,transparent) 55%,transparent 90%)}
 /* bouton fixe « Réserver mon transfert » : seulement sur téléphone, quand le formulaire du haut n'est plus visible */
 .sticky-book{display:none}
+.btn.sticky-book{background:#FFC72C;color:#111;border:2px solid #E0A400;font-weight:800}
+.btn.sticky-book:hover{background:#FFD54F;color:#111}
 @media (max-width:600px){
   .hero::before{background:linear-gradient(180deg,color-mix(in srgb,var(--teal) 84%,transparent) 0%,color-mix(in srgb,var(--teal) 70%,transparent) 70%,color-mix(in srgb,var(--teal) 30%,transparent) 100%)}
   .hero-grid{padding-block:16px 28px}
@@ -244,7 +246,7 @@ button{font:inherit;color:inherit}
   .hero #qfields .c2{display:none}
   .hero .qb-foot{margin-top:12px}
   .hero .qb-foot .btn{flex:1 1 100%}
-  .sticky-book{position:fixed;left:16px;right:16px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:49;display:flex;min-height:56px;font-size:18px;box-shadow:0 12px 28px -10px rgba(0,0,0,.5)}
+  .sticky-book{position:fixed;left:16px;right:16px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:49;display:flex;min-height:60px;font-size:19px;box-shadow:0 12px 28px -10px rgba(0,0,0,.5)}
   .sticky-book[hidden]{display:none}
   body.sb-on .wa-float{bottom:calc(80px + env(safe-area-inset-bottom,0px))}
 }
