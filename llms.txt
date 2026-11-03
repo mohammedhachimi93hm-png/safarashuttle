@@ -85,3 +85,7 @@ The exact price is shown on the website before booking and confirmed by WhatsApp
 - https://safarashuttle.com/en/transfers/casablanca-to-chefchaouen.html
 - https://safarashuttle.com/en/transfers/casablanca-to-essaouira.html
 - https://safarashuttle.com/en/transfers/casablanca-to-meknes.html
+
+## Travel guides
+- https://safarashuttle.com/guide/aeroport-casablanca-centre-ville.html (FR: aéroport Mohammed V → centre de Casablanca : train, Aérobus, taxi, Uber, chauffeur privé)
+- https://safarashuttle.com/en/guide/casablanca-airport-to-city-center.html (EN: Mohammed V Airport → Casablanca city center: train, Aérobus, taxi, Uber, private driver)
