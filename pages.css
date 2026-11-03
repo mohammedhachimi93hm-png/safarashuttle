@@ -128,6 +128,13 @@ main.wrap{padding-top:34px;padding-bottom:40px}
 .steps li{counter-increment:s;margin:0!important}
 .steps li::before{content:counter(s);display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--teal);color:var(--on-teal);font-weight:700;margin-bottom:8px}
 .steps b{display:block}
+.steps.days{grid-template-columns:minmax(0,1fr);gap:20px}
+.steps.days li{display:grid;grid-template-columns:38px minmax(0,1fr);column-gap:14px;align-items:start}
+.steps.days li::before{grid-row:1/span 3;margin:0}
+.steps.days li>*{grid-column:2}
+.steps.days b{font-size:18px;line-height:1.35}
+.steps.days .km{display:block;font:600 13px/1.4 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--brass);margin:3px 0 6px}
+.steps.days p{margin:0}
 
 /* Tableau des prix */
 .tbl{width:100%;border-collapse:collapse;font-size:17px}
