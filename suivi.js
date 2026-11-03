@@ -27,7 +27,7 @@
   var host=location.hostname.replace(/^www\./,''), ref='';
   try{ ref=document.referrer?new URL(document.referrer).hostname.replace(/^www\./,''):''; }catch(e){}
   var internal=ref===host; if(internal) ref='';
-  var s=decodeURIComponent(utm)||ref;
+  var s=ref; try{ s=decodeURIComponent(utm)||ref; }catch(e){ s=utm||ref; }
   var KNOWN=[[/google_?maps|maps\.google|business\.google/,'Google Maps'],[/google/,'Google'],[/bing/,'Bing'],[/facebook|fb\.|^fb$/,'Facebook'],
     [/instagram/,'Instagram'],[/whatsapp|wa\.me/,'WhatsApp'],[/tiktok/,'TikTok'],[/youtube/,'YouTube'],[/tripadvisor/,'TripAdvisor'],[/chatgpt|openai/,'ChatGPT'],
     [/pinterest|pin\.it/,'Pinterest'],[/yahoo/,'Yahoo'],[/duckduckgo/,'DuckDuckGo'],[/linkedin/,'LinkedIn'],[/snapchat/,'Snapchat'],[/^t\.co$|twitter|^x\.com$/,'X (Twitter)']];

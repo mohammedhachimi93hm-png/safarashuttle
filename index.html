@@ -1829,7 +1829,7 @@ const TRK=(()=>{
   const utm=((location.search.match(/[?&]utm_source=([^&#]+)/)||[])[1]||'').toLowerCase();
   let ref=''; try{ ref=document.referrer?new URL(document.referrer).hostname.replace(/^www\./,''):''; }catch(e){}
   const internal=ref===location.hostname.replace(/^www\./,''); if(internal) ref='';
-  const s=decodeURIComponent(utm)||ref;
+  let s=ref; try{ s=decodeURIComponent(utm)||ref; }catch(e){ s=utm||ref; } // lien mal formé : ne doit jamais casser le site
   const KNOWN=[[/google_?maps|maps\.google|business\.google/,'Google Maps'],[/google/,'Google'],[/bing/,'Bing'],[/facebook|fb\.|^fb$/,'Facebook'],
     [/instagram/,'Instagram'],[/pinterest|pin\.it/,'Pinterest'],[/whatsapp|wa\.me/,'WhatsApp'],[/tiktok/,'TikTok'],[/youtube/,'YouTube'],[/tripadvisor/,'TripAdvisor'],[/chatgpt|openai/,'ChatGPT'],
     [/yahoo/,'Yahoo'],[/duckduckgo/,'DuckDuckGo'],[/linkedin/,'LinkedIn'],[/snapchat/,'Snapchat'],[/^t\.co$|twitter|^x\.com$/,'X (Twitter)']];
